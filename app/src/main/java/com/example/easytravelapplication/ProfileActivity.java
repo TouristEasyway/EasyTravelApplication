@@ -255,8 +255,8 @@ public class ProfileActivity extends AppCompatActivity {
                     }
 
                     String url = snapshot.child("profile_pic").getValue(String.class);
-                    if (!url.isEmpty()){
-                        Picasso.get().load(url).into(binding.userProfileImage);
+                    if (url != null && !url.isEmpty()){
+                        Picasso.get().load(url).placeholder(R.drawable.ic_person).into(binding.userProfileImage);
                     }else {
                         binding.userProfileImage.setImageResource(R.drawable.ic_person);
                     }

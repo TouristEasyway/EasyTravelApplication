@@ -21,8 +21,6 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.easytravelapplication.Utils.AppConstant;
-import com.example.easytravelapplication.Utils.CommonMethod;
-import com.example.easytravelapplication.Utils.ConnectionDetector;
 import com.example.easytravelapplication.databinding.ActivityAddManagePackageBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -45,13 +43,13 @@ public class AddManagePackageActivity extends AppCompatActivity {
     DatabaseReference reference, dbref;
     StorageReference storageReference;
 
-    String image, uniqueKey, downloadURL;
+    String image, uniqueKey, downloadURL, totalDay, totalNight;
 
     private static final int REQ = 123;
     private static final int STORAGE_CODE = 223;
     Bitmap bitmap;
     SharedPreferences sp;
-    ProgressDialog pd;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,14 +62,32 @@ public class AddManagePackageActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        getSupportActionBar().setTitle(" Add Package");
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Intent intent = getIntent();
+        binding.edtPackageName.setText(intent.getStringExtra("package_name"));
+        binding.edtPlaces.setText(intent.getStringExtra("places"));
+        binding.edtStartingDate.setText(intent.getStringExtra("starting_date"));
+        totalDay = intent.getStringExtra("day");
+        totalNight = intent.getStringExtra("night");
+        binding.edtTotalDay.setText(totalDay);
+        binding.edtTotalNight.setText(totalNight);
+        binding.edtEndDate.setText(intent.getStringExtra("end_date"));
+        binding.edtPrice.setText(intent.getStringExtra("price"));
+        image = intent.getStringExtra("image");
+        Picasso.get().load(image).placeholder(R.drawable.login_fi).into(binding.imgPackage);
+
+        if (intent.getStringExtra("package_name") == null) {
+            binding.btnManage.setText("Add Package");
+            getSupportActionBar().setTitle(" Add Package");
+        } else {
+            binding.btnManage.setText("Update Package");
+            getSupportActionBar().setTitle(" Update Package");
+        }
 
         sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
         reference = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
 
-
+        progressDialog = new ProgressDialog(AddManagePackageActivity.this);
     }
 
     private void initListener() {
@@ -82,12 +98,12 @@ public class AddManagePackageActivity extends AppCompatActivity {
             }
         });
 
-        Picasso.get().load(image).into(binding.imgPackage);
+        Picasso.get().load(image).placeholder(R.drawable.login_fi).into(binding.imgPackage);
 
         binding.btnManage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkValidatation();
+                checkValidation();
             }
         });
     }
@@ -133,7 +149,7 @@ public class AddManagePackageActivity extends AppCompatActivity {
     }
 
 
-    private void checkValidatation() {
+    private void checkValidation() {
         if (binding.edtPackageName.getText().toString().equals("")) {
             binding.edtPackageName.setError("Package Name is Required");
         } else if (binding.edtPlaces.getText().toString().matches("")) {
@@ -142,30 +158,21 @@ public class AddManagePackageActivity extends AppCompatActivity {
             binding.edtTotalDay.setError("Total Day is  Required");
         } else if (binding.edtTotalNight.getText().toString().equals("")) {
             binding.edtTotalNight.setError("Total Night is  Required");
-        } else if (binding.edtDate.getText().toString().equals("")) {
-            binding.edtDate.setError("Starting Date Required");
+        } else if (binding.edtStartingDate.getText().toString().equals("")) {
+            binding.edtStartingDate.setError("Starting Date Required");
+        } else if (binding.edtEndDate.getText().toString().equals("")) {
+            binding.edtEndDate.setError("End Date Required");
         } else if (binding.edtPrice.getText().toString().equals("")) {
             binding.edtPrice.setError("Price  Required");
         } else if (bitmap == null) {
-            if (new ConnectionDetector(this).isConnectingToInternet()) {
-                pd = new ProgressDialog(this);
-                pd.setMessage("Please Wait...");
-                pd.setCancelable(false);
-                pd.show();
-                updateData(image);
-            } else {
-                new ConnectionDetector(this).connectiondetect();
-            }
+            progressDialog.setMessage("Please Wait...");
+            progressDialog.show();
+            updateData(image);
         } else {
-            if (new ConnectionDetector(this).isConnectingToInternet()) {
-                pd = new ProgressDialog(this);
-                pd.setMessage("Please Wait...");
-                pd.setCancelable(false);
-                pd.show();
-                uploadImage();
-            } else {
-                new ConnectionDetector(this).connectiondetect();
-            }
+
+            progressDialog.setMessage("Please Wait...");
+            progressDialog.show();
+            uploadImage();
         }
     }
 
@@ -198,7 +205,7 @@ public class AddManagePackageActivity extends AppCompatActivity {
                     });
                 } else {
                     Toast.makeText(AddManagePackageActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                    pd.dismiss();
+                    progressDialog.dismiss();
                 }
             }
         });
@@ -214,7 +221,8 @@ public class AddManagePackageActivity extends AppCompatActivity {
         params.put("places", binding.edtPlaces.getText().toString());
         params.put("totalDay", binding.edtTotalDay.getText().toString());
         params.put("totalNight", binding.edtTotalNight.getText().toString());
-        params.put("startingDate", binding.edtDate.getText().toString());
+        params.put("startingDate", binding.edtStartingDate.getText().toString());
+        params.put("endDate", binding.edtEndDate.getText().toString());
         params.put("price", binding.edtPrice.getText().toString());
         params.put("packageImage", s);
         params.put("status", "Active");
@@ -222,14 +230,13 @@ public class AddManagePackageActivity extends AppCompatActivity {
         dbref.child(key).setValue(params).addOnSuccessListener(new OnSuccessListener() {
             @Override
             public void onSuccess(Object o) {
-                pd.dismiss();
+                progressDialog.dismiss();
                 Toast.makeText(AddManagePackageActivity.this, "Package Added Successfully.", Toast.LENGTH_SHORT).show();
-                new CommonMethod(AddManagePackageActivity.this, ManagePackageActivity.class);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                pd.dismiss();
+                progressDialog.dismiss();
                 Toast.makeText(AddManagePackageActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
             }
         });

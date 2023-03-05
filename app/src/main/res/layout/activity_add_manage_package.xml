@@ -23,47 +23,29 @@
                 android:paddingHorizontal="25dp"
                 android:paddingBottom="25dp">
 
-                <!--                <androidx.appcompat.widget.AppCompatTextView-->
-                <!--                    android:id="@+id/tvTitle"-->
-                <!--                    style="@style/regular_14_text_bold"-->
-                <!--                    android:layout_width="0dp"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:text="Add Package"-->
-                <!--                    android:textSize="30sp"-->
-                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                    app:layout_constraintStart_toStartOf="parent"-->
-                <!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-                <FrameLayout
-                    android:id="@+id/flImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/imgPackage"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_marginTop="30dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/login_fi"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:riv_corner_radius="15dp" />
 
-                    <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/imgPackage"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:scaleType="fitXY"
-                        android:tint="@color/black"
-                        android:src="@drawable/ic_person"
-                        app:riv_corner_radius="15dp" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/edit_image_view"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="end"
-                        android:layout_marginEnd="25dp"
-                        android:background="@drawable/circle_gray"
-                        android:padding="5dp"
-                         />
-                </FrameLayout>
-
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/edit_image_view"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="end"
+                    android:background="@drawable/circle_gray"
+                    android:backgroundTint="@color/light_blue_4"
+                    android:padding="10dp"
+                    android:src="@drawable/edit"
+                    app:layout_constraintEnd_toEndOf="@id/imgPackage"
+                    app:layout_constraintTop_toTopOf="@id/imgPackage" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilPackageName"
@@ -76,7 +58,7 @@
                     app:hintTextColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/flImage">
+                    app:layout_constraintTop_toBottomOf="@id/imgPackage">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtPackageName"
@@ -152,7 +134,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilDate"
+                    android:id="@+id/tilStartingDate"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -165,7 +147,28 @@
                     app:layout_constraintTop_toBottomOf="@id/tilTotalNight">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtDate"
+                        android:id="@+id/edtStartingDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilEndDate"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:hint="End Date"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tilStartingDate">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtEndDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black" />
@@ -183,7 +186,7 @@
                     app:hintTextColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tilDate">
+                    app:layout_constraintTop_toBottomOf="@id/tilEndDate">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtPrice"

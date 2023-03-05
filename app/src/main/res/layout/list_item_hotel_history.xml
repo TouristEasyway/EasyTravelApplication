@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
+        app:cardCornerRadius="5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+            <!--            <androidx.appcompat.widget.AppCompatImageView-->
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/rivHotel"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_person"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_corner_radius="10dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvUserName"
+                style="@style/regular_16_text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toStartOf="@id/imgCall"
+                app:layout_constraintStart_toEndOf="@id/rivHotel"
+                app:layout_constraintTop_toTopOf="@id/rivHotel"
+                tools:text="Rohan Suthar" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHotelName"
+                style="@style/regular_14_text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintEnd_toStartOf="@id/imgCall"
+                app:layout_constraintStart_toEndOf="@id/rivHotel"
+                app:layout_constraintTop_toBottomOf="@id/tvUserName"
+                tools:text="Holiday Package" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgCall"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_call"
+                app:layout_constraintBottom_toBottomOf="@id/tvHotelName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvUserName" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelFrom"
+                style="@style/hint_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="From"
+                app:layout_constraintEnd_toEndOf="@id/tvStartingDate"
+                app:layout_constraintStart_toStartOf="@id/tvStartingDate"
+                app:layout_constraintTop_toBottomOf="@id/rivHotel" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvStartingDate"
+                style="@style/regular_16_text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tvEndDate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/labelFrom"
+                tools:text="28-02-2022" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelTo"
+                style="@style/hint_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="To"
+                app:layout_constraintEnd_toEndOf="@id/tvEndDate"
+                app:layout_constraintStart_toStartOf="@id/tvEndDate"
+                app:layout_constraintTop_toBottomOf="@id/rivHotel" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvEndDate"
+                style="@style/regular_16_text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="end"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tvStartingDate"
+                app:layout_constraintTop_toBottomOf="@id/labelTo"
+                tools:text="28-02-2022" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

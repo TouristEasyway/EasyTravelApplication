@@ -1,25 +1,39 @@
 package com.example.easytravelapplication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 
 import com.example.easytravelapplication.Model.ManageCarResponse;
 import com.example.easytravelapplication.Utils.CommonMethod;
 import com.example.easytravelapplication.Utils.ConnectionDetector;
 import com.example.easytravelapplication.databinding.ActivityAddCarBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class AddCarActivity extends AppCompatActivity {
@@ -30,29 +44,43 @@ public class AddCarActivity extends AppCompatActivity {
     ProgressDialog pd;
     ManageCarResponse response;
 
+    StorageReference storageReference;
+
+    String image, downloadURL;
+    Bitmap bitmap;
+    private static final int REQ = 123;
+    private static final int STORAGE_CODE = 223;
+
     boolean toUpdate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_car);
-
-       response  = (ManageCarResponse) getIntent().getSerializableExtra("CAR_RESPONSE");
+        requestStoragePermission();
+        response = (ManageCarResponse) getIntent().getSerializableExtra("CAR_RESPONSE");
         toUpdate = getIntent().getBooleanExtra("UPDATE_CAR", false);
 
-        if (toUpdate){
+        if (toUpdate) {
             binding.btnAddCar.setText("Update Car");
             setDataForUpdate(response);
 
-        }
-        else{
+        } else {
             binding.btnAddCar.setText("Add Car");
         }
-
 
 
         pd = new ProgressDialog(AddCarActivity.this);
         reference = FirebaseDatabase.getInstance().getReference();
 
+        binding.cardImage1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openGallery();
+            }
+        });
+
+        Picasso.get().load(image).placeholder(R.drawable.ic_camera).into(binding.customImageview1);
 
         binding.btnAddCar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,17 +93,15 @@ public class AddCarActivity extends AppCompatActivity {
     private void setDataForUpdate(ManageCarResponse response) {
         binding.edtCarName.setText(response.getCarName());
 
-        if (response.getFurlType().equals("Petrol")){
+        if (response.getFurlType().equals("Petrol")) {
             binding.rbPetrol.setChecked(true);
-        }
-        else{
+        } else {
             binding.rbCNG.setChecked(true);
         }
 
-        if (response.getCarType().equals("Auto")){
+        if (response.getCarType().equals("Auto")) {
             binding.rbAuto.setChecked(true);
-        }
-        else{
+        } else {
             binding.rbManul.setChecked(true);
 
         }
@@ -84,49 +110,44 @@ public class AddCarActivity extends AppCompatActivity {
         binding.edtState.setText(response.getState());
         binding.edtAvailable.setText(response.getAvailable());
 
-
-
-
     }
 
     private void validateDetails() {
-        if (binding.edtCarName.getText().equals("")){
+        if (binding.edtCarName.getText().equals("")) {
             binding.edtCarName.setError("Please Enter Car Name");
-        }
-        else if (binding.radioGroupFuelTye.getCheckedRadioButtonId() == -1){
+        } else if (binding.radioGroupFuelTye.getCheckedRadioButtonId() == -1) {
             new CommonMethod(AddCarActivity.this, "Select Fuel Type");
-        }
-        else if (binding.radioGroupCarTye.getCheckedRadioButtonId() == -1){
+        } else if (binding.radioGroupCarTye.getCheckedRadioButtonId() == -1) {
             new CommonMethod(AddCarActivity.this, "Select Car Type");
-        }
-        else if (binding.edtRatePerKm.getText().equals("")){
+        } else if (binding.edtRatePerKm.getText().equals("")) {
             binding.edtRatePerKm.setError("Please Enter rate par km");
-        }
-
-        else if (binding.edtAvailable.getText().equals("")){
+        } else if (binding.edtAvailable.getText().equals("")) {
             binding.edtAvailable.setError("Please Car availability");
-
-        }
-        else{
-//            pd= new ProgressDialog(AddCarActivity.this);
-//            pd.setMessage("Please Wait...");
-//            pd.setCancelable(false);
-//            pd.show();
-
-
+        }else if (bitmap == null) {
             if (new ConnectionDetector(this).isConnectingToInternet()) {
                 pd = new ProgressDialog(this);
                 pd.setMessage("Please Wait...");
                 pd.setCancelable(false);
                 pd.show();
-                addCarData();
+                addCarData(image);
+            } else {
+                new ConnectionDetector(this).connectiondetect();
+            }
+        } else {
+            if (new ConnectionDetector(this).isConnectingToInternet()) {
+                pd = new ProgressDialog(this);
+                pd.setMessage("Please Wait...");
+                pd.setCancelable(false);
+                pd.show();
+                uploadImages();
             } else {
                 new ConnectionDetector(this).connectiondetect();
             }
         }
+
     }
 
-    private void addCarData() {
+    private void addCarData(String image) {
         dbref = reference.child("Manage Car");
         String key = reference.push().getKey();
 
@@ -140,14 +161,13 @@ public class AddCarActivity extends AppCompatActivity {
         params.put("city", binding.edtCity.getText().toString());
         params.put("state", binding.edtState.getText().toString());
         params.put("available", binding.edtAvailable.getText().toString());
-
+        params.put("carImage", image);
 
         if (toUpdate) {
             dbref.child(response.getKey()).updateChildren(params).addOnSuccessListener(new OnSuccessListener() {
                 @Override
                 public void onSuccess(Object o) {
-
-                    new CommonMethod(AddCarActivity.this,  "Car Updated");
+                    new CommonMethod(AddCarActivity.this, "Car Updated");
                     new CommonMethod(AddCarActivity.this, ManageCarRentActivity.class);
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -156,9 +176,7 @@ public class AddCarActivity extends AppCompatActivity {
                     Toast.makeText(AddCarActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
                 }
             });
-
-        }
-        else{
+        } else {
             dbref.child(key).setValue(params).addOnSuccessListener(new OnSuccessListener() {
                 @Override
                 public void onSuccess(Object o) {
@@ -174,6 +192,80 @@ public class AddCarActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void requestStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            return;
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+        }
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_CODE);
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == STORAGE_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Oops you just denied Permission", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, REQ);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQ && resultCode == RESULT_OK) {
+            Uri uri = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                binding.customImageview1.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void uploadImages() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+        byte[] finalImage = byteArrayOutputStream.toByteArray();
+
+        final StorageReference filePath;
+
+        filePath = storageReference.child("Manage Hotel").child(finalImage + "jpg");
+
+        final UploadTask uploadTask = filePath.putBytes(finalImage);
+
+        uploadTask.addOnCompleteListener(AddCarActivity.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                if (task.isSuccessful()) {
+                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    downloadURL = String.valueOf(uri);
+                                    addCarData(downloadURL);
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    Toast.makeText(AddCarActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    pd.dismiss();
+                }
+            }
+        });
 
     }
 }

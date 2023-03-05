@@ -32,6 +32,12 @@ android {
     }
 }
 
+/*
+MD5: 7A:D3:B4:91:F8:AD:37:41:53:DD:97:EA:EA:A9:2A:69
+SHA1: A1:0B:13:C3:77:A9:1B:E4:50:9E:22:1B:A7:8C:C0:A4:06:57:90:85
+SHA-256: 0C:C6:8B:1C:B6:99:F8:7B:DC:89:CB:27:0E:B5:4B:E1:18:E5:D6:8A:61:B7:8D:03:B1:FC:02:AA:56:3C:64:EA
+*/
+
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -48,4 +54,8 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'com.zhihu.android:matisse:0.5.3-beta3'
+    implementation 'com.google.zxing:core:3.3.3'
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    implementation 'com.razorpay:checkout:1.6.19'
 }
