@@ -47,16 +47,12 @@ public class BuyCarAdapter  extends RecyclerView.Adapter<BuyCarAdapter.MyViewHol
         holder.binding.tvPrice.setText(responseList.get(position).getPrice());
         holder.binding.tvTotalKm.setText(responseList.get(position).getRatePerKM() + "KM/Hr");
         holder.binding.tvDay.setText(responseList.get(position).bookDate);
-        if (responseList.get(position).getCarName().equals("")){
+        if (responseList.get(position).getCarImage().equals("")){
             Picasso.get().load(R.drawable.car).into(holder.binding.imgCar);
         }
         else{
             Picasso.get().load(responseList.get(position).getCarImage()).into(holder.binding.imgCar);
         }
-
-
-
-
 
     }
 
