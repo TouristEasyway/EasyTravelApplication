@@ -55,33 +55,33 @@ public class SignupActivity extends AppCompatActivity {
         sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
 
 
-        binding.TIEDob.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Calendar c = Calendar.getInstance();
-
-
-                int year = c.get(Calendar.YEAR);
-                int month = c.get(Calendar.MONTH);
-                int day = c.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        // on below line we are passing context.
-                        SignupActivity.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                // on below line we are setting date to our text view.
-                                binding.TIEDob.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-
-                            }
-                        },
-                        year, month, day);
-                datePickerDialog.show();
-
-            }
-        });
+//        binding.TIEDob.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                final Calendar c = Calendar.getInstance();
+//
+//
+//                int year = c.get(Calendar.YEAR);
+//                int month = c.get(Calendar.MONTH);
+//                int day = c.get(Calendar.DAY_OF_MONTH);
+//
+//                DatePickerDialog datePickerDialog = new DatePickerDialog(
+//                        // on below line we are passing context.
+//                        SignupActivity.this,
+//                        new DatePickerDialog.OnDateSetListener() {
+//                            @Override
+//                            public void onDateSet(DatePicker view, int year,
+//                                                  int monthOfYear, int dayOfMonth) {
+//                                // on below line we are setting date to our text view.
+//                                binding.TIEDob.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+//
+//                            }
+//                        },
+//                        year, month, day);
+//                datePickerDialog.show();
+//
+//            }
+//        });
 
 
         binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +156,7 @@ public class SignupActivity extends AppCompatActivity {
         user.put("status", "Active");
 
 //        dbref.child(key).child(binding.TIEName.getText().toString()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-        dbref.child(key).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+        dbref.child(binding.TIEEmail.getText().toString().split("@")[0]).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
