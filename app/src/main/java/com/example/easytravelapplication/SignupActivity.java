@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
@@ -56,30 +55,30 @@ public class SignupActivity extends AppCompatActivity {
         sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
 
 
-                        binding.TIEDob.setOnClickListener(new View.OnClickListener() {
+        binding.TIEDob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar c = Calendar.getInstance();
+
+
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        // on below line we are passing context.
+                        SignupActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
                             @Override
-                            public void onClick(View view) {
-                                final Calendar c = Calendar.getInstance();
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // on below line we are setting date to our text view.
+                                binding.TIEDob.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
 
-
-                                int year = c.get(Calendar.YEAR);
-                                int month = c.get(Calendar.MONTH);
-                                int day = c.get(Calendar.DAY_OF_MONTH);
-
-                                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                                        // on below line we are passing context.
-                                        SignupActivity.this,
-                                        new DatePickerDialog.OnDateSetListener() {
-                                            @Override
-                                            public void onDateSet(DatePicker view, int year,
-                                                                  int monthOfYear, int dayOfMonth) {
-                                                // on below line we are setting date to our text view.
-                                                binding.TIEDob.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-
-                                            }
-                                        },
-                                        year, month, day);
-                                datePickerDialog.show();
+                            }
+                        },
+                        year, month, day);
+                datePickerDialog.show();
 
             }
         });
@@ -121,13 +120,13 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void createUser() {
-        auth.createUserWithEmailAndPassword(binding.TIEEmail.getText().toString(),binding.TIEPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        auth.createUserWithEmailAndPassword(binding.TIEEmail.getText().toString(), binding.TIEPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     uploadData();
-                }else {
-                    Toast.makeText(SignupActivity.this, "Error Occured : "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(SignupActivity.this, "Error Occured : " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -161,6 +160,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
+                    sp.edit().putString(AppConstant.KEY, key).commit();
                     pd.dismiss();
                     Toast.makeText(SignupActivity.this, "You are Successfully Registered!", Toast.LENGTH_SHORT).show();
                     openMain();
@@ -180,7 +180,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private void openMain() {
 
-        Intent intent = new Intent(SignupActivity.this,LoginOtpActivity.class);
+        Intent intent = new Intent(SignupActivity.this, LoginOtpActivity.class);
         intent.putExtra("CONTACT_NO", binding.TIEPhoneNo.getText().toString());
         startActivity(intent);
     }

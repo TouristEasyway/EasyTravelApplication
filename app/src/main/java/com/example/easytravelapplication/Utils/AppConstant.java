@@ -18,10 +18,6 @@ public class AppConstant {
 
     public static String STATE = "state";
 
-
-
-
-
-
+    public static String KEY = "key";
 
 }

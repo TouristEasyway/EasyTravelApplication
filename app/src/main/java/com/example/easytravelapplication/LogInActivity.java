@@ -119,7 +119,7 @@ public class LogInActivity extends AppCompatActivity {
     private void doLogin() {
         String userEnteredName = binding.edtUserName.getText().toString();
         String userEnteredPassword = binding.edtPassword.getText().toString();
-        String childName = binding.edtUserName.getText().toString().split("@")[0];
+        String key = sp.getString(AppConstant.KEY, "");
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
 
@@ -129,24 +129,23 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String passwordDB = dataSnapshot.child(childName).child("password").getValue(String.class);
+                    String passwordDB = dataSnapshot.child(key).child("password").getValue(String.class);
 
                     if (passwordDB.equals(userEnteredPassword)) {
                         Toast.makeText(getApplicationContext(), "login Successfully", Toast.LENGTH_LONG).show();
 
                         sp.edit().putString(AppConstant.IS_LOGIN, "true").commit();
                         sp.edit().putString(AppConstant.LOGIN_SIGNUP, "Login").commit();
-                        sp.edit().putString(AppConstant.FIREBASE_CHILD_NAME, childName).commit();
-                        sp.edit().putString(AppConstant.USERTYPE, dataSnapshot.child(childName).child("user_type").getValue(String.class)).commit();
-                        sp.edit().putString(AppConstant.EMAIL, dataSnapshot.child(childName).child("email").getValue(String.class)).commit();
-                        sp.edit().putString(AppConstant.NAME, dataSnapshot.child(childName).child("name").getValue(String.class)).commit();
-                        sp.edit().putString(AppConstant.DOB, dataSnapshot.child(childName).child("birth_date").getValue(String.class)).commit();
-                        sp.edit().putString(AppConstant.PASSWORD, dataSnapshot.child(childName).child("password").getValue(String.class)).commit();
-                        sp.edit().putString(AppConstant.CONTACT, dataSnapshot.child(childName).child("contact_no").getValue(String.class)).commit();
-                        sp.edit().putString(AppConstant.CITY, dataSnapshot.child(childName).child("city").getValue(String.class)).commit();
-                        sp.edit().putString(AppConstant.STATE, dataSnapshot.child(childName).child("state").getValue(String.class)).commit();
-                        sp.edit().putString(AppConstant.GENDER, dataSnapshot.child(childName).child("gender").getValue(String.class)).commit();
-                        sp.edit().putString(AppConstant.PROFILE_IMAGE, dataSnapshot.child(childName).child("profile_pic").getValue(String.class)).commit();
+                        sp.edit().putString(AppConstant.USERTYPE, dataSnapshot.child(key).child("user_type").getValue(String.class)).commit();
+                        sp.edit().putString(AppConstant.EMAIL, dataSnapshot.child(key).child("email").getValue(String.class)).commit();
+                        sp.edit().putString(AppConstant.NAME, dataSnapshot.child(key).child("name").getValue(String.class)).commit();
+                        sp.edit().putString(AppConstant.DOB, dataSnapshot.child(key).child("birth_date").getValue(String.class)).commit();
+                        sp.edit().putString(AppConstant.PASSWORD, dataSnapshot.child(key).child("password").getValue(String.class)).commit();
+                        sp.edit().putString(AppConstant.CONTACT, dataSnapshot.child(key).child("contact_no").getValue(String.class)).commit();
+                        sp.edit().putString(AppConstant.CITY, dataSnapshot.child(key).child("city").getValue(String.class)).commit();
+                        sp.edit().putString(AppConstant.STATE, dataSnapshot.child(key).child("state").getValue(String.class)).commit();
+                        sp.edit().putString(AppConstant.GENDER, dataSnapshot.child(key).child("gender").getValue(String.class)).commit();
+                        sp.edit().putString(AppConstant.PROFILE_IMAGE, dataSnapshot.child(key).child("profile_pic").getValue(String.class)).commit();
 
                         openMain();
 

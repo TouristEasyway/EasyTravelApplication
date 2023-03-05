@@ -29,11 +29,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -118,13 +115,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         final StorageReference filePath;
 
-        filePath = storageReference.child("Users").child(finalImage+"jpg");
+        filePath = storageReference.child("Users").child(finalImage + "jpg");
 
         final UploadTask uploadTask = filePath.putBytes(finalImage);
         uploadTask.addOnCompleteListener(ProfileActivity.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -144,6 +141,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
+
     private void updateData(String s) {
 
         HashMap user = new HashMap<>();
@@ -159,11 +157,11 @@ public class ProfileActivity extends AppCompatActivity {
         user.put("user_type", "User");
         user.put("status", "Active");
 
-        reference.child(binding.TIEEmail.getText().toString().split("@", binding.TIEName.length())[0]).updateChildren(user).addOnSuccessListener(new OnSuccessListener() {
+        reference.child(uniqueKey).updateChildren(user).addOnSuccessListener(new OnSuccessListener() {
             @Override
             public void onSuccess(Object o) {
-
-                Toast.makeText(ProfileActivity.this, "Profile Updated Succeefully.", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                Toast.makeText(ProfileActivity.this, "Profile Updated Successfully.", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -216,8 +214,9 @@ public class ProfileActivity extends AppCompatActivity {
     private void initView() {
         getSupportActionBar().setTitle("Profile");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
+
+        uniqueKey = sp.getString(AppConstant.KEY, "");
         reference = FirebaseDatabase.getInstance().getReference().child("Users");
         storageReference = FirebaseStorage.getInstance().getReference();
         auth = FirebaseAuth.getInstance();
@@ -231,45 +230,117 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setData() {
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                for (DataSnapshot snapshot : datasnapshot.getChildren()) {
 
-                    binding.tvUserName.setText(snapshot.child(sp.getString(AppConstant.FIREBASE_CHILD_NAME, "")).child("name").getValue().toString());
-                    binding.TIEName.setText(snapshot.child(sp.getString(AppConstant.FIREBASE_CHILD_NAME, "")).child("name").getValue().toString());
-                    binding.TIEEmail.setText(snapshot.child(sp.getString(AppConstant.FIREBASE_CHILD_NAME, "")).child("email").getValue().toString());
-                    binding.TIEPhoneNo.setText(snapshot.child(sp.getString(AppConstant.FIREBASE_CHILD_NAME, "")).child("contact_no").getValue().toString());
-                    binding.TIEDob.setText(snapshot.child(sp.getString(AppConstant.FIREBASE_CHILD_NAME, "")).child("birth_date").getValue().toString());
-                    binding.TIECity.setText(snapshot.child(sp.getString(AppConstant.FIREBASE_CHILD_NAME, "")).child("city").getValue().toString());
-                    binding.TIEState.setText(snapshot.child(sp.getString(AppConstant.FIREBASE_CHILD_NAME, "")).child("state").getValue().toString());
+        binding.tvUserName.setText(sp.getString(AppConstant.NAME, ""));
+        binding.TIEName.setText(sp.getString(AppConstant.NAME, ""));
+        binding.TIEEmail.setText(sp.getString(AppConstant.EMAIL, ""));
+        binding.TIEPhoneNo.setText(sp.getString(AppConstant.CONTACT, ""));
+        binding.TIEDob.setText(sp.getString(AppConstant.DOB, ""));
+        binding.TIECity.setText(sp.getString(AppConstant.CITY, ""));
+        binding.TIEState.setText(sp.getString(AppConstant.STATE, ""));
 
-                    uniqueKey = snapshot.child("key").getValue().toString();
+//                    uniqueKey = snapshot.child("key").getValue().toString();
+//
+        String genderName = sp.getString(AppConstant.GENDER, "");
 
-                    String genderName = snapshot.child(sp.getString(AppConstant.FIREBASE_CHILD_NAME, "")).child("gender").getValue().toString();
+        if (genderName.equals("Male")) {
+            binding.rgMale.setChecked(true);
+        } else {
+            binding.rgFemale.setChecked(true);
+        }
+        String url = sp.getString(AppConstant.PROFILE_IMAGE, "");
+        if (url != null && !url.isEmpty()) {
+            Picasso.get().load(url).placeholder(R.drawable.ic_person).into(binding.userProfileImage);
+        } else {
+            binding.userProfileImage.setImageResource(R.drawable.ic_person);
+        }
+        progressDialog.dismiss();
+//                }
 
-                    if (genderName.equals("Male")) {
-                        binding.rgMale.setChecked(true);
-                    } else {
-                        binding.rgFemale.setChecked(true);
-                    }
 
-                    String url = snapshot.child("profile_pic").getValue(String.class);
-                    if (url != null && !url.isEmpty()){
-                        Picasso.get().load(url).placeholder(R.drawable.ic_person).into(binding.userProfileImage);
-                    }else {
-                        binding.userProfileImage.setImageResource(R.drawable.ic_person);
-                    }
-                    progressDialog.dismiss();
-                }
-            }
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                        ProfileResponse data = snapshot.getValue(ProfileResponse.class);
+//
+//                        binding.tvUserName.setText(data.getName());
+//                        binding.TIEName.setText(data.getName());
+//                        binding.TIEEmail.setText(data.getEmail());
+//                        binding.TIEPhoneNo.setText(data.getContact_no());
+//                        binding.TIEDob.setText(data.getBirth_date());
+//                        binding.TIECity.setText(data.getCity());
+//                        binding.TIEState.setText(data.getState());
+//
+//                        uniqueKey = snapshot.child("key").getValue().toString();
+//
+//                        String genderName = data.getGender();
+//
+//                        if (genderName.equals("Male")) {
+//                            binding.rgMale.setChecked(true);
+//                        } else {
+//                            binding.rgFemale.setChecked(true);
+//                        }
+//
+//                        String url = data.getProfile_pic();
+//                        if (url != null && !url.isEmpty()){
+//                            Picasso.get().load(url).placeholder(R.drawable.ic_person).into(binding.userProfileImage);
+//                        }else {
+//                            binding.userProfileImage.setImageResource(R.drawable.ic_person);
+//                        }
+//                    }
+//                    progressDialog.dismiss();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                progressDialog.dismiss();
+//
+//            }
+//        });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+//                for (DataSnapshot snapshot : datasnapshot.getChildren()) {
+//
+//                    binding.tvUserName.setText(snapshot.child(sp.getString(AppConstant.KEY, "")).child("name").getValue().toString());
+//                    binding.TIEName.setText(snapshot.child(sp.getString(AppConstant.FIREBASE_CHILD_NAME, "")).child("name").getValue().toString());
+//                    binding.TIEEmail.setText(snapshot.child(sp.getString(AppConstant.FIREBASE_CHILD_NAME, "")).child("email").getValue().toString());
+//                    binding.TIEPhoneNo.setText(snapshot.child(sp.getString(AppConstant.FIREBASE_CHILD_NAME, "")).child("contact_no").getValue().toString());
+//                    binding.TIEDob.setText(snapshot.child(sp.getString(AppConstant.FIREBASE_CHILD_NAME, "")).child("birth_date").getValue().toString());
+//                    binding.TIECity.setText(snapshot.child(sp.getString(AppConstant.FIREBASE_CHILD_NAME, "")).child("city").getValue().toString());
+//                    binding.TIEState.setText(snapshot.child(sp.getString(AppConstant.FIREBASE_CHILD_NAME, "")).child("state").getValue().toString());
+//
+////                    uniqueKey = snapshot.child("key").getValue().toString();
+////
+//                    String genderName = snapshot.child(sp.getString(AppConstant.FIREBASE_CHILD_NAME, "")).child("gender").getValue().toString();
+//
+//                    if (genderName.equals("Male")) {
+//                        binding.rgMale.setChecked(true);
+//                    } else {
+//                        binding.rgFemale.setChecked(true);
+//                    }
+//
+//                    String url = snapshot.child("profile_pic").getValue(String.class);
+//                    if (url != null && !url.isEmpty()){
+//                        Picasso.get().load(url).placeholder(R.drawable.ic_person).into(binding.userProfileImage);
+//                    }else {
+//                        binding.userProfileImage.setImageResource(R.drawable.ic_person);
+//                    }
+//                    progressDialog.dismiss();
+////                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
