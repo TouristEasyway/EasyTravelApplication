@@ -112,6 +112,11 @@ public class AddCarActivity extends AppCompatActivity {
         binding.edtState.setText(response.getState());
         binding.edtAvailable.setText(response.getAvailable());
 
+        if (response.getCarImage().isEmpty()) {
+            Picasso.get().load(R.drawable.car).into(binding.customImageview1);
+        } else {
+            Picasso.get().load(response.getCarImage()).into(binding.customImageview1);
+        }
     }
 
     private void validateDetails() {

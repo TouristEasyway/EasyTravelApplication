@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.easytravelapplication.Utils.AppConstant;
+import com.example.easytravelapplication.Utils.CommonMethod;
 import com.example.easytravelapplication.databinding.ActivityAddManagePackageBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,6 +52,8 @@ public class AddManagePackageActivity extends AppCompatActivity {
     SharedPreferences sp;
     ProgressDialog progressDialog;
 
+    boolean toUpdate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +66,8 @@ public class AddManagePackageActivity extends AppCompatActivity {
 
     private void initView() {
         Intent intent = getIntent();
+        toUpdate = intent.getBooleanExtra("is_from_update", false);
+        uniqueKey = intent.getStringExtra("key");
         binding.edtPackageName.setText(intent.getStringExtra("package_name"));
         binding.edtPlaces.setText(intent.getStringExtra("places"));
         binding.edtStartingDate.setText(intent.getStringExtra("starting_date"));
@@ -227,19 +232,34 @@ public class AddManagePackageActivity extends AppCompatActivity {
         params.put("packageImage", s);
         params.put("status", "Active");
 
-        dbref.child(key).setValue(params).addOnSuccessListener(new OnSuccessListener() {
-            @Override
-            public void onSuccess(Object o) {
-                progressDialog.dismiss();
-                Toast.makeText(AddManagePackageActivity.this, "Package Added Successfully.", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                progressDialog.dismiss();
-                Toast.makeText(AddManagePackageActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (toUpdate) {
+            dbref.child(uniqueKey).updateChildren(params).addOnSuccessListener(new OnSuccessListener() {
+                @Override
+                public void onSuccess(Object o) {
+                    new CommonMethod(AddManagePackageActivity.this, "Package Updated Successfully.");
+                    new CommonMethod(AddManagePackageActivity.this, ManagePackageActivity.class);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(AddManagePackageActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else {
+            dbref.child(key).setValue(params).addOnSuccessListener(new OnSuccessListener() {
+                @Override
+                public void onSuccess(Object o) {
+                    progressDialog.dismiss();
+                    Toast.makeText(AddManagePackageActivity.this, "Package Added Successfully.", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressDialog.dismiss();
+                    Toast.makeText(AddManagePackageActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
 }

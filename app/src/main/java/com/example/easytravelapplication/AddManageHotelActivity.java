@@ -60,7 +60,6 @@ public class AddManageHotelActivity extends AppCompatActivity {
     ArrayList<Uri> selectedImageList;
     //    ImageAdapter adapter;
     boolean toUpdate;
-    HotelListResponse response;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

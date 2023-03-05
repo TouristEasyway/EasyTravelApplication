@@ -73,6 +73,7 @@ public class ManagePackageAdapter extends RecyclerView.Adapter<ManagePackageAdap
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, AddManagePackageActivity.class);
+                intent.putExtra("is_from_update", true);
                 intent.putExtra("package_name", responseList.get(position).getPackageName());
                 intent.putExtra("places",  responseList.get(position).getPlaces());
                 intent.putExtra("day",  responseList.get(position).getTotalDay());
@@ -81,6 +82,7 @@ public class ManagePackageAdapter extends RecyclerView.Adapter<ManagePackageAdap
                 intent.putExtra("end_date",  responseList.get(position).getEndDate());
                 intent.putExtra("price",  responseList.get(position).getPrice());
                 intent.putExtra("image",  responseList.get(position).getPackageImage());
+                intent.putExtra("key", responseList.get(position).getKey());
                 context.startActivity(intent);
             }
         });
