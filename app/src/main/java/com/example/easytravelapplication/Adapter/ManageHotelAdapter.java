@@ -115,7 +115,7 @@ public class ManageHotelAdapter extends RecyclerView.Adapter<ManageHotelAdapter.
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manage Packages");
+                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manage Hotel");
                                 ProgressDialog pd = new ProgressDialog(context);
                                 pd.setMessage("Please Wait...");
                                 pd.setCancelable(false);

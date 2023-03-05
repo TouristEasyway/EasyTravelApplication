@@ -75,6 +75,8 @@ public class DashBoardActivity extends AppCompatActivity {
 
         if (item.getItemId() == R.id.logout) {
             auth.signOut();
+            sp  = this.getSharedPreferences(AppConstant.PREF,Context.MODE_PRIVATE);
+            sp.edit().clear().commit();
             openLogin();
         }
         if (item.getItemId() == R.id.profile) {

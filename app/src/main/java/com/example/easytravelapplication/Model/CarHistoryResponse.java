@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class CarHistoryResponse implements Serializable {
 
-    public  String  carName,fuelType,carType,ratePerKM,available,fullName,email,contactNo,startDate,endDate,bookDate,price,key;
+    public  String  carName,fuelType,carType,ratePerKM,available,fullName,email,contactNo,startDate,endDate,bookDate,price,key,carImage;
 
     public  CarHistoryResponse(){
 
     }
-    public CarHistoryResponse(String carName, String fuelType, String carType, String ratePerKM, String available, String fullName, String email, String contactNo, String startDate, String endDate, String bookDate, String price,String  key) {
+    public CarHistoryResponse(String carName, String fuelType, String carType, String ratePerKM, String available, String fullName, String email, String contactNo, String startDate, String endDate, String bookDate, String price,String  key,String carImage) {
         this.carName = carName;
         this.fuelType = fuelType;
         this.carType = carType;
@@ -23,6 +23,15 @@ public class CarHistoryResponse implements Serializable {
         this.bookDate = bookDate;
         this.price = price;
         this.key = key;
+        this.carImage = carImage;
+    }
+
+    public String getCarImage() {
+        return carImage;
+    }
+
+    public void setCarImage(String carImage) {
+        this.carImage = carImage;
     }
 
     public String getKey() {

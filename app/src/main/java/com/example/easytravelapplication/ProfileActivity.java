@@ -214,7 +214,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        getSupportActionBar().setTitle(" Profile");
+        getSupportActionBar().setTitle("Profile");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
