@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.easytravelapplication.AddManageHotelActivity;
 import com.example.easytravelapplication.AddManagePackageActivity;
 import com.example.easytravelapplication.BookHotelActivity;
 import com.example.easytravelapplication.Model.HotelListResponse;
@@ -72,7 +73,8 @@ public class ManageHotelAdapter extends RecyclerView.Adapter<ManageHotelAdapter.
         holder.binding.imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, AddManagePackageActivity.class);
+                Intent intent = new Intent(context, AddManageHotelActivity.class);
+                intent.putExtra("is_from_update", true);
                 intent.putExtra("hotel_name", response.getHotelName());
                 intent.putExtra("address", response.getAddress());
                 intent.putExtra("city", response.getCity());
@@ -83,6 +85,7 @@ public class ManageHotelAdapter extends RecyclerView.Adapter<ManageHotelAdapter.
                 intent.putExtra("check_out_time", response.getCheckOutTime());
                 intent.putExtra("service", response.getService());
                 intent.putExtra("hotel_image", response.getHotelImages());
+                intent.putExtra("key", response.getKey());
                 context.startActivity(intent);
             }
         });

@@ -22,7 +22,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
+import com.example.easytravelapplication.Model.HotelListResponse;
 import com.example.easytravelapplication.Utils.AppConstant;
+import com.example.easytravelapplication.Utils.CommonMethod;
 import com.example.easytravelapplication.databinding.ActivityAddManageHotelBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -47,7 +49,7 @@ public class AddManageHotelActivity extends AppCompatActivity {
     DatabaseReference reference, dbref;
     StorageReference storageReference;
 
-    String image, downloadURL;
+    String image, downloadURL, uniqueKey;
     Bitmap bitmap;
     SharedPreferences sp;
     ProgressDialog progressDialog;
@@ -56,8 +58,9 @@ public class AddManageHotelActivity extends AppCompatActivity {
     //    int IMAGE_CODE = 123;
     ArrayList<Uri> arrayList;
     ArrayList<Uri> selectedImageList;
-//    ImageAdapter adapter;
-
+    //    ImageAdapter adapter;
+    boolean toUpdate;
+    HotelListResponse response;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,8 @@ public class AddManageHotelActivity extends AppCompatActivity {
 
     private void initView() {
         Intent intent = getIntent();
+        toUpdate = intent.getBooleanExtra("is_from_update", false);
+        uniqueKey = intent.getStringExtra("key");
         binding.edtHotelName.setText(intent.getStringExtra("hotel_name"));
         binding.edtAddress.setText(intent.getStringExtra("address"));
         binding.edtCity.setText(intent.getStringExtra("city"));
@@ -266,19 +271,34 @@ public class AddManageHotelActivity extends AppCompatActivity {
 //            dbref.child(key).child(hotelImages).setValue(true);
 //        }
 
-        dbref.child(key).setValue(params).addOnSuccessListener(new OnSuccessListener() {
-            @Override
-            public void onSuccess(Object o) {
-                progressDialog.dismiss();
-                Toast.makeText(AddManageHotelActivity.this, "Hotel Added Successfully.", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                progressDialog.dismiss();
-                Toast.makeText(AddManageHotelActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (toUpdate) {
+            dbref.child(uniqueKey).updateChildren(params).addOnSuccessListener(new OnSuccessListener() {
+                @Override
+                public void onSuccess(Object o) {
+                    new CommonMethod(AddManageHotelActivity.this, "Hotel Updated Successfully.");
+                    new CommonMethod(AddManageHotelActivity.this, ManageHotelActivity.class);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(AddManageHotelActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            dbref.child(key).setValue(params).addOnSuccessListener(new OnSuccessListener() {
+                @Override
+                public void onSuccess(Object o) {
+                    progressDialog.dismiss();
+                    Toast.makeText(AddManageHotelActivity.this, "Hotel Added Successfully.", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressDialog.dismiss();
+                    Toast.makeText(AddManageHotelActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void requestStoragePermission() {

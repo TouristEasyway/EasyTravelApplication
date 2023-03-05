@@ -1,6 +1,8 @@
 package com.example.easytravelapplication.Model;
 
-public class HotelListResponse {
+import java.io.Serializable;
+
+public class HotelListResponse implements Serializable {
 
     String address, checkInTime, checkOutTime, city, hotelImages, hotelName, key, location, price,service,state,status;
 
