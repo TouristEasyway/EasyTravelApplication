@@ -161,6 +161,15 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Object o) {
                 progressDialog.dismiss();
+                sp.edit().putString(AppConstant.USERTYPE, "User").commit();
+                sp.edit().putString(AppConstant.EMAIL, binding.TIEEmail.getText().toString()).commit();
+                sp.edit().putString(AppConstant.NAME, binding.TIEName.getText().toString()).commit();
+                sp.edit().putString(AppConstant.DOB, binding.TIEDob.getText().toString()).commit();
+                sp.edit().putString(AppConstant.CONTACT, binding.TIEPhoneNo.getText().toString()).commit();
+                sp.edit().putString(AppConstant.CITY, binding.TIECity.getText().toString()).commit();
+                sp.edit().putString(AppConstant.STATE, binding.TIEState.getText().toString()).commit();
+                sp.edit().putString(AppConstant.GENDER,  binding.rgMale.isChecked() ? "Male" : "Female").commit();
+                sp.edit().putString(AppConstant.PROFILE_IMAGE, s).commit();
                 Toast.makeText(ProfileActivity.this, "Profile Updated Successfully.", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
