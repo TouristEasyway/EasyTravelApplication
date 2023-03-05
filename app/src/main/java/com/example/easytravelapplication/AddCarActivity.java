@@ -61,7 +61,8 @@ public class AddCarActivity extends AppCompatActivity {
         requestStoragePermission();
         response = (ManageCarResponse) getIntent().getSerializableExtra("CAR_RESPONSE");
         toUpdate = getIntent().getBooleanExtra("UPDATE_CAR", false);
-
+        image = getIntent().getStringExtra("image");
+        Picasso.get().load(image).placeholder(R.drawable.login_fi).into(binding.customImageview1);
         if (toUpdate) {
             binding.btnAddCar.setText("Update Car");
             setDataForUpdate(response);
@@ -115,7 +116,7 @@ public class AddCarActivity extends AppCompatActivity {
         if (response.getCarImage().isEmpty()) {
             Picasso.get().load(R.drawable.car).into(binding.customImageview1);
         } else {
-            Picasso.get().load(response.getCarImage()).into(binding.customImageview1);
+            Picasso.get().load(image).into(binding.customImageview1);
         }
     }
 

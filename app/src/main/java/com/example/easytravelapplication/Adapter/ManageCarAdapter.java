@@ -92,6 +92,7 @@ public class ManageCarAdapter extends RecyclerView.Adapter<ManageCarAdapter.View
                 Intent intent = new Intent(context,AddCarActivity.class);
                 intent.putExtra("CAR_RESPONSE",responseList.get(position));
                 intent.putExtra("UPDATE_CAR", true);
+                intent.putExtra("image",  responseList.get(position).getCarImage());
                 context.startActivity(intent);
             }
         });
