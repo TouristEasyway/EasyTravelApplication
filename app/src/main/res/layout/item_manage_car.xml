@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="20dp"
+        app:cardCornerRadius="5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+            <!--            <androidx.appcompat.widget.AppCompatImageView-->
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imgCar"
+                android:src="@drawable/car"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitXY"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_corner_radius="10dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_car_name"
+                style="@style/regular_14_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toStartOf="@id/tv_available"
+                app:layout_constraintStart_toEndOf="@id/imgCar"
+                app:layout_constraintTop_toTopOf="@id/imgCar"
+                tools:text="Swift" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_available"
+                style="@style/regular_14_text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_black_25"
+                android:padding="8dp"
+                tools:text="available"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_car_name"
+                app:layout_constraintTop_toTopOf="@id/tv_car_name" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_fuel_type"
+                style="@style/regular_14_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toStartOf="@id/tv_available"
+                app:layout_constraintStart_toEndOf="@id/imgCar"
+                app:layout_constraintTop_toBottomOf="@id/tv_car_name"
+                tools:text="CNG" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_rate_par_km"
+                style="@style/regular_14_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/deleterImg"
+                app:layout_constraintStart_toEndOf="@id/imgCar"
+                app:layout_constraintTop_toBottomOf="@id/tv_fuel_type"
+                tools:text="100/km" />
+
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/editImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_edit_24"
+                android:layout_marginEnd="20dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/tv_rate_par_km"
+                app:layout_constraintEnd_toStartOf="@id/deleterImg"
+                app:layout_constraintTop_toTopOf="@id/tv_rate_par_km" />
+
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/deleterImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:src="@drawable/baseline_delete_24"
+                app:layout_constraintBottom_toBottomOf="@id/tv_rate_par_km"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_rate_par_km" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_purchase"
+                style="@style/regular_14_text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_black_25"
+                android:padding="8dp"
+                android:text="Book Now"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_rate_par_km"
+                app:layout_constraintTop_toTopOf="@id/tv_rate_par_km" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

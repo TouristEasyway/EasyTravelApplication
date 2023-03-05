@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">TouristEasyWay </string>
+
+    <string name="log_in">Log In</string>
+    <string name="enter_user_name">Enter Username</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="forget_password">forget password?</string>
+    <string name="login_otp">We have sent you access code\nvia SMS for mobile number verification</string>
+    <string name="login_otp_did_not">Didn\'t receive OTP?</string>
+    <string name="login_otp_resend">Resend code</string>
+    <string name="login_otp_verify">Verify</string>
+    <string name="explore_beauty_of_journey">Explore Beauty Of Journey.</string>
+    <string name="everything_you_can_imagine_is_here">Everything you can imagine, is here.</string>
+    <string name="rupee">₹</string>
+</resources>

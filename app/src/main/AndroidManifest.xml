@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.EasyTravelApplication"
+        tools:targetApi="31">
+        <activity
+            android:name=".BuyCarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BuyNowActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddCarActivity"
+            android:exported="true" />
+        <activity
+            android:name=".AddManagePackageActivity"
+            android:exported="true" />
+        <activity
+            android:name=".PackagePurchaseHistoryActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CarRentalHistoryActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ManageCarRentActivity"
+            android:exported="true" />
+        <activity
+            android:name=".HotelBokkingHistoryActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ManageHotelActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ManagePackageActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ManageUserActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LoginOtpActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SignupActivity"
+            android:exported="true" />
+        <activity
+            android:name=".DashBoardActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LogInActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SplashScreenActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+    </application>
+
+</manifest>

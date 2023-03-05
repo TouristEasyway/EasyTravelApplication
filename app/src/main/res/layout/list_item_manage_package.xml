@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="20dp"
+        app:cardCornerRadius="5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+            <!--            <androidx.appcompat.widget.AppCompatImageView-->
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/rivPackage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_person"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_corner_radius="10dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPackageName"
+                style="@style/regular_14_text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toStartOf="@id/tvDayNight"
+                app:layout_constraintStart_toEndOf="@id/rivPackage"
+                app:layout_constraintTop_toTopOf="@id/rivPackage"
+                tools:text="Holiday Package" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDayNight"
+                style="@style/regular_14_text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_black_25"
+                android:padding="8dp"
+                android:text="4N/5D"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tvPackageName"
+                app:layout_constraintTop_toTopOf="@id/tvPackageName" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPlaces"
+                style="@style/regular_14_text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toStartOf="@id/tvDayNight"
+                app:layout_constraintStart_toEndOf="@id/rivPackage"
+                app:layout_constraintTop_toBottomOf="@id/tvPackageName"
+                tools:text="Goa, Ahmedabad,Pune" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvStartingDate"
+                style="@style/regular_18_text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toStartOf="@id/deleterImg"
+                app:layout_constraintStart_toEndOf="@id/rivPackage"
+                app:layout_constraintTop_toBottomOf="@id/tvPlaces"
+                tools:text="28-02-2022" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPrice"
+                style="@style/regular_18_text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/deleterImg"
+                app:layout_constraintStart_toEndOf="@id/rivPackage"
+                app:layout_constraintTop_toBottomOf="@id/tvStartingDate"
+                tools:text="$ 12,000.00" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/deleterImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_delete_24"
+                android:tint="@color/red"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/tvPrice"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvStartingDate" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgEdit"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="20dp"
+                android:visibility="gone"
+                android:src="@drawable/baseline_edit_24"
+                app:layout_constraintBottom_toBottomOf="@id/btnBuyNow"
+                app:layout_constraintEnd_toStartOf="@id/btnBuyNow"
+                app:layout_constraintTop_toTopOf="@id/btnBuyNow" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBuyNow"
+                style="@style/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="10dp"
+                android:text="Buy Now"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPrice" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
