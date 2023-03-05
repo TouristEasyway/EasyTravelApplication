@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
@@ -72,6 +73,7 @@ public class AddCarActivity extends AppCompatActivity {
 
         pd = new ProgressDialog(AddCarActivity.this);
         reference = FirebaseDatabase.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         binding.cardImage1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,7 +242,7 @@ public class AddCarActivity extends AppCompatActivity {
 
         final StorageReference filePath;
 
-        filePath = storageReference.child("Manage Hotel").child(finalImage + "jpg");
+        filePath = storageReference.child("Manage Car").child(finalImage + "jpg");
 
         final UploadTask uploadTask = filePath.putBytes(finalImage);
 
