@@ -6,13 +6,13 @@ import java.io.Serializable;
 
 public class ManageCarResponse implements Serializable {
 
-    String carName, furlType,carType,ratePerKM,city,state,available,key;
+    String carName, furlType,carType,ratePerKM,city,state,available,key,carImage;
 
     public ManageCarResponse(){
 
     }
 
-    public ManageCarResponse(String carName, String furlType, String carType, String ratePerKM, String city, String state,String available,String key) {
+    public ManageCarResponse(String carName, String furlType, String carType, String ratePerKM, String city, String state,String available,String key,String carImage) {
         this.carName = carName;
         this.furlType = furlType;
         this.carType = carType;
@@ -21,6 +21,7 @@ public class ManageCarResponse implements Serializable {
         this.state = state;
         this.available = available;
         this.key = key;
+        this.carImage = carImage;
     }
 
     public String getKey() {
@@ -85,5 +86,13 @@ public class ManageCarResponse implements Serializable {
 
     public void setAvailable(String available) {
         this.available = available;
+    }
+
+    public String getCarImage() {
+        return carImage;
+    }
+
+    public void setCarImage(String carImage) {
+        this.carImage = carImage;
     }
 }

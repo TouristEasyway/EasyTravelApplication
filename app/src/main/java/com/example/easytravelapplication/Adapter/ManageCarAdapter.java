@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -57,6 +58,12 @@ public class ManageCarAdapter extends RecyclerView.Adapter<ManageCarAdapter.View
         holder.itemRowBinding.tvFuelType.setText(responseList.get(position).getFurlType());
         holder.itemRowBinding.tvRateParKm.setText(responseList.get(position).getRatePerKM());
         holder.itemRowBinding.tvAvailable.setText(responseList.get(position).getAvailable());
+
+        if (responseList.get(position).getCarImage().isEmpty()) {
+            Picasso.get().load(R.drawable.car).into(holder.itemRowBinding.imgCar);
+        } else {
+            Picasso.get().load(responseList.get(position).getCarImage()).into(holder.itemRowBinding.imgCar);
+        }
 
         if (userType.equals("User")){
             holder.itemRowBinding.deleterImg.setVisibility(View.GONE);
