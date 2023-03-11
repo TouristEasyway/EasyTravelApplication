@@ -81,7 +81,12 @@ public class ManageHotelActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //Use For Close Application
-        finishAffinity();
+        finish();
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
     private void initListener() {
         binding.btnAdd.setOnClickListener(new View.OnClickListener() {

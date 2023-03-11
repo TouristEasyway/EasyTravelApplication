@@ -58,6 +58,16 @@ public class CarRentalHistoryActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
     private void getCarData() {
 
         reference = FirebaseDatabase.getInstance().getReference("Book Car");

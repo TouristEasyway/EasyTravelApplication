@@ -73,6 +73,11 @@ public class HotelBokkingHistoryActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //Use For Close Application
-        finishAffinity();
+        finish();
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

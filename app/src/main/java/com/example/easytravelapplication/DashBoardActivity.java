@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,10 +21,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.easytravelapplication.Adapter.ManagePackageAdapter;
+import com.example.easytravelapplication.Adapter.UserCarAdapter;
+import com.example.easytravelapplication.Adapter.UserCarHistoryAdapter;
+import com.example.easytravelapplication.Adapter.UserDashBoardPackageAdapter;
+import com.example.easytravelapplication.Adapter.UserHotelAdapter;
+import com.example.easytravelapplication.Adapter.UserHotelHistoryAdapter;
+import com.example.easytravelapplication.Adapter.UserPackageHistoryAdapter;
+import com.example.easytravelapplication.Model.CarHistoryResponse;
+import com.example.easytravelapplication.Model.HotelHistoryListResponse;
+import com.example.easytravelapplication.Model.HotelListResponse;
+import com.example.easytravelapplication.Model.ManageCarResponse;
+import com.example.easytravelapplication.Model.PackageHistoryListResponse;
+import com.example.easytravelapplication.Model.PackageListResponse;
 import com.example.easytravelapplication.Utils.AppConstant;
 import com.example.easytravelapplication.Utils.CommonMethod;
 import com.example.easytravelapplication.databinding.ActivityDashBoardBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class DashBoardActivity extends AppCompatActivity {
 
@@ -31,6 +52,8 @@ public class DashBoardActivity extends AppCompatActivity {
     FirebaseAuth auth;
     SharedPreferences sp;
     HomeAdapter adapter;
+    DatabaseReference reference;
+    private ProgressDialog pd;
 
 
     String[] adminList = {"Manage User", "Manage Package", "Package Purchase History", "Manage Hotels", "Hotel Booking History", "Manage Car Rents", "Car Rental History"};
@@ -47,17 +70,264 @@ public class DashBoardActivity extends AppCompatActivity {
         sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
         sp.getString(AppConstant.USERTYPE, "");
         String  userType = sp.getString(AppConstant.USERTYPE, "");
+        pd = new ProgressDialog(this);
 
         if (userType.equals("User")){
-            adapter = new HomeAdapter(this, userList);
+
+            pd.setMessage("Please Wait...");
+            pd.setCancelable(false);
+            pd.show();
+            setPackageData();
+            setPackageHistoryData();
+            setHotelData();
+            setHotelHistoryData();
+            setCarData();
+            setCarHistoryData();
+
+
+
+//            adapter = new HomeAdapter(this, userList);
         }
         else{
+            binding.rvDashboard.setVisibility(View.VISIBLE);
             adapter = new HomeAdapter(this, adminList);
+            binding.rvDashboard.setAdapter(adapter);
         }
 
-        binding.rvDashboard.setAdapter(adapter);
 
-        Log.d("TAG", sp.getString(AppConstant.USERTYPE,""));
+
+    }
+
+    private void setCarHistoryData() {
+
+        binding.rvCarHistory.setVisibility(View.VISIBLE);
+        binding.tvCarHistory.setVisibility(View.VISIBLE);
+        binding.tvCarHistory.setVisibility(View.VISIBLE);
+        reference = FirebaseDatabase.getInstance().getReference("Book Car");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    ArrayList<CarHistoryResponse> arrayList = new ArrayList<>();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        CarHistoryResponse data = snapshot.getValue(CarHistoryResponse.class);
+                        arrayList.add(data);
+                    }
+
+                    UserCarHistoryAdapter adapter = new UserCarHistoryAdapter(arrayList);
+                    binding.rvCarHistory.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+
+                }
+                pd.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                pd.dismiss();
+
+            }
+        });
+        binding.carHistoryViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CommonMethod(DashBoardActivity.this, CarRentalHistoryActivity.class);
+            }
+        });
+    }
+
+    private void setCarData() {
+
+
+        binding.rvCar.setVisibility(View.VISIBLE);
+        binding.tvCar.setVisibility(View.VISIBLE);
+        binding.carViewAll.setVisibility(View.VISIBLE);
+
+        reference = FirebaseDatabase.getInstance().getReference("Manage Car");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    ArrayList<ManageCarResponse> arrayList = new ArrayList<>();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        ManageCarResponse data = snapshot.getValue(ManageCarResponse.class);
+                        arrayList.add(data);
+                    }
+
+                    UserCarAdapter adapter = new UserCarAdapter(arrayList);
+                    binding.rvCar.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    pd.dismiss();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                pd.dismiss();
+
+            }
+        });
+        binding.carViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CommonMethod(DashBoardActivity.this, ManageCarRentActivity.class);
+            }
+        });
+    }
+
+    private void setHotelHistoryData() {
+
+
+        binding.rvHotelHistory.setVisibility(View.VISIBLE);
+        binding.tvHotelHistory.setVisibility(View.VISIBLE);
+        binding.hotelHistoryViewAll.setVisibility(View.VISIBLE);
+        reference = FirebaseDatabase.getInstance().getReference("Book Hotel");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    ArrayList<HotelHistoryListResponse> arrayList = new ArrayList<>();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        HotelHistoryListResponse data = snapshot.getValue(HotelHistoryListResponse.class);
+                        arrayList.add(data);
+                    }
+
+                    UserHotelHistoryAdapter adapter = new UserHotelHistoryAdapter(arrayList);
+                    binding.rvHotelHistory.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    pd.dismiss();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                pd.dismiss();
+
+            }
+        });
+        binding.hotelHistoryViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CommonMethod(DashBoardActivity.this, HotelBokkingHistoryActivity.class);
+            }
+        });
+    }
+
+    private void setHotelData() {
+
+
+        binding.rvHotel.setVisibility(View.VISIBLE);
+        binding.tvHotel.setVisibility(View.VISIBLE);
+        binding.hotelViewAll.setVisibility(View.VISIBLE);
+        reference = FirebaseDatabase.getInstance().getReference("Manage Hotel");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    ArrayList<HotelListResponse> arrayList = new ArrayList<>();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        HotelListResponse data = snapshot.getValue(HotelListResponse.class);
+                        arrayList.add(data);
+                    }
+
+                    UserHotelAdapter adapter = new UserHotelAdapter(arrayList);
+                    binding.rvHotel.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    pd.dismiss();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                pd.dismiss();
+
+            }
+        });
+        binding.hotelViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CommonMethod(DashBoardActivity.this, ManageHotelActivity.class);
+            }
+        });
+    }
+
+    private void setPackageHistoryData() {
+
+
+        binding.rvPackageHistory.setVisibility(View.VISIBLE);
+        binding.tvPackageHistory.setVisibility(View.VISIBLE);
+        binding.packageHistoryViewAll.setVisibility(View.VISIBLE);
+        reference = FirebaseDatabase.getInstance().getReference("Book Packages");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    ArrayList<PackageHistoryListResponse> arrayList = new ArrayList<>();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        PackageHistoryListResponse data = snapshot.getValue(PackageHistoryListResponse.class);
+                        arrayList.add(data);
+                    }
+
+                    UserPackageHistoryAdapter adapter = new UserPackageHistoryAdapter(arrayList);
+                    binding.rvPackageHistory.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    pd.dismiss();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                pd.dismiss();
+
+            }
+        });
+        binding.packageHistoryViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CommonMethod(DashBoardActivity.this, PackagePurchaseHistoryActivity.class);
+            }
+        });
+    }
+
+    private void setPackageData() {
+        binding.rvPackage.setVisibility(View.VISIBLE);
+        binding.tvPackage.setVisibility(View.VISIBLE);
+        binding.packageViewAll.setVisibility(View.VISIBLE);
+        reference = FirebaseDatabase.getInstance().getReference("Manage Packages");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    ArrayList<PackageListResponse> arrayList = new ArrayList<>();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        PackageListResponse data = snapshot.getValue(PackageListResponse.class);
+                        arrayList.add(data);
+                    }
+
+                    UserDashBoardPackageAdapter adapter = new UserDashBoardPackageAdapter(arrayList);
+                    binding.rvPackage.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    pd.dismiss();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                pd.dismiss();
+
+            }
+        });
+        binding.packageViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CommonMethod(DashBoardActivity.this, ManagePackageActivity.class);
+            }
+        });
 
     }
 

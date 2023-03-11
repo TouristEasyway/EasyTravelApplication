@@ -79,7 +79,7 @@ public class ManageCarRentActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
 
                     arrayList = new ArrayList<>();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -88,7 +88,7 @@ public class ManageCarRentActivity extends AppCompatActivity {
                     }
                     pd.dismiss();
 
-                    ManageCarAdapter adapter = new ManageCarAdapter( ManageCarRentActivity.this,arrayList,userType);
+                    ManageCarAdapter adapter = new ManageCarAdapter(ManageCarRentActivity.this, arrayList, userType);
                     binding.rvCarData.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
@@ -101,9 +101,15 @@ public class ManageCarRentActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public void onBackPressed() {
         //Use For Close Application
-        finishAffinity();
+        finish();
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

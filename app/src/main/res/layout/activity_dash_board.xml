@@ -7,23 +7,253 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".DashBoardActivity">
+        android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_dashboard"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_home" />
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            tools:context=".DashBoardActivity">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/item_home" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_package"
+                style="@style/regular_14_text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Package"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/package_view_all"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/package_view_all"
+                style="@style/regular_14_text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View All"
+                android:textSize="20sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPackage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_package"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_user_dashboard" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_package_history"
+                style="@style/regular_14_text_bold"
+                android:layout_width="0dp"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Package History"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/package_history_view_all"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvPackage" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/package_history_view_all"
+                style="@style/regular_14_text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View All"
+                android:textSize="20sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_package_history" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPackageHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_package_history"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_user_dashboard" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_hotel"
+                style="@style/regular_14_text_bold"
+                android:layout_width="0dp"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Hotel"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/hotel_view_all"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvPackageHistory" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/hotel_view_all"
+                style="@style/regular_14_text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View All"
+                android:textSize="20sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_hotel" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvHotel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_hotel"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_user_dashboard" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_hotel_history"
+                style="@style/regular_14_text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Hotel History"
+                android:textSize="20sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@+id/hotel_history_view_all"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvHotel" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/hotel_history_view_all"
+                style="@style/regular_14_text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View All"
+                android:visibility="gone"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_hotel_history" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvHotelHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_hotel_history"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_user_dashboard" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_car"
+                style="@style/regular_14_text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Car"
+                android:visibility="gone"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/car_view_all"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvHotelHistory" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/car_view_all"
+                style="@style/regular_14_text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View All"
+                android:textSize="20sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_car" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_car"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_user_dashboard" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_car_history"
+                style="@style/regular_14_text_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Car History"
+                android:visibility="gone"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/car_history_view_all"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvCar" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/car_history_view_all"
+                style="@style/regular_14_text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View All"
+                android:visibility="gone"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_car_history" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCarHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_car_history"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_user_dashboard" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
