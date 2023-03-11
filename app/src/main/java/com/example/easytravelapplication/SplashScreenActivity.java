@@ -22,7 +22,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash_screen);
-
+        getSupportActionBar().hide();
         sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
 
 
