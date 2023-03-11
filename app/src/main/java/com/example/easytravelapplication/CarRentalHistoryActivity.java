@@ -37,6 +37,11 @@ public class CarRentalHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_car_rental_history);
+
+
+        getSupportActionBar().setTitle("Car Rental History");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
         sp.getString(AppConstant.USERTYPE, "");
         userType = sp.getString(AppConstant.USERTYPE, "");

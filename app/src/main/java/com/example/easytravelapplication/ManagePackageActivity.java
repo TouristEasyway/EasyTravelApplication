@@ -34,6 +34,10 @@ public class ManagePackageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_manage_package);
 
+
+        getSupportActionBar().setTitle("Manage Package");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_manage_package);
         if (new ConnectionDetector(this).isConnectingToInternet()) {
             pd = new ProgressDialog(this);
@@ -84,6 +88,11 @@ public class ManagePackageActivity extends AppCompatActivity {
                 new CommonMethod(ManagePackageActivity.this, AddManagePackageActivity.class);
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        //Use For Close Application
+        finishAffinity();
     }
 
 }

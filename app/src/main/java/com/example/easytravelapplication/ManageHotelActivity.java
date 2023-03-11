@@ -32,6 +32,8 @@ public class ManageHotelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_manage_hotel);
+        getSupportActionBar().setTitle("Manage Hotel");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initView();
         initListener();
     }
@@ -75,6 +77,12 @@ public class ManageHotelActivity extends AppCompatActivity {
         });
     }
 
+
+    @Override
+    public void onBackPressed() {
+        //Use For Close Application
+        finishAffinity();
+    }
     private void initListener() {
         binding.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,5 +90,6 @@ public class ManageHotelActivity extends AppCompatActivity {
                 new CommonMethod(ManageHotelActivity.this, AddManageHotelActivity.class);
             }
         });
+
     }
 }

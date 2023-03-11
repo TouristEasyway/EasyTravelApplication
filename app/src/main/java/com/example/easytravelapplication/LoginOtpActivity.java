@@ -48,6 +48,8 @@ public class LoginOtpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_otp);
         binding= DataBindingUtil.setContentView(this,R.layout.activity_login_otp);
 
+        getSupportActionBar().setTitle("OTP Screen");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mAuth = FirebaseAuth.getInstance();
         //Initialized Child Of Database
         mdatabase = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -306,6 +308,11 @@ public class LoginOtpActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+    @Override
+    public void onBackPressed() {
+        //Use For Close Application
+        finishAffinity();
     }
 
 }

@@ -38,6 +38,8 @@ public class BookHotelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_book_hotel);
 
+        getSupportActionBar().setTitle("Book Hotel");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         reference = FirebaseDatabase.getInstance().getReference();
         sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
 
@@ -234,4 +236,10 @@ public class BookHotelActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 //    }
+
+    @Override
+    public void onBackPressed() {
+        //Use For Close Application
+        finishAffinity();
+    }
 }

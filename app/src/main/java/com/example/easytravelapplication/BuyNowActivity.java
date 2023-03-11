@@ -39,6 +39,8 @@ public class BuyNowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_buy_now);
 
+        getSupportActionBar().setTitle("Book Package");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         reference = FirebaseDatabase.getInstance().getReference();
         sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
 
@@ -47,7 +49,6 @@ public class BuyNowActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        getSupportActionBar().setTitle(" Booking Page");
 
         Intent intent = getIntent();
         binding.tvPackageName.setText(intent.getStringExtra("package_name"));
@@ -183,4 +184,10 @@ public class BuyNowActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 //    }
+
+    @Override
+    public void onBackPressed() {
+        //Use For Close Application
+        finishAffinity();
+    }
 }

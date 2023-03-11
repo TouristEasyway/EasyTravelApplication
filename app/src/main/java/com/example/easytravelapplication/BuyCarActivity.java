@@ -46,6 +46,8 @@ public class BuyCarActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_buy_car);
          response = (ManageCarResponse) getIntent().getSerializableExtra("CAR_RESPONSE");
 
+        getSupportActionBar().setTitle("Buy Car");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         reference = FirebaseDatabase.getInstance().getReference();
 
         initView();
@@ -273,4 +275,9 @@ public class BuyCarActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 //    }
+    @Override
+    public void onBackPressed() {
+        //Use For Close Application
+        finishAffinity();
+    }
 }

@@ -46,6 +46,8 @@ public class SignupActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_signup);
 
+        getSupportActionBar().setTitle("Sign Up");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //Initialized Child Of Database
         auth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference();
@@ -184,5 +186,9 @@ public class SignupActivity extends AppCompatActivity {
         intent.putExtra("CONTACT_NO", binding.TIEPhoneNo.getText().toString());
         startActivity(intent);
     }
-
+    @Override
+    public void onBackPressed() {
+        //Use For Close Application
+        finishAffinity();
+    }
 }

@@ -31,6 +31,8 @@ public class HotelBokkingHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_hotel_bokking_history);
+        getSupportActionBar().setTitle("Hotel Booking");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initView();
     }
 
@@ -65,5 +67,12 @@ public class HotelBokkingHistoryActivity extends AppCompatActivity {
                 Toast.makeText(HotelBokkingHistoryActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        //Use For Close Application
+        finishAffinity();
     }
 }

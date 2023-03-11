@@ -58,6 +58,8 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
 
+        getSupportActionBar().setTitle("Update Profile");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         requestStoragePermission();
         initView();
         initListener();
@@ -358,5 +360,11 @@ public class ProfileActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //Use For Close Application
+        finishAffinity();
     }
 }

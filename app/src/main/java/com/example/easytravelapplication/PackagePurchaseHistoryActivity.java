@@ -32,6 +32,9 @@ public class PackagePurchaseHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_package_purchase_history);
+
+        getSupportActionBar().setTitle("Package History");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (new ConnectionDetector(this).isConnectingToInternet()) {
             pd = new ProgressDialog(this);
             pd.setMessage("Please Wait...");
@@ -71,6 +74,10 @@ public class PackagePurchaseHistoryActivity extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    public void onBackPressed() {
+        //Use For Close Application
+        finishAffinity();
+    }
 
 }

@@ -59,6 +59,8 @@ public class AddManagePackageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_manage_package);
 
+        getSupportActionBar().setTitle("Add Package");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         requestStoragePermission();
         initView();
         initListener();
@@ -260,6 +262,11 @@ public class AddManagePackageActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+    @Override
+    public void onBackPressed() {
+        //Use For Close Application
+        finishAffinity();
     }
 
 }

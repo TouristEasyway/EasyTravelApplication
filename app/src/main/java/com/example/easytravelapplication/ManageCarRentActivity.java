@@ -41,6 +41,8 @@ public class ManageCarRentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_manage_car_rent);
+        getSupportActionBar().setTitle("Manage Car");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
         sp.getString(AppConstant.USERTYPE, "");
         userType = sp.getString(AppConstant.USERTYPE, "");
@@ -98,7 +100,10 @@ public class ManageCarRentActivity extends AppCompatActivity {
                 pd.dismiss();
             }
         });
-
-
+    }
+    @Override
+    public void onBackPressed() {
+        //Use For Close Application
+        finishAffinity();
     }
 }

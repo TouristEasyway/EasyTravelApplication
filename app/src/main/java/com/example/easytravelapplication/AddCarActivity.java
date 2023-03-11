@@ -58,6 +58,9 @@ public class AddCarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_car);
+
+        getSupportActionBar().setTitle("Add Car");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         requestStoragePermission();
         response = (ManageCarResponse) getIntent().getSerializableExtra("CAR_RESPONSE");
         toUpdate = getIntent().getBooleanExtra("UPDATE_CAR", false);
@@ -275,5 +278,11 @@ public class AddCarActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+    @Override
+    public void onBackPressed() {
+        //Use For Close Application
+        finishAffinity();
     }
 }

@@ -35,6 +35,8 @@ public class ManageUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_manage_user);
 
+        getSupportActionBar().setTitle("Manage Users");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         pd = new ProgressDialog(this);
         pd.setMessage("Please Wait...");
         pd.setCancelable(false);
@@ -82,4 +84,11 @@ public class ManageUserActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        //Use For Close Application
+        finishAffinity();
+    }
+
 }

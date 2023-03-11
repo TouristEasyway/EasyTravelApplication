@@ -66,6 +66,9 @@ public class AddManageHotelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_manage_hotel);
+
+        getSupportActionBar().setTitle("Add Hotel");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         requestStoragePermission();
         initView();
         initListener();
@@ -391,4 +394,10 @@ public class AddManageHotelActivity extends AppCompatActivity {
 //            return arrayList.size();
 //        }
 //    }
+
+    @Override
+    public void onBackPressed() {
+        //Use For Close Application
+        finishAffinity();
+    }
 }
