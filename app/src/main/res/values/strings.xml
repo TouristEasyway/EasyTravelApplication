@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TouristEasyWay </string>
+    <string name="app_name">EasyWay</string>
 
     <string name="log_in">Log In</string>
     <string name="enter_user_name">Enter Username</string>

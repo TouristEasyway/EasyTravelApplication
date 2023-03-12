@@ -151,15 +151,18 @@ public class LogInActivity extends AppCompatActivity {
                         openMain();
 
                     } else {
+                        pd.dismiss();
                         new CommonMethod(LogInActivity.this, "Email Not Registered With Our System");
                     }
                 } else {
+                    pd.dismiss();
                     new CommonMethod(LogInActivity.this, "Invalid Users");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                pd.dismiss();
                 Toast.makeText(LogInActivity.this, "Error", Toast.LENGTH_LONG).show();
 
             }

@@ -128,12 +128,14 @@ public class SignupActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     uploadData();
                 } else {
+                    pd.dismiss();
                     Toast.makeText(SignupActivity.this, "Error Occured : " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                pd.dismiss();
                 Toast.makeText(SignupActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -181,10 +183,11 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void openMain() {
-
-        Intent intent = new Intent(SignupActivity.this, LoginOtpActivity.class);
-        intent.putExtra("CONTACT_NO", binding.TIEPhoneNo.getText().toString());
+        Intent intent = new Intent(SignupActivity.this, LogInActivity.class);
         startActivity(intent);
+        /*Intent intent = new Intent(SignupActivity.this, LoginOtpActivity.class);
+        intent.putExtra("CONTACT_NO", binding.TIEPhoneNo.getText().toString());
+        startActivity(intent);*/
     }
     @Override
     public void onBackPressed() {

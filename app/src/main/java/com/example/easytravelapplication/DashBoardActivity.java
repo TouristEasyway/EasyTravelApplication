@@ -57,7 +57,6 @@ public class DashBoardActivity extends AppCompatActivity {
 
 
     String[] adminList = {"Manage User", "Manage Package", "Package Purchase History", "Manage Hotels", "Hotel Booking History", "Manage Car Rents", "Car Rental History"};
-    String[] userList = {"Package","Package Purchase History", "Manage Hotels", "Hotel Booking History", "Manage Car Rents", "Car Rental History"};
 
 
     @Override
@@ -69,11 +68,11 @@ public class DashBoardActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
         sp.getString(AppConstant.USERTYPE, "");
-        String  userType = sp.getString(AppConstant.USERTYPE, "");
+        String userType = sp.getString(AppConstant.USERTYPE, "");
         pd = new ProgressDialog(this);
 
-        if (userType.equals("User")){
-
+        if (userType.equals("User")) {
+            getSupportActionBar().setTitle("Home");
             pd.setMessage("Please Wait...");
             pd.setCancelable(false);
             pd.show();
@@ -85,15 +84,14 @@ public class DashBoardActivity extends AppCompatActivity {
             setCarHistoryData();
 
 
-
 //            adapter = new HomeAdapter(this, userList);
-        }
-        else{
+        } else {
+            getSupportActionBar().setTitle("Admin");
             binding.rvDashboard.setVisibility(View.VISIBLE);
             adapter = new HomeAdapter(this, adminList);
             binding.rvDashboard.setAdapter(adapter);
         }
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
     }
@@ -342,10 +340,12 @@ public class DashBoardActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
+        if (item.getItemId() == android.R.id.home) {
+            finishAffinity();
+        }
         if (item.getItemId() == R.id.logout) {
             auth.signOut();
-            sp  = this.getSharedPreferences(AppConstant.PREF,Context.MODE_PRIVATE);
+            sp = this.getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
             sp.edit().clear().commit();
             openLogin();
         }
@@ -426,7 +426,7 @@ public class DashBoardActivity extends AppCompatActivity {
                         new CommonMethod(context, ManageCarRentActivity.class);
                     } else if (arrayList[position].equals("Car Rental History")) {
                         new CommonMethod(context, CarRentalHistoryActivity.class);
-                    }else {
+                    } else {
 
                     }
                 }
