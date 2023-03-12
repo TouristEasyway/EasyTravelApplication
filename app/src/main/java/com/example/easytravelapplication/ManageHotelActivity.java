@@ -1,6 +1,8 @@
 package com.example.easytravelapplication;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,6 +12,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.easytravelapplication.Adapter.ManageHotelAdapter;
 import com.example.easytravelapplication.Model.HotelListResponse;
+import com.example.easytravelapplication.Utils.AppConstant;
 import com.example.easytravelapplication.Utils.CommonMethod;
 import com.example.easytravelapplication.databinding.ActivityManageHotelBinding;
 import com.google.firebase.database.DataSnapshot;
@@ -89,6 +92,16 @@ public class ManageHotelActivity extends AppCompatActivity {
         return true;
     }
     private void initListener() {
+         SharedPreferences sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
+         sp.getString(AppConstant.USERTYPE, "");
+         String userType = sp.getString(AppConstant.USERTYPE, "");
+
+        if (userType.equals("User")){
+            binding.btnAdd.setVisibility(View.GONE);
+        }
+        else{
+            binding.btnAdd.setVisibility(View.VISIBLE);
+        }
         binding.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

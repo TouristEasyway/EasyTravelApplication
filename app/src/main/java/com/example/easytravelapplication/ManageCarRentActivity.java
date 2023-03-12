@@ -47,6 +47,12 @@ public class ManageCarRentActivity extends AppCompatActivity {
         sp.getString(AppConstant.USERTYPE, "");
         userType = sp.getString(AppConstant.USERTYPE, "");
 
+        if (userType.equals("User")){
+            binding.btnAdd.setVisibility(View.GONE);
+        }
+        else{
+            binding.btnAdd.setVisibility(View.VISIBLE);
+        }
         binding.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

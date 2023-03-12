@@ -40,11 +40,15 @@ public class UserHotelAdapter extends RecyclerView.Adapter<UserHotelAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull UserHotelAdapter.MyViewHolder holder, int position) {
 
-        holder.binding.tvTitle.setText(responseList.get(position).getHotelImages());
+        holder.binding.tvTitle.setText(responseList.get(position).getHotelName());
         holder.binding.tvPrice.setText(responseList.get(position).getPrice());
         holder.binding.tvSubtitle.setText(responseList.get(position).getAddress());
         Picasso.get().load(responseList.get(position).getHotelImages()).into(holder.binding.img);
-
+        if (responseList.get(position).getHotelImages() != null) {
+            Picasso.get().load(responseList.get(position).getHotelImages()).placeholder(R.drawable.car).into(holder.binding.img);
+        } else {
+            Picasso.get().load(R.drawable.pic).into(holder.binding.img);
+        }
     }
 
     @Override

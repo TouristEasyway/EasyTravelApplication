@@ -50,7 +50,7 @@ public class BuyCarAdapter extends RecyclerView.Adapter<BuyCarAdapter.MyViewHold
         if (responseList.get(position).getCarImage() != null) {
             Picasso.get().load(responseList.get(position).getCarImage()).placeholder(R.drawable.car).into(holder.binding.imgCar);
         } else {
-            Picasso.get().load(responseList.get(position).getCarImage()).into(holder.binding.imgCar);
+            Picasso.get().load(R.drawable.car).into(holder.binding.imgCar);
         }
 
     }

@@ -102,7 +102,7 @@ public class DashBoardActivity extends AppCompatActivity {
 
         binding.rvCarHistory.setVisibility(View.VISIBLE);
         binding.tvCarHistory.setVisibility(View.VISIBLE);
-        binding.tvCarHistory.setVisibility(View.VISIBLE);
+        binding.carHistoryViewAll.setVisibility(View.VISIBLE);
         reference = FirebaseDatabase.getInstance().getReference("Book Car");
         reference.addValueEventListener(new ValueEventListener() {
             @Override

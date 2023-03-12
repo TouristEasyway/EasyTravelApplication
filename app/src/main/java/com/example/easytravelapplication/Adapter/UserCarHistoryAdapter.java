@@ -38,10 +38,13 @@ public class UserCarHistoryAdapter extends RecyclerView.Adapter<UserCarHistoryAd
     public void onBindViewHolder(@NonNull UserCarHistoryAdapter.MyViewHolder holder, int position) {
 
         holder.binding.tvTitle.setText(responseList.get(position).getCarName());
-        holder.binding.tvPrice.setText(responseList.get(position).getRatePerKM());
+        holder.binding.tvPrice.setText(responseList.get(position).getPrice());
         holder.binding.tvSubtitle.setText(responseList.get(position).getAvailable());
-        Picasso.get().load(responseList.get(position).getCarImage()).into(holder.binding.img);
-
+        if (responseList.get(position).getCarImage() != null) {
+            Picasso.get().load(responseList.get(position).getCarImage()).placeholder(R.drawable.car).into(holder.binding.img);
+        } else {
+            Picasso.get().load(R.drawable.car).into(holder.binding.img);
+        }
     }
 
     @Override
