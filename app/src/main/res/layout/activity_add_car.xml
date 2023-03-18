@@ -199,60 +199,60 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/TIL_city"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_state"
+                    style="@style/regular_14_text_bold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:hint="City"
-                    app:boxStrokeColor="@color/black"
-                    app:hintTextColor="@color/black"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="State"
+                    android:textSize="@dimen/_13sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/TIL_available">
+                    app:layout_constraintTop_toBottomOf="@id/TIL_available" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_city"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/TIL_state"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/stateSpinner"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:hint="State"
-                    app:boxStrokeColor="@color/black"
-                    app:hintTextColor="@color/black"
+                    android:layout_marginTop="@dimen/_5sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/TIL_city">
+                    app:layout_constraintTop_toBottomOf="@id/label_state" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_state"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_city"
+                    style="@style/regular_14_text_bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="City"
+                    android:textSize="@dimen/_13sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/stateSpinner" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/citySpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/label_city" />
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnAddCar"
                     style="@style/button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
+                    android:layout_marginVertical="20dp"
                     android:paddingHorizontal="30dp"
                     android:text="Add Car"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/TIL_state"/>
+                    app:layout_constraintTop_toBottomOf="@id/citySpinner" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

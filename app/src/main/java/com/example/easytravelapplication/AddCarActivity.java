@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,6 +38,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AddCarActivity extends AppCompatActivity {
@@ -54,7 +57,10 @@ public class AddCarActivity extends AppCompatActivity {
     private static final int STORAGE_CODE = 223;
 
     boolean toUpdate;
+    private ArrayList<String> cityList = new ArrayList<>();
+    private  ArrayList<String> stateList = new ArrayList<>();
 
+    String  city,state;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +72,49 @@ public class AddCarActivity extends AppCompatActivity {
         response = (ManageCarResponse) getIntent().getSerializableExtra("CAR_RESPONSE");
         toUpdate = getIntent().getBooleanExtra("UPDATE_CAR", false);
         image = getIntent().getStringExtra("image");
+        cityList.add("Ahmedabad");
+
+        stateList.add("Add State");
+        stateList.add("Gujarat");
+
+
+        ArrayAdapter cityAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,cityList);
+        cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        binding.citySpinner.setAdapter(cityAdapter);
+
+
+        ArrayAdapter stateAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,stateList);
+        stateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        binding.stateSpinner.setAdapter(stateAdapter);
+
+
+        binding.citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                city = cityList.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        binding.stateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                state = stateList.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         Picasso.get().load(image).placeholder(R.drawable.login_fi).into(binding.customImageview1);
         if (toUpdate) {
             binding.btnAddCar.setText("Update Car");
@@ -113,8 +162,20 @@ public class AddCarActivity extends AppCompatActivity {
 
         }
         binding.edtRatePerKm.setText(response.getRatePerKM());
-        binding.edtCity.setText(response.getCity());
-        binding.edtState.setText(response.getState());
+
+        for (int i=0;i<cityList.size();i++){
+            if (cityList.get(i).equals(response.getCity())){
+                binding.citySpinner.setSelection(i);
+                break;
+            }
+        }
+
+        for (int i=0;i<stateList.size();i++){
+            if (stateList.get(i).equals(response.getState())){
+                binding.stateSpinner.setSelection(i);
+                break;
+            }
+        }
         binding.edtAvailable.setText(response.getAvailable());
 
         if (response.getCarImage().isEmpty()) {
@@ -170,8 +231,8 @@ public class AddCarActivity extends AppCompatActivity {
         params.put("fuelType", binding.rbPetrol.isChecked() ? "Petrol" : "CNG");
         params.put("carType", binding.rbAuto.isChecked() ? "Auto" : "Manual");
         params.put("ratePerKM", binding.edtRatePerKm.getText().toString());
-        params.put("city", binding.edtCity.getText().toString());
-        params.put("state", binding.edtState.getText().toString());
+        params.put("city", city);
+        params.put("state", state);
         params.put("available", binding.edtAvailable.getText().toString());
         params.put("carImage", image);
 

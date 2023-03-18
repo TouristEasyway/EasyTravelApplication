@@ -59,7 +59,7 @@ public class ManageCarAdapter extends RecyclerView.Adapter<ManageCarAdapter.View
         holder.itemRowBinding.tvRateParKm.setText(responseList.get(position).getRatePerKM());
         holder.itemRowBinding.tvAvailable.setText(responseList.get(position).getAvailable());
 
-        if (responseList.get(position).getCarImage().isEmpty()) {
+        if (responseList.get(position).getCarImage() == null) {
             Picasso.get().load(R.drawable.car).into(holder.itemRowBinding.imgCar);
         } else {
             Picasso.get().load(responseList.get(position).getCarImage()).into(holder.itemRowBinding.imgCar);
