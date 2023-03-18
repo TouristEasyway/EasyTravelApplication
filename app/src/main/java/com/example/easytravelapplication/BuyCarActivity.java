@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.example.easytravelapplication.Model.ManageCarResponse;
+import com.example.easytravelapplication.Utils.AppConstant;
 import com.example.easytravelapplication.Utils.CommonMethod;
 import com.example.easytravelapplication.databinding.ActivityBuyCarBinding;
 import com.example.easytravelapplication.databinding.ActivityBuyNowBinding;
@@ -44,7 +46,7 @@ public class BuyCarActivity extends AppCompatActivity {
 
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_buy_car);
-         response = (ManageCarResponse) getIntent().getSerializableExtra("CAR_RESPONSE");
+        response = (ManageCarResponse) getIntent().getSerializableExtra("CAR_RESPONSE");
 
         getSupportActionBar().setTitle("Buy Car");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -207,7 +209,7 @@ public class BuyCarActivity extends AppCompatActivity {
         params.put("startDate", binding.tvStartDate.getText().toString());
         params.put("endDate", binding.tvEndDate.getText().toString());
         params.put("carName", response.getCarName());
-        params.put("fuelType", response.getFurlType());
+        params.put("fuelType", response.getfuelType());
         params.put("carType", response.getCarType());
         params.put("bookDate", binding.tvBookDate.getText().toString());
         params.put("price", binding.tvPrice.getText().toString());
@@ -235,12 +237,16 @@ public class BuyCarActivity extends AppCompatActivity {
 
 
     private void initView() {
+        sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
         binding.tvCarName.setText(response.getCarName());
         binding.tvCarType.setText(response.getCarType());
-        binding.tvFuelType.setText(response.getFurlType());
+        binding.tvFuelType.setText(response.getfuelType());
         binding.tvRate.setText(response.getRatePerKM());
         binding.tvAvailble.setText(response.getAvailable());
         binding.tvCity.setText(response.getCity());
+        binding.edtName.setText(sp.getString(AppConstant.NAME, ""));
+        binding.edtEmail.setText(sp.getString(AppConstant.EMAIL, ""));
+        binding.edtContactNo.setText(sp.getString(AppConstant.CONTACT, ""));
     }
 
 

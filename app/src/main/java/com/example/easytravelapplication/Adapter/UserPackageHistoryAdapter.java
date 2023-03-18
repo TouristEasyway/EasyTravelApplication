@@ -1,6 +1,8 @@
 package com.example.easytravelapplication.Adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -9,7 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easytravelapplication.Model.PackageHistoryListResponse;
 import com.example.easytravelapplication.Model.PackageHistoryListResponse;
+import com.example.easytravelapplication.PackageDetailActivity;
+import com.example.easytravelapplication.PackageHistoryDetailActivity;
 import com.example.easytravelapplication.R;
+import com.example.easytravelapplication.Utils.CommonMethod;
 import com.example.easytravelapplication.databinding.ItemUserDashboardBinding;
 import com.squareup.picasso.Picasso;
 
@@ -42,6 +47,14 @@ public class UserPackageHistoryAdapter extends RecyclerView.Adapter<UserPackageH
         holder.binding.tvSubtitle.setText(responseList.get(position).getPlaces());
         Picasso.get().load(responseList.get(position).getPackageImage()).into(holder.binding.img);
 
+        holder.binding.cvMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), PackageHistoryDetailActivity.class);
+                intent.putExtra("PACKAGE_HISTORY_RESPONSE",responseList.get(position));
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -1,13 +1,15 @@
 package com.example.easytravelapplication.Model;
 
-public class PackageListResponse {
+import java.io.Serializable;
 
-    String packageName, places,totalDay,totalNight,startingDate,price,packageImage,key,endDate;
+public class PackageListResponse implements Serializable {
+
+    String packageName, places,totalDay,totalNight,startingDate,price,packageImage,key,endDate,hotelName;
 
     public PackageListResponse() {
     }
 
-    public PackageListResponse(String packageName, String places, String totalDay, String totalNight, String startingDate, String price, String packageImage, String key, String endDate) {
+    public PackageListResponse(String packageName, String places, String totalDay, String totalNight, String startingDate, String price, String packageImage, String key, String endDate,String hotelName) {
         this.packageName = packageName;
         this.places = places;
         this.totalDay = totalDay;
@@ -17,6 +19,15 @@ public class PackageListResponse {
         this.packageImage = packageImage;
         this.key = key;
         this.endDate = endDate;
+        this.hotelName = hotelName;
+    }
+
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
     }
 
     public String getEndDate() {

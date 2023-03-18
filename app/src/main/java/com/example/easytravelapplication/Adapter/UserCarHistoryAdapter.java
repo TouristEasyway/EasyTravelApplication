@@ -1,15 +1,21 @@
 
 package com.example.easytravelapplication.Adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.easytravelapplication.CarDetailActivity;
+import com.example.easytravelapplication.CarHistoryDetailActivity;
 import com.example.easytravelapplication.Model.CarHistoryResponse;
+import com.example.easytravelapplication.PackageDetailActivity;
 import com.example.easytravelapplication.R;
+import com.example.easytravelapplication.Utils.CommonMethod;
 import com.example.easytravelapplication.databinding.ItemUserDashboardBinding;
 import com.squareup.picasso.Picasso;
 
@@ -38,13 +44,21 @@ public class UserCarHistoryAdapter extends RecyclerView.Adapter<UserCarHistoryAd
     public void onBindViewHolder(@NonNull UserCarHistoryAdapter.MyViewHolder holder, int position) {
 
         holder.binding.tvTitle.setText(responseList.get(position).getCarName());
-        holder.binding.tvPrice.setText(responseList.get(position).getPrice());
+        holder.binding.tvPrice.setText(responseList.get(position).getRatePerKM());
         holder.binding.tvSubtitle.setText(responseList.get(position).getAvailable());
         if (responseList.get(position).getCarImage() != null) {
             Picasso.get().load(responseList.get(position).getCarImage()).placeholder(R.drawable.car).into(holder.binding.img);
         } else {
             Picasso.get().load(R.drawable.car).into(holder.binding.img);
         }
+        holder.binding.cvMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(),CarHistoryDetailActivity.class);
+                intent.putExtra("CAR_HISTORY_RESPONSE",responseList.get(position));
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -55,7 +55,7 @@ public class ManageCarAdapter extends RecyclerView.Adapter<ManageCarAdapter.View
     public void onBindViewHolder(@NonNull ManageCarAdapter.ViewHolder holder, int position) {
 
         holder.itemRowBinding.tvCarName.setText(responseList.get(position).getCarName());
-        holder.itemRowBinding.tvFuelType.setText(responseList.get(position).getFurlType());
+        holder.itemRowBinding.tvFuelType.setText(responseList.get(position).getfuelType());
         holder.itemRowBinding.tvRateParKm.setText(responseList.get(position).getRatePerKM());
         holder.itemRowBinding.tvAvailable.setText(responseList.get(position).getAvailable());
 

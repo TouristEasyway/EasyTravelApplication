@@ -44,7 +44,6 @@ public class ManageCarRentActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Manage Car");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
-        sp.getString(AppConstant.USERTYPE, "");
         userType = sp.getString(AppConstant.USERTYPE, "");
 
         if (userType.equals("User")){

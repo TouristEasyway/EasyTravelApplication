@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,6 +38,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AddManagePackageActivity extends AppCompatActivity {
@@ -54,6 +57,11 @@ public class AddManagePackageActivity extends AppCompatActivity {
 
     boolean toUpdate;
 
+    String  hotelName;
+
+    ArrayList<String> hotelList =  new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +70,11 @@ public class AddManagePackageActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Add Package");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         requestStoragePermission();
+        hotelList.add("Add Hotel");
+        hotelList.add("Taj Hotel");
+        hotelList.add("Hayat Hotel");
+        hotelList.add("Hotel River View");
+        hotelList.add("Hotel Star");
         initView();
         initListener();
     }
@@ -72,14 +85,21 @@ public class AddManagePackageActivity extends AppCompatActivity {
         uniqueKey = intent.getStringExtra("key");
         binding.edtPackageName.setText(intent.getStringExtra("package_name"));
         binding.edtPlaces.setText(intent.getStringExtra("places"));
-        binding.edtStartingDate.setText(intent.getStringExtra("starting_date"));
+//        binding.edtStartingDate.setText(intent.getStringExtra("starting_date"));
         totalDay = intent.getStringExtra("day");
         totalNight = intent.getStringExtra("night");
         binding.edtTotalDay.setText(totalDay);
         binding.edtTotalNight.setText(totalNight);
-        binding.edtEndDate.setText(intent.getStringExtra("end_date"));
+//        binding.edtEndDate.setText(intent.getStringExtra("end_date"));
         binding.edtPrice.setText(intent.getStringExtra("price"));
         image = intent.getStringExtra("image");
+        String hotelName = intent.getStringExtra("hotel");
+        for (int i =0;i <hotelList.size();i++){
+            if (hotelList.get(i).equals(hotelName)){
+                binding.hotels.setSelection(i);
+                break;
+            }
+        }
         Picasso.get().load(image).placeholder(R.drawable.login_fi).into(binding.imgPackage);
 
         if (intent.getStringExtra("package_name") == null) {
@@ -98,6 +118,25 @@ public class AddManagePackageActivity extends AppCompatActivity {
     }
 
     private void initListener() {
+
+
+        ArrayAdapter hotelAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,hotelList);
+        hotelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        binding.hotels.setAdapter(hotelAdapter);
+
+        binding.hotels.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                hotelName = hotelList.get(i);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         binding.editImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -165,10 +204,10 @@ public class AddManagePackageActivity extends AppCompatActivity {
             binding.edtTotalDay.setError("Total Day is  Required");
         } else if (binding.edtTotalNight.getText().toString().equals("")) {
             binding.edtTotalNight.setError("Total Night is  Required");
-        } else if (binding.edtStartingDate.getText().toString().equals("")) {
-            binding.edtStartingDate.setError("Starting Date Required");
-        } else if (binding.edtEndDate.getText().toString().equals("")) {
-            binding.edtEndDate.setError("End Date Required");
+//        } else if (binding.edtStartingDate.getText().toString().equals("")) {
+//            binding.edtStartingDate.setError("Starting Date Required");
+//        } else if (binding.edtEndDate.getText().toString().equals("")) {
+//            binding.edtEndDate.setError("End Date Required");
         } else if (binding.edtPrice.getText().toString().equals("")) {
             binding.edtPrice.setError("Price  Required");
         } else if (bitmap == null) {
@@ -228,11 +267,12 @@ public class AddManagePackageActivity extends AppCompatActivity {
         params.put("places", binding.edtPlaces.getText().toString());
         params.put("totalDay", binding.edtTotalDay.getText().toString());
         params.put("totalNight", binding.edtTotalNight.getText().toString());
-        params.put("startingDate", binding.edtStartingDate.getText().toString());
-        params.put("endDate", binding.edtEndDate.getText().toString());
+//        params.put("startingDate", binding.edtStartingDate.getText().toString());
+//        params.put("endDate", binding.edtEndDate.getText().toString());
         params.put("price", binding.edtPrice.getText().toString());
         params.put("packageImage", s);
         params.put("status", "Active");
+        params.put("hotelName", hotelName);
 
         if (toUpdate) {
             dbref.child(uniqueKey).updateChildren(params).addOnSuccessListener(new OnSuccessListener() {

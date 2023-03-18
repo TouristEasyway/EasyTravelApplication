@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        tools:context=".CarHistoryDetailActivity">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgCar"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_130sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher_round"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_car_name"
+            style="@style/regular_14_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="Car Name"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@id/txt_car_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgCar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_car_name"
+            style="@style/regular_14_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_car_name"
+            app:layout_constraintTop_toBottomOf="@id/imgCar"
+            tools:text="Toyota " />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/b1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="txt_car_name,label_car_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_car_type"
+            style="@style/regular_14_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Car Type"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@id/txt_car_type"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/b1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_car_type"
+            style="@style/regular_14_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_car_type"
+            app:layout_constraintTop_toBottomOf="@id/b1"
+            tools:text="Auto " />
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/b2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="txt_car_type,label_car_type" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_fuel_type"
+            style="@style/regular_14_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Fuel Type"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@id/txt_fuel_type"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/b2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_fuel_type"
+            style="@style/regular_14_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_fuel_type"
+            app:layout_constraintTop_toBottomOf="@id/b2"
+            tools:text="CNG " />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/b3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="label_fuel_type,txt_fuel_type" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_rate"
+            style="@style/regular_14_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Rate"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@id/txt_rate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/b3" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_rate"
+            style="@style/regular_14_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_rate"
+            app:layout_constraintTop_toBottomOf="@id/b3"
+            tools:text="100/KM " />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/b4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="label_rate,txt_rate" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_available"
+            style="@style/regular_14_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Available"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@id/txt_available"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/b4" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_available"
+            style="@style/regular_14_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_available"
+            app:layout_constraintTop_toBottomOf="@id/b4"
+            tools:text="Booked " />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/b5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="label_available,txt_available" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_start_date"
+            style="@style/regular_14_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Start Date "
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@id/txt_start_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/b5" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_start_date"
+            style="@style/regular_14_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_start_date"
+            app:layout_constraintTop_toBottomOf="@id/b5"
+            tools:text="01/01/2022 " />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/b6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="label_start_date,txt_start_date" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_end_date"
+            style="@style/regular_14_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="End Date "
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@id/txt_end_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/b6" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_end_date"
+            style="@style/regular_14_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_end_date"
+            app:layout_constraintTop_toBottomOf="@id/b6"
+            tools:text="01/01/2022 " />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

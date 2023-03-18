@@ -35,10 +35,10 @@
                 style="@style/regular_14_text_bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Package"
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:text="Package"
                 android:textSize="20sp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toStartOf="@+id/package_view_all"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -48,9 +48,9 @@
                 style="@style/regular_14_text_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:text="View All"
                 android:textSize="20sp"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -60,24 +60,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:visibility="gone"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_package"
                 tools:itemCount="3"
                 tools:listitem="@layout/item_user_dashboard" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/no_data_pacakge"
+                style="@style/regular_14_text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="No Data found"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_package" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_package_history"
                 style="@style/regular_14_text_bold"
                 android:layout_width="0dp"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="Package History"
+                app:layout_goneMarginTop="@dimen/_20sdp"
                 android:textSize="20sp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toStartOf="@+id/package_history_view_all"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rvPackage" />
@@ -89,6 +101,7 @@
                 android:layout_height="wrap_content"
                 android:text="View All"
                 android:textSize="20sp"
+                app:layout_goneMarginTop="@dimen/_20sdp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_package_history" />
@@ -107,14 +120,27 @@
                 tools:listitem="@layout/item_user_dashboard" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/no_data_pacakge_history"
+                style="@style/regular_14_text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No Data found"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_package_history" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_car"
                 style="@style/regular_14_text_bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="Car"
-                android:visibility="gone"
                 android:textSize="20sp"
+                app:layout_goneMarginTop="@dimen/_20sdp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toStartOf="@+id/car_view_all"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rvPackageHistory" />
@@ -143,6 +169,17 @@
                 tools:itemCount="3"
                 tools:listitem="@layout/item_user_dashboard" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/no_data_car"
+                style="@style/regular_14_text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No Data found"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_car" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_car_history"
@@ -151,8 +188,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="Car History"
-                android:visibility="gone"
                 android:textSize="20sp"
+                android:visibility="gone"
+                app:layout_goneMarginTop="@dimen/_20sdp"
                 app:layout_constraintEnd_toStartOf="@+id/car_history_view_all"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rvCar" />
@@ -163,8 +201,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="View All"
-                android:visibility="gone"
                 android:textSize="20sp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_car_history" />
 
@@ -180,6 +218,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_car_history"
                 tools:itemCount="3"
                 tools:listitem="@layout/item_user_dashboard" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/no_data_car_history"
+                style="@style/regular_14_text_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No Data found"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_car_history" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

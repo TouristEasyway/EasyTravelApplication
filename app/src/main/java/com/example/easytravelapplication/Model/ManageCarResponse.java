@@ -3,18 +3,19 @@ package com.example.easytravelapplication.Model;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class ManageCarResponse implements Serializable {
 
-    String carName, furlType,carType,ratePerKM,city,state,available,key,carImage;
+    String carName, fuelType,carType,ratePerKM,city,state,available,key,carImage;
 
     public ManageCarResponse(){
 
     }
 
-    public ManageCarResponse(String carName, String furlType, String carType, String ratePerKM, String city, String state,String available,String key,String carImage) {
+    public ManageCarResponse(String carName, String fuelType, String carType, String ratePerKM, String city, String state,String available,String key,String carImage) {
         this.carName = carName;
-        this.furlType = furlType;
+        this.fuelType = fuelType;
         this.carType = carType;
         this.ratePerKM = ratePerKM;
         this.city = city;
@@ -40,12 +41,12 @@ public class ManageCarResponse implements Serializable {
         this.carName = carName;
     }
 
-    public String getFurlType() {
-        return furlType;
+    public String getfuelType() {
+        return fuelType;
     }
 
-    public void setFurlType(String furlType) {
-        this.furlType = furlType;
+    public void setfuelType(String fuelType) {
+        this.fuelType = fuelType;
     }
 
     public String getCarType() {

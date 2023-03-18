@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.easytravelapplication.Model.ManageCarResponse;
+import com.example.easytravelapplication.Utils.AppConstant;
 import com.example.easytravelapplication.Utils.CommonMethod;
 import com.example.easytravelapplication.Utils.ConnectionDetector;
 import com.example.easytravelapplication.databinding.ActivityAddCarBinding;
@@ -97,9 +98,9 @@ public class AddCarActivity extends AppCompatActivity {
     }
 
     private void setDataForUpdate(ManageCarResponse response) {
-        binding.edtCarName.setText(response.getCarName());
 
-        if (response.getFurlType().equals("Petrol")) {
+
+        if (response.getfuelType().equals("Petrol")) {
             binding.rbPetrol.setChecked(true);
         } else {
             binding.rbCNG.setChecked(true);
@@ -166,7 +167,7 @@ public class AddCarActivity extends AppCompatActivity {
         HashMap params = new HashMap<>();
         params.put("key", key);
         params.put("carName", binding.edtCarName.getText().toString());
-        params.put("furlType", binding.rbPetrol.isChecked() ? "Petrol" : "CNG");
+        params.put("fuelType", binding.rbPetrol.isChecked() ? "Petrol" : "CNG");
         params.put("carType", binding.rbAuto.isChecked() ? "Auto" : "Manual");
         params.put("ratePerKM", binding.edtRatePerKm.getText().toString());
         params.put("city", binding.edtCity.getText().toString());

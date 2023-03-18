@@ -61,6 +61,20 @@ public class BuyNowActivity extends AppCompatActivity {
         binding.tvPrice.setText(intent.getStringExtra("price"));
         image = intent.getStringExtra("image");
         Picasso.get().load(image).into(binding.rivPackage);
+
+
+        binding.edtName.setText(sp.getString(AppConstant.NAME, ""));
+        binding.edtEmail.setText(sp.getString(AppConstant.EMAIL, ""));
+        binding.edtContactNo.setText(sp.getString(AppConstant.CONTACT, ""));
+        binding.tvDob.setText(sp.getString(AppConstant.DOB, ""));
+
+        if (sp.getString(AppConstant.GENDER, "").equalsIgnoreCase("Female")){
+            binding.rgFemale.setChecked(true);
+        }
+        else{
+            binding.rgMale.setChecked(true);
+
+        }
     }
 
     private void initListener() {

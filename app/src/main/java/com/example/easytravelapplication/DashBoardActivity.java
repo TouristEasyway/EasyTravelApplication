@@ -117,6 +117,10 @@ public class DashBoardActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
 
                 }
+                else{
+                    binding.rvCarHistory.setVisibility(View.VISIBLE);
+                    binding.noDataCarHistory.setVisibility(View.VISIBLE);
+                }
                 pd.dismiss();
             }
 
@@ -158,7 +162,13 @@ public class DashBoardActivity extends AppCompatActivity {
                     pd.dismiss();
 
                 }
+                else{
+                    pd.dismiss();
+                    binding.noDataCar.setVisibility(View.VISIBLE);
+                    binding.rvCar.setVisibility(View.GONE);
+                }
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -275,6 +285,10 @@ public class DashBoardActivity extends AppCompatActivity {
                     pd.dismiss();
 
                 }
+                else{
+                    binding.noDataPacakgeHistory.setVisibility(View.VISIBLE);
+                    binding.rvPackageHistory.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -311,6 +325,10 @@ public class DashBoardActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                     pd.dismiss();
 
+                }
+                else{
+                    binding.noDataPacakge.setVisibility(View.VISIBLE);
+                    binding.rvPackage.setVisibility(View.GONE);
                 }
             }
 

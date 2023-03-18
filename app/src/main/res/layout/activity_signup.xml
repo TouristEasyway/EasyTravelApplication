@@ -2,236 +2,235 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
+        android:background="@color/purple_200"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fillViewport="true">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:background="@drawable/background"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:paddingHorizontal="15dp"
-            android:paddingBottom="15dp">
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
 
-            <TextView
-                android:id="@+id/heading"
-                style="@style/regular_14_text_bold"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:gravity="center"
-                android:text="Sign Up"
-                android:textSize="30sp" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="15dp"
+                android:paddingBottom="15dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TIL_name"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/img_login"
-                android:layout_marginTop="30dp"
-                android:hint="Name"
-                app:boxStrokeColor="@color/black"
-                app:hintTextColor="@color/black">
-
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/TIE_name"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TIL_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black" />
+                    android:layout_below="@+id/img_login"
+                    android:layout_marginTop="30dp"
+                    android:hint="Name"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black">
 
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TIL_email"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/img_login"
-                android:layout_marginTop="15dp"
-                android:hint="Email"
-                app:boxStrokeColor="@color/black"
-                app:hintTextColor="@color/black">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/TIE_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black" />
 
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/TIE_email"
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TIL_email"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/black" />
+                    android:layout_below="@+id/img_login"
+                    android:layout_marginTop="15dp"
+                    android:hint="Email"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black">
 
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TIL_phone_no"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/img_login"
-                android:layout_marginTop="15dp"
-                android:hint="Phone No"
-                app:boxStrokeColor="@color/black"
-                app:hintTextColor="@color/black">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/TIE_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/black" />
 
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/TIE_phone_no"
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TIL_phone_no"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="phone"
-                    android:textColor="@color/black" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/rg_male"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/black"
-                    android:text="Male" />
-
-                <RadioButton
-                    android:id="@+id/rg_female"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/black"
-                    android:text="Female" />
-
-            </RadioGroup>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TIL_dob"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:hint="Date Of Birth"
-                app:boxStrokeColor="@color/black"
-                app:hintTextColor="@color/black">
+                    android:layout_below="@+id/img_login"
+                    android:layout_marginTop="15dp"
+                    android:hint="Phone No"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black">
 
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/TIE_dob"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/TIE_phone_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:textColor="@color/black" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black" />
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
 
+                    <RadioButton
+                        android:id="@+id/rg_male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/black"
+                        android:text="Male" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <RadioButton
+                        android:id="@+id/rg_female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/black"
+                        android:text="Female" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TIL_city"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:hint="City"
-                app:boxStrokeColor="@color/black"
-                app:hintTextColor="@color/black">
+                </RadioGroup>
 
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/TIE_city"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TIL_dob"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black" />
+                    android:layout_marginTop="15dp"
+                    android:hint="Date Of Birth"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black">
 
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TIL_State"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:hint="State"
-                app:boxStrokeColor="@color/black"
-                app:hintTextColor="@color/black">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/TIE_dob"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black" />
 
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/TIE_state"
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TIL_city"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black" />
+                    android:layout_marginTop="15dp"
+                    android:hint="City"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black">
 
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/TIE_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black" />
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TIL_password"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="Password"
-                app:boxStrokeColor="@color/black"
-                app:hintTextColor="@color/black"
-                app:passwordToggleEnabled="true">
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/TIE_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/TIL_confirm_password"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="Confirm Password"
-                app:boxStrokeColor="@color/black"
-                app:hintTextColor="@color/black"
-                app:passwordToggleEnabled="true">
-
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/TIE_confirm_password"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TIL_State"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:hint="State"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black">
 
-                    />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/TIE_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black" />
 
 
-            </com.google.android.material.textfield.TextInputLayout>
-            <Button
-                android:id="@+id/btn_sign_up"
-                android:layout_width="210dp"
-                android:layout_height="56dp"
-                android:layout_marginTop="84dp"
-                android:backgroundTint="#CF47E6"
-                android:padding="10dp"
-                android:text="Register"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_forget_password"
-                />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TIL_password"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Password"
+
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/TIE_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TIL_confirm_password"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Confirm Password"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black"
+                    app:passwordToggleEnabled="true">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/TIE_confirm_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+
+                        />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btn_sign_up"
+                    android:layout_width="210dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="84dp"
+                    android:backgroundTint="#CF47E6"
+                    android:padding="10dp"
+                    android:text="Register"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_forget_password" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 </layout>

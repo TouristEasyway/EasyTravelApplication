@@ -83,6 +83,7 @@ public class ManagePackageAdapter extends RecyclerView.Adapter<ManagePackageAdap
                 intent.putExtra("price",  responseList.get(position).getPrice());
                 intent.putExtra("image",  responseList.get(position).getPackageImage());
                 intent.putExtra("key", responseList.get(position).getKey());
+                intent.putExtra("hotel", responseList.get(position).getHotelName());
                 context.startActivity(intent);
             }
         });

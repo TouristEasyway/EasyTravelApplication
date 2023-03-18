@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        tools:context=".PackageHistoryDetailActivity">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgPackage"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_130sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher_round"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_package_name"
+            style="@style/regular_14_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="Package Name"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@id/txt_package_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgPackage" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_package_name"
+            style="@style/regular_14_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_package_name"
+            app:layout_constraintTop_toBottomOf="@id/imgPackage"
+            tools:text="Holiday Package " />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/b1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="txt_package_name,label_package_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_hotel"
+            style="@style/regular_14_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Hotel"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@id/txt_hotel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/b1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_hotel"
+            style="@style/regular_14_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_hotel"
+            app:layout_constraintTop_toBottomOf="@id/b1"
+            tools:text="ABCD Hotel" />
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/b2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="txt_hotel,label_hotel" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_price"
+            style="@style/regular_14_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Price"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@id/txt_price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/b2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_price"
+            style="@style/regular_14_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_price"
+            app:layout_constraintTop_toBottomOf="@id/b2"
+            tools:text="100 " />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/b3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="label_price,txt_price" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_places"
+            style="@style/regular_14_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Places"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@id/txt_places"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/b3" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_places"
+            style="@style/regular_14_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_places"
+            app:layout_constraintTop_toBottomOf="@id/b3"
+            tools:text="Mumbai " />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/b4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="label_places,txt_places" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_total_days"
+            style="@style/regular_14_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Total Day"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@id/txt_total_days"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/b4" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_total_days"
+            style="@style/regular_14_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_total_days"
+            app:layout_constraintTop_toBottomOf="@id/b4"
+            tools:text="1" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/b5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="label_total_days,txt_total_days" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_total_night"
+            style="@style/regular_14_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Total Night"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@id/txt_total_night"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/b5" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_total_night"
+            style="@style/regular_14_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_total_night"
+            app:layout_constraintTop_toBottomOf="@id/b5"
+            tools:text="2 " />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/b6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="label_total_night,txt_total_night" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_purchase_date"
+            style="@style/regular_14_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Purchase Date"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@id/txt_purchase_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/b6" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_purchase_date"
+            style="@style/regular_14_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_purchase_date"
+            app:layout_constraintTop_toBottomOf="@id/b6"
+            tools:text="20/03/2021 " />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
