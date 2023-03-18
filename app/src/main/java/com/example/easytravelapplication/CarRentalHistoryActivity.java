@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -78,19 +79,36 @@ public class CarRentalHistoryActivity extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     arrayList = new ArrayList<>();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        CarHistoryResponse data = snapshot.getValue(CarHistoryResponse.class);
-                        arrayList.add(data);
+                         CarHistoryResponse data = snapshot.getValue(CarHistoryResponse.class);
+
+                        if (data != null){
+                            arrayList.add(data);
+                            BuyCarAdapter adapter = new BuyCarAdapter(arrayList, CarRentalHistoryActivity.this,userType);
+                            binding.rvBuyCar.setAdapter(adapter);
+                            binding.rvBuyCar.setVisibility(View.VISIBLE);
+                            binding.noData.setVisibility(View.GONE);
+                            adapter.notifyDataSetChanged();
+                            pd.dismiss();
+                        }
+                        else{
+                            binding.rvBuyCar.setVisibility(View.GONE);
+                            binding.noData.setVisibility(View.VISIBLE);
+                            pd.dismiss();
+                        }
                     }
 
-                    BuyCarAdapter adapter = new BuyCarAdapter(arrayList, CarRentalHistoryActivity.this,userType);
-                    binding.rvBuyCar.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                }
+                else{
+                    binding.rvBuyCar.setVisibility(View.GONE);
+                    binding.noData.setVisibility(View.VISIBLE);
                     pd.dismiss();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                binding.rvBuyCar.setVisibility(View.GONE);
+                binding.noData.setVisibility(View.VISIBLE);
                 pd.dismiss();
                 new CommonMethod(CarRentalHistoryActivity.this, "Something went Wrong");
             }

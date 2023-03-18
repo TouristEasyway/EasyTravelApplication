@@ -90,19 +90,38 @@ public class ManageCarRentActivity extends AppCompatActivity {
                     arrayList = new ArrayList<>();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         ManageCarResponse data = snapshot.getValue(ManageCarResponse.class);
-                        arrayList.add(data);
-                    }
-                    pd.dismiss();
 
-                    ManageCarAdapter adapter = new ManageCarAdapter(ManageCarRentActivity.this, arrayList, userType);
-                    binding.rvCarData.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                        if (data != null){
+                            arrayList.add(data);
+                            ManageCarAdapter adapter = new ManageCarAdapter(ManageCarRentActivity.this, arrayList, userType);
+                            binding.rvCarData.setAdapter(adapter);
+                            binding.rvCarData.setVisibility(View.VISIBLE);
+                            binding.noData.setVisibility(View.GONE);
+                            adapter.notifyDataSetChanged();
+                            pd.dismiss();
+
+                        }
+                        else{
+                            binding.rvCarData.setVisibility(View.GONE);
+                            binding.noData.setVisibility(View.VISIBLE);
+                            pd.dismiss();
+                        }
+                    }
+
+
+                }
+                else{
+                    binding.rvCarData.setVisibility(View.GONE);
+                    binding.noData.setVisibility(View.VISIBLE);
+                    pd.dismiss();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+                binding.rvCarData.setVisibility(View.GONE);
+                binding.noData.setVisibility(View.VISIBLE);
                 pd.dismiss();
             }
         });

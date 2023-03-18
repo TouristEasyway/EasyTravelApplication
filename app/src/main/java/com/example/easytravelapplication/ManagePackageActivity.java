@@ -64,18 +64,36 @@ public class ManagePackageActivity extends AppCompatActivity {
                     arrayList = new ArrayList<>();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         PackageListResponse data = snapshot.getValue(PackageListResponse.class);
-                        arrayList.add(data);
+                        if(data != null){
+                            arrayList.add(data);
+                            ManagePackageAdapter adapter = new ManagePackageAdapter(arrayList, ManagePackageActivity.this);
+                            binding.rvPackage.setVisibility(View.VISIBLE);
+                            binding.noData.setVisibility(View.GONE);
+                            binding.rvPackage.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                            pd.dismiss();
+                        }
+                        else{
+                            binding.rvPackage.setVisibility(View.GONE);
+                            binding.noData.setVisibility(View.VISIBLE);
+                            pd.dismiss();
+
+                        }
                     }
 
-                    ManagePackageAdapter adapter = new ManagePackageAdapter(arrayList, ManagePackageActivity.this);
-                    binding.rvPackage.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+
+                }
+                else{
+                    binding.rvPackage.setVisibility(View.GONE);
+                    binding.noData.setVisibility(View.VISIBLE);
                     pd.dismiss();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                binding.noData.setVisibility(View.VISIBLE);
+                binding.rvPackage.setVisibility(View.GONE);
                 pd.dismiss();
 
             }

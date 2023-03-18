@@ -56,7 +56,7 @@ public class DashBoardActivity extends AppCompatActivity {
     private ProgressDialog pd;
 
 
-    String[] adminList = {"Manage User", "Manage Package", "Package Purchase History", "Manage Hotels", "Hotel Booking History", "Manage Car Rents", "Car Rental History"};
+    String[] adminList = {"Manage User", "Manage Package", "Package Purchase History", "Manage Car Rents", "Car Rental History"};
 
 
     @Override
@@ -78,8 +78,8 @@ public class DashBoardActivity extends AppCompatActivity {
             pd.show();
             setPackageData();
             setPackageHistoryData();
-            setHotelData();
-            setHotelHistoryData();
+//            setHotelData();
+//            setHotelHistoryData();
             setCarData();
             setCarHistoryData();
 
@@ -174,83 +174,83 @@ public class DashBoardActivity extends AppCompatActivity {
         });
     }
 
-    private void setHotelHistoryData() {
+//    private void setHotelHistoryData() {
+//
+//
+//        /*binding.rvHotelHistory.setVisibility(View.VISIBLE);
+//        binding.tvHotelHistory.setVisibility(View.VISIBLE);
+//        binding.hotelHistoryViewAll.setVisibility(View.VISIBLE);*/
+//        reference = FirebaseDatabase.getInstance().getReference("Book Hotel");
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    ArrayList<HotelHistoryListResponse> arrayList = new ArrayList<>();
+//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                        HotelHistoryListResponse data = snapshot.getValue(HotelHistoryListResponse.class);
+//                        arrayList.add(data);
+//                    }
+//
+//                    UserHotelHistoryAdapter adapter = new UserHotelHistoryAdapter(arrayList);
+////                    binding.rvHotelHistory.setAdapter(adapter);
+//                    adapter.notifyDataSetChanged();
+//                    pd.dismiss();
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                pd.dismiss();
+//
+//            }
+//        });
+////        binding.hotelHistoryViewAll.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View view) {
+////                new CommonMethod(DashBoardActivity.this, HotelBokkingHistoryActivity.class);
+////            }
+////        });
+//    }
 
-
-        binding.rvHotelHistory.setVisibility(View.VISIBLE);
-        binding.tvHotelHistory.setVisibility(View.VISIBLE);
-        binding.hotelHistoryViewAll.setVisibility(View.VISIBLE);
-        reference = FirebaseDatabase.getInstance().getReference("Book Hotel");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    ArrayList<HotelHistoryListResponse> arrayList = new ArrayList<>();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        HotelHistoryListResponse data = snapshot.getValue(HotelHistoryListResponse.class);
-                        arrayList.add(data);
-                    }
-
-                    UserHotelHistoryAdapter adapter = new UserHotelHistoryAdapter(arrayList);
-                    binding.rvHotelHistory.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    pd.dismiss();
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                pd.dismiss();
-
-            }
-        });
-        binding.hotelHistoryViewAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new CommonMethod(DashBoardActivity.this, HotelBokkingHistoryActivity.class);
-            }
-        });
-    }
-
-    private void setHotelData() {
-
-
-        binding.rvHotel.setVisibility(View.VISIBLE);
-        binding.tvHotel.setVisibility(View.VISIBLE);
-        binding.hotelViewAll.setVisibility(View.VISIBLE);
-        reference = FirebaseDatabase.getInstance().getReference("Manage Hotel");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    ArrayList<HotelListResponse> arrayList = new ArrayList<>();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        HotelListResponse data = snapshot.getValue(HotelListResponse.class);
-                        arrayList.add(data);
-                    }
-
-                    UserHotelAdapter adapter = new UserHotelAdapter(arrayList);
-                    binding.rvHotel.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    pd.dismiss();
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                pd.dismiss();
-
-            }
-        });
-        binding.hotelViewAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new CommonMethod(DashBoardActivity.this, ManageHotelActivity.class);
-            }
-        });
-    }
+//    private void setHotelData() {
+//
+//
+////        binding.rvHotel.setVisibility(View.VISIBLE);
+////        binding.tvHotel.setVisibility(View.VISIBLE);
+////        binding.hotelViewAll.setVisibility(View.VISIBLE);
+//        reference = FirebaseDatabase.getInstance().getReference("Manage Hotel");
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    ArrayList<HotelListResponse> arrayList = new ArrayList<>();
+//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                        HotelListResponse data = snapshot.getValue(HotelListResponse.class);
+//                        arrayList.add(data);
+//                    }
+//
+//                    UserHotelAdapter adapter = new UserHotelAdapter(arrayList);
+////                    binding.rvHotel.setAdapter(adapter);
+//                    adapter.notifyDataSetChanged();
+//                    pd.dismiss();
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                pd.dismiss();
+//
+//            }
+//        });
+////        binding.hotelViewAll.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View view) {
+////                new CommonMethod(DashBoardActivity.this, ManageHotelActivity.class);
+////            }
+////        });
+//    }
 
     private void setPackageHistoryData() {
 
@@ -418,11 +418,7 @@ public class DashBoardActivity extends AppCompatActivity {
                         new CommonMethod(context, ManagePackageActivity.class);
                     } else if (arrayList[position].equals("Package Purchase History")) {
                         new CommonMethod(context, PackagePurchaseHistoryActivity.class);
-                    } else if (arrayList[position].equals("Manage Hotels")) {
-                        new CommonMethod(context, ManageHotelActivity.class);
-                    } else if (arrayList[position].equals("Hotel Booking History")) {
-                        new CommonMethod(context, HotelBokkingHistoryActivity.class);
-                    } else if (arrayList[position].equals("Manage Car Rents")) {
+                    }else if (arrayList[position].equals("Manage Car Rents")) {
                         new CommonMethod(context, ManageCarRentActivity.class);
                     } else if (arrayList[position].equals("Car Rental History")) {
                         new CommonMethod(context, CarRentalHistoryActivity.class);

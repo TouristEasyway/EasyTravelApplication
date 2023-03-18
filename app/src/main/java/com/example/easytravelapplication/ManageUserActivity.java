@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.easytravelapplication.Adapter.ManageUserAdapter;
 import com.example.easytravelapplication.Model.LogInResponse;
@@ -67,19 +68,36 @@ public class ManageUserActivity extends AppCompatActivity {
                     arrayList = new ArrayList<>();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         LogInResponse data = snapshot.getValue(LogInResponse.class);
-                        arrayList.add(data);
+                        if (data != null){
+                            arrayList.add(data);
+                            ManageUserAdapter adapter = new ManageUserAdapter(ManageUserActivity.this,arrayList);
+                            binding.itemManageUser.setAdapter(adapter);
+                            binding.itemManageUser.setVisibility(View.VISIBLE);
+                            binding.noData.setVisibility(View.GONE);
+                            adapter.notifyDataSetChanged();
+                            pd.dismiss();
+                        }
+                        else{
+                            binding.itemManageUser.setVisibility(View.GONE);
+                            binding.noData.setVisibility(View.VISIBLE);
+                            pd.dismiss();
+                        }
 
                     }
+
+                }
+                else{
+                    binding.itemManageUser.setVisibility(View.GONE);
+                    binding.noData.setVisibility(View.VISIBLE);
                     pd.dismiss();
-                    ManageUserAdapter adapter = new ManageUserAdapter(ManageUserActivity.this,arrayList);
-                    binding.itemManageUser.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+                binding.itemManageUser.setVisibility(View.GONE);
+                binding.noData.setVisibility(View.VISIBLE);
                 pd.dismiss();
             }
         });

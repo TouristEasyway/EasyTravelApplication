@@ -2,6 +2,7 @@ package com.example.easytravelapplication;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -57,19 +58,36 @@ public class PackagePurchaseHistoryActivity extends AppCompatActivity {
                     arrayList = new ArrayList<>();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         PackageHistoryListResponse data = snapshot.getValue(PackageHistoryListResponse.class);
-                        arrayList.add(data);
+                        if (data != null){
+                            arrayList.add(data);
+                            PackageHistoryAdapter adapter = new PackageHistoryAdapter(arrayList, PackagePurchaseHistoryActivity.this);
+                            binding.rvPackage.setAdapter(adapter);
+                            binding.rvPackage.setVisibility(View.VISIBLE);
+                            binding.noData.setVisibility(View.GONE);
+                            adapter.notifyDataSetChanged();
+                            pd.dismiss();
+                        }
+                        else{
+                            pd.dismiss();
+                            binding.rvPackage.setVisibility(View.GONE);
+                            binding.noData.setVisibility(View.VISIBLE);
+
+                        }
                     }
 
-                    PackageHistoryAdapter adapter = new PackageHistoryAdapter(arrayList, PackagePurchaseHistoryActivity.this);
-                    binding.rvPackage.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    pd.dismiss();
-                }
+                } else{
+                        pd.dismiss();
+                        binding.rvPackage.setVisibility(View.GONE);
+                        binding.noData.setVisibility(View.VISIBLE);
+                    }
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 pd.dismiss();
+                binding.rvPackage.setVisibility(View.GONE);
+                binding.noData.setVisibility(View.VISIBLE);
                 Toast.makeText(PackagePurchaseHistoryActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
             }
         });

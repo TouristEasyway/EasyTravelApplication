@@ -18,7 +18,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:itemCount="10"
+            android:visibility="gone"
             tools:listitem="@layout/list_item_package_history" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/no_data"
+            style="@style/regular_14_text_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Data found"
+            android:textSize="@dimen/_15sdp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

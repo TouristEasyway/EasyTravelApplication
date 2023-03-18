@@ -21,9 +21,23 @@
             android:layout_marginTop="20dp"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginHorizontal="20dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:listitem="@layout/item_manage_user"
             android:layout_height="match_parent" />
+        <androidx.appcompat.widget.AppCompatTextView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="No Data found"
+            android:visibility="gone"
+            android:id="@+id/no_data"
+            android:textSize="@dimen/_15sdp"
+            style="@style/regular_14_text_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
