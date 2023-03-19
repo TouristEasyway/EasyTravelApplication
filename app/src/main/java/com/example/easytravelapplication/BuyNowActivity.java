@@ -1,11 +1,13 @@
 package com.example.easytravelapplication;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
@@ -16,23 +18,29 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.easytravelapplication.Utils.AppConstant;
 import com.example.easytravelapplication.Utils.CommonMethod;
+import com.example.easytravelapplication.Utils.ConnectionDetector;
 import com.example.easytravelapplication.databinding.ActivityBuyNowBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.razorpay.Checkout;
+import com.razorpay.PaymentResultListener;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class BuyNowActivity extends AppCompatActivity {
+public class BuyNowActivity extends AppCompatActivity implements PaymentResultListener {
 
     ActivityBuyNowBinding binding;
     SharedPreferences sp;
     DatabaseReference reference, dbref;
     ProgressDialog progressDialog;
     private String totalDay, totalNight, image;
+    String sPaymentType = "", sTransactionId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,9 +132,9 @@ public class BuyNowActivity extends AppCompatActivity {
                     progressDialog.setMessage("Please Wait...");
                     progressDialog.setCancelable(false);
                     progressDialog.show();
-                    BookPackage();
+//                    BookPackage();
 //                    Initialized Method For Login
-//                    launchRazorpayPayment();
+                    launchRazorpayPayment();
                 }
             }
         });
@@ -167,37 +175,74 @@ public class BuyNowActivity extends AppCompatActivity {
         });
     }
 
-//    private void launchRazorpayPayment() {
-//        final Activity activity = this;
-//
-//        final Checkout co = new Checkout();
-//
-//        try {
-//            JSONObject options = new JSONObject();
-//            options.put("name", "Razorpay Corp");
-//            //options.put("description", "Demoing Charges");
-//            options.put("description", "Product Details");
-//            options.put("send_sms_hash", true);
-//            options.put("allow_rotation", true);
-//            //You can omit the image option to fetch the image from dashboard
-//            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
-//            options.put("currency", "INR");
-//            options.put("amount", Double.parseDouble(binding.tvPrice.getText().toString()) * 100);
-//
-//            JSONObject preFill = new JSONObject();
-//            preFill.put("email", sp.getString(AppConstant.EMAIL, ""));
-//            preFill.put("contact", sp.getString(AppConstant.CONTACT, ""));
-//
-//            options.put("prefill", preFill);
-//
-//            co.open(activity, options);
-//        } catch (Exception e) {
-//            Log.d("RESPONSE", e.getMessage());
-//            Toast.makeText(activity, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT)
-//                    .show();
-//            e.printStackTrace();
-//        }
-//    }
+    private void launchRazorpayPayment() {
+        final Activity activity = this;
+
+        final Checkout co = new Checkout();
+        //demo123@yopmail.com
+        //demo@123
+        try {
+            JSONObject options = new JSONObject();
+            options.put("name", "Razorpay Corp");
+            //options.put("description", "Demoing Charges");
+            options.put("description", "Buy Now");
+            options.put("send_sms_hash", true);
+            options.put("allow_rotation", true);
+            //You can omit the image option to fetch the image from dashboard
+            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
+            options.put("currency", "INR");
+            options.put("amount", Double.parseDouble(binding.tvPrice.getText().toString()) * 100);
+
+            JSONObject preFill = new JSONObject();
+            preFill.put("email", sp.getString(AppConstant.EMAIL, ""));
+            preFill.put("contact", sp.getString(AppConstant.CONTACT, ""));
+
+            options.put("prefill", preFill);
+
+            co.open(activity, options);
+        } catch (Exception e) {
+            Log.d("RESPONSE", e.getMessage());
+            Toast.makeText(activity, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT)
+                    .show();
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onPaymentSuccess(String razorpayPaymentID) {
+        try {
+            //Toast.makeText(this, "Payment Successful: " + razorpayPaymentID, Toast.LENGTH_SHORT).show();
+            sTransactionId = razorpayPaymentID;
+            sPaymentType = "Online";
+            if (new ConnectionDetector(BuyNowActivity.this).isConnectingToInternet()) {
+                if(new ConnectionDetector(BuyNowActivity.this).isConnectingToInternet()){
+                    progressDialog = new ProgressDialog(BuyNowActivity.this);
+                    progressDialog.setMessage("Please Wait...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    BookPackage();
+                }
+                else{
+                    new ConnectionDetector(BuyNowActivity.this).connectiondetect();
+                }
+            } else {
+                new ConnectionDetector(BuyNowActivity.this).connectiondetect();
+            }
+        } catch (Exception e) {
+            Log.e("RESPONSE", "Exception in onPaymentSuccess", e);
+        }
+    }
+
+    @Override
+    public void onPaymentError(int code, String response) {
+        try {
+            Log.d("RESPONSE", "Payment Cancelled " + code + " " + response);
+            //Toast.makeText(this, "Payment failed: " + code + " " + response, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Payment Cancelled", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.e("RESPONSE", "Exception in onPaymentError", e);
+        }
+    }
 
     @Override
     public void onBackPressed() {

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -17,12 +18,17 @@ import android.widget.Toast;
 import com.example.easytravelapplication.Model.ManageCarResponse;
 import com.example.easytravelapplication.Utils.AppConstant;
 import com.example.easytravelapplication.Utils.CommonMethod;
+import com.example.easytravelapplication.Utils.ConnectionDetector;
 import com.example.easytravelapplication.databinding.ActivityBuyCarBinding;
 import com.example.easytravelapplication.databinding.ActivityBuyNowBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.razorpay.Checkout;
+import com.razorpay.PaymentResultListener;
+
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,7 +36,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-public class BuyCarActivity extends AppCompatActivity {
+public class BuyCarActivity extends AppCompatActivity implements PaymentResultListener {
 
 
     ActivityBuyCarBinding binding;
@@ -40,6 +46,7 @@ public class BuyCarActivity extends AppCompatActivity {
     ManageCarResponse response;
     String  startDate;
     String endDate;
+    String sPaymentType = "", sTransactionId = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,9 +177,9 @@ public class BuyCarActivity extends AppCompatActivity {
                     progressDialog.setMessage("Please Wait...");
                     progressDialog.setCancelable(false);
                     progressDialog.show();
-                    bookCar();
+//                    bookCar();
 //                    Initialized Method For Login
-//                    launchRazorpayPayment();
+                    launchRazorpayPayment();
                 }
             }
         });
@@ -250,37 +257,73 @@ public class BuyCarActivity extends AppCompatActivity {
     }
 
 
-    //    private void launchRazorpayPayment() {
-//        final Activity activity = this;
-//
-//        final Checkout co = new Checkout();
-//
-//        try {
-//            JSONObject options = new JSONObject();
-//            options.put("name", "Razorpay Corp");
-//            //options.put("description", "Demoing Charges");
-//            options.put("description", "Product Details");
-//            options.put("send_sms_hash", true);
-//            options.put("allow_rotation", true);
-//            //You can omit the image option to fetch the image from dashboard
-//            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
-//            options.put("currency", "INR");
-//            options.put("amount", Double.parseDouble(binding.tvPrice.getText().toString()) * 100);
-//
-//            JSONObject preFill = new JSONObject();
-//            preFill.put("email", sp.getString(AppConstant.EMAIL, ""));
-//            preFill.put("contact", sp.getString(AppConstant.CONTACT, ""));
-//
-//            options.put("prefill", preFill);
-//
-//            co.open(activity, options);
-//        } catch (Exception e) {
-//            Log.d("RESPONSE", e.getMessage());
-//            Toast.makeText(activity, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT)
-//                    .show();
-//            e.printStackTrace();
-//        }
-//    }
+        private void launchRazorpayPayment() {
+        final Activity activity = this;
+
+        final Checkout co = new Checkout();
+
+        try {
+            JSONObject options = new JSONObject();
+            options.put("name", "Razorpay Corp");
+            //options.put("description", "Demoing Charges");
+            options.put("description", "BuyCar Details");
+            options.put("send_sms_hash", true);
+            options.put("allow_rotation", true);
+            //You can omit the image option to fetch the image from dashboard
+            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
+            options.put("currency", "INR");
+            options.put("amount", Double.parseDouble(binding.tvPrice.getText().toString()) * 100);
+
+            JSONObject preFill = new JSONObject();
+            preFill.put("email", sp.getString(AppConstant.EMAIL, ""));
+            preFill.put("contact", sp.getString(AppConstant.CONTACT, ""));
+
+            options.put("prefill", preFill);
+
+            co.open(activity, options);
+        } catch (Exception e) {
+            Log.d("RESPONSE", e.getMessage());
+            Toast.makeText(activity, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT)
+                    .show();
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onPaymentSuccess(String razorpayPaymentID) {
+        try {
+            //Toast.makeText(this, "Payment Successful: " + razorpayPaymentID, Toast.LENGTH_SHORT).show();
+            sTransactionId = razorpayPaymentID;
+            sPaymentType = "Online";
+            if (new ConnectionDetector(BuyCarActivity.this).isConnectingToInternet()) {
+                if(new ConnectionDetector(BuyCarActivity.this).isConnectingToInternet()){
+                    progressDialog = new ProgressDialog(BuyCarActivity.this);
+                    progressDialog.setMessage("Please Wait...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    bookCar();
+                }
+                else{
+                    new ConnectionDetector(BuyCarActivity.this).connectiondetect();
+                }
+            } else {
+                new ConnectionDetector(BuyCarActivity.this).connectiondetect();
+            }
+        } catch (Exception e) {
+            Log.e("RESPONSE", "Exception in onPaymentSuccess", e);
+        }
+    }
+
+    @Override
+    public void onPaymentError(int code, String response) {
+        try {
+            Log.d("RESPONSE", "Payment Cancelled " + code + " " + response);
+            //Toast.makeText(this, "Payment failed: " + code + " " + response, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Payment Cancelled", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.e("RESPONSE", "Exception in onPaymentError", e);
+        }
+    }
     @Override
     public void onBackPressed() {
         //Use For Close Application
