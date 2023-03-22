@@ -200,7 +200,6 @@ public class SignupActivity extends AppCompatActivity {
         dbref = reference.child("Users");
         String key = reference.push().getKey();
 
-
         HashMap<String, String> user = new HashMap<>();
         user.put("key", key);
         user.put("name", binding.TIEName.getText().toString());
