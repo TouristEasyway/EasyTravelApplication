@@ -211,7 +211,7 @@ public class SignupActivity extends AppCompatActivity {
         user.put("state", state);
         user.put("password", binding.TIEPassword.getText().toString());
         user.put("profile_pic", "");
-        user.put("user_type", "Admin");
+        user.put("user_type", "User");
         user.put("status", "Active");
 
 //        dbref.child(key).child(binding.TIEName.getText().toString()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
