@@ -43,7 +43,7 @@ public class UserCarAdapter extends RecyclerView.Adapter<UserCarAdapter.MyViewHo
     public void onBindViewHolder(@NonNull UserCarAdapter.MyViewHolder holder, int position) {
 
         holder.binding.tvTitle.setText(responseList.get(position).getCarName());
-        holder.binding.tvPrice.setText(responseList.get(position).getRatePerKM());
+        holder.binding.tvPrice.setText(responseList.get(position).getRatePerKM() + "Km/Hr");
         holder.binding.tvSubtitle.setText(responseList.get(position).getAvailable());
         Picasso.get().load(responseList.get(position).getCarImage()).into(holder.binding.img);
 

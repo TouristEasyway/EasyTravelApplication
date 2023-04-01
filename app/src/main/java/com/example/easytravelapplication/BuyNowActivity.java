@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
@@ -16,20 +18,25 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.example.easytravelapplication.Model.HotelListResponse;
 import com.example.easytravelapplication.Utils.AppConstant;
 import com.example.easytravelapplication.Utils.CommonMethod;
 import com.example.easytravelapplication.Utils.ConnectionDetector;
 import com.example.easytravelapplication.databinding.ActivityBuyNowBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -41,6 +48,11 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
     ProgressDialog progressDialog;
     private String totalDay, totalNight, image;
     String sPaymentType = "", sTransactionId = "";
+    String  startDate;
+    String endDate;
+    String  hotelName;
+
+    ArrayList<HotelListResponse> hotelList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +70,10 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
 
     private void initView() {
 
+
         Intent intent = getIntent();
         binding.tvPackageName.setText(intent.getStringExtra("package_name"));
         binding.tvPlaces.setText(intent.getStringExtra("places"));
-        binding.tvStartingDate.setText(intent.getStringExtra("starting_date"));
         totalDay = intent.getStringExtra("day");
         totalNight = intent.getStringExtra("night");
         binding.tvDayNight.setText(totalDay + "D/" + totalNight + "N");
@@ -83,9 +95,57 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
             binding.rgMale.setChecked(true);
 
         }
+
+        getHotelName();
+
+        HotelListResponse response = new HotelListResponse();
+        response.setHotelName("Add Hotels");
+        hotelList.add(0,response);
+        ArrayAdapter hotelAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,hotelList);
+        hotelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        binding.hotels.setAdapter(hotelAdapter);
+
+        binding.hotels.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                hotelName = hotelList.get(i).getHotelName();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private  void getHotelName() {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manage Hotel");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        HotelListResponse data = snapshot.getValue(HotelListResponse.class);
+                        hotelList.add(data);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
 
     private void initListener() {
+
         binding.tvDob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +170,66 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
                         },
                         year, month, day);
                 datePickerDialog.show();
+            }
+        });
+
+        binding.tvStartDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+
+
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        // on below line we are passing context.
+                        BuyNowActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // on below line we are setting date to our text view.
+                                binding.tvStartDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                startDate = (dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+
+                            }
+                        },
+                        year, month, day);
+
+
+                datePickerDialog.show();
+            }
+        });
+
+        binding.tvEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+
+
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        // on below line we are passing context.
+                        BuyNowActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // on below line we are setting date to our text view.
+                                binding.tvEndDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                endDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+
+                            }
+                        },
+                        year, month, day);
+                datePickerDialog.show();
+
+
             }
         });
 
@@ -153,7 +273,8 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
         params.put("places", binding.tvPlaces.getText().toString());
         params.put("totalDay", totalDay);
         params.put("totalNight", totalNight);
-        params.put("startingDate", binding.tvStartingDate.getText().toString());
+        params.put("hotelName", hotelName);
+        params.put("startingDate", binding.tvStartDate.getText().toString());
         params.put("endDate", binding.tvEndDate.getText().toString());
         params.put("price", binding.tvPrice.getText().toString());
         params.put("purchaseDate", Calendar.getInstance().getTime().toString());
@@ -216,20 +337,25 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
             sPaymentType = "Online";
             if (new ConnectionDetector(BuyNowActivity.this).isConnectingToInternet()) {
                 if(new ConnectionDetector(BuyNowActivity.this).isConnectingToInternet()){
-                    progressDialog = new ProgressDialog(BuyNowActivity.this);
-                    progressDialog.setMessage("Please Wait...");
-                    progressDialog.setCancelable(false);
+
                     progressDialog.show();
                     BookPackage();
+                    progressDialog.dismiss();
+
                 }
                 else{
                     new ConnectionDetector(BuyNowActivity.this).connectiondetect();
+                    progressDialog.dismiss();
                 }
             } else {
                 new ConnectionDetector(BuyNowActivity.this).connectiondetect();
+                progressDialog.dismiss();
+
             }
         } catch (Exception e) {
             Log.e("RESPONSE", "Exception in onPaymentSuccess", e);
+            progressDialog.dismiss();
+
         }
     }
 
@@ -239,6 +365,7 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
             Log.d("RESPONSE", "Payment Cancelled " + code + " " + response);
             //Toast.makeText(this, "Payment failed: " + code + " " + response, Toast.LENGTH_SHORT).show();
             Toast.makeText(this, "Payment Cancelled", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
         } catch (Exception e) {
             Log.e("RESPONSE", "Exception in onPaymentError", e);
         }

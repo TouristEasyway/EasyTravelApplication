@@ -61,6 +61,7 @@ public class ManageHotelActivity extends AppCompatActivity {
                     if (arrayList.isEmpty()) {
                         binding.rvPackage.setVisibility(View.GONE);
                         binding.tvNoData.setVisibility(View.VISIBLE);
+                        pd.dismiss();
                     } else {
                         binding.tvNoData.setVisibility(View.GONE);
                         binding.rvPackage.setVisibility(View.VISIBLE);
@@ -69,6 +70,10 @@ public class ManageHotelActivity extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                         pd.dismiss();
                     }
+                }
+                else{
+                    pd.dismiss();
+
                 }
             }
 

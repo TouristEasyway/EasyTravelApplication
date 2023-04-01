@@ -151,26 +151,26 @@
 
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/label_total_days"
+            android:id="@+id/label_start_date"
             style="@style/regular_14_text_bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="Total Day"
+            android:text="Start Date"
             android:textSize="@dimen/_15sdp"
-            app:layout_constraintEnd_toStartOf="@id/txt_total_days"
+            app:layout_constraintEnd_toStartOf="@id/txt_start_date"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/b4" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_total_days"
+            android:id="@+id/txt_start_date"
             style="@style/regular_14_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:textSize="@dimen/_13sdp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/label_total_days"
+            app:layout_constraintStart_toEndOf="@id/label_start_date"
             app:layout_constraintTop_toBottomOf="@id/b4"
             tools:text="1" />
 
@@ -179,29 +179,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="label_total_days,txt_total_days" />
+            app:constraint_referenced_ids="label_start_date,txt_start_date" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/label_total_night"
+            android:id="@+id/label_end_date"
             style="@style/regular_14_text_bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="Total Night"
+            android:text="End Date"
             android:textSize="@dimen/_15sdp"
-            app:layout_constraintEnd_toStartOf="@id/txt_total_night"
+            app:layout_constraintEnd_toStartOf="@id/txt_end_date"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/b5" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_total_night"
+            android:id="@+id/txt_end_date"
             style="@style/regular_14_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:textSize="@dimen/_13sdp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/label_total_night"
+            app:layout_constraintStart_toEndOf="@id/label_end_date"
             app:layout_constraintTop_toBottomOf="@id/b5"
             tools:text="2 " />
 
@@ -210,7 +210,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="label_total_night,txt_total_night" />
+            app:constraint_referenced_ids="label_end_date,txt_end_date" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/label_purchase_date"

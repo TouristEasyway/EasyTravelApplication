@@ -47,6 +47,8 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
     String  startDate;
     String endDate;
     String sPaymentType = "", sTransactionId = "";
+
+    int price;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,8 +170,6 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
                     binding.tvStartDate.setError("Select Starting Date ");
                 } else if (binding.tvEndDate.getText().toString().equals("")) {
                     binding.tvEndDate.setError("Select End Date");
-                } else if (binding.tvBookDate.getText().equals("")){
-                    binding.tvBookDate.setError("Select Bookig Date");
                 }
 
                 else {
@@ -200,7 +200,7 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
         String dayDifference = Long.toString(differenceDates);
         Log.d("TAG",dayDifference);
 
-        int price = Integer.parseInt(dayDifference) * Integer.parseInt(response.getRatePerKM());
+         price = Integer.parseInt(dayDifference) * Integer.parseInt(response.getRatePerKM());
         binding.tvPrice.setText(getString(R.string.rupee) + String.valueOf(price));
     }
 
@@ -248,7 +248,7 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
         binding.tvCarName.setText(response.getCarName());
         binding.tvCarType.setText(response.getCarType());
         binding.tvFuelType.setText(response.getfuelType());
-        binding.tvRate.setText(response.getRatePerKM());
+        binding.tvRate.setText(response.getRatePerKM()+ "KM/Hr");
         binding.tvAvailble.setText(response.getAvailable());
         binding.tvCity.setText(response.getCity());
         binding.edtName.setText(sp.getString(AppConstant.NAME, ""));
@@ -272,7 +272,7 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
             //You can omit the image option to fetch the image from dashboard
             options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
             options.put("currency", "INR");
-            options.put("amount", Double.parseDouble(binding.tvPrice.getText().toString()) * 100);
+            options.put("amount", price);
 
             JSONObject preFill = new JSONObject();
             preFill.put("email", sp.getString(AppConstant.EMAIL, ""));
@@ -311,6 +311,7 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
             }
         } catch (Exception e) {
             Log.e("RESPONSE", "Exception in onPaymentSuccess", e);
+            progressDialog.dismiss();
         }
     }
 
@@ -320,6 +321,7 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
             Log.d("RESPONSE", "Payment Cancelled " + code + " " + response);
             //Toast.makeText(this, "Payment failed: " + code + " " + response, Toast.LENGTH_SHORT).show();
             Toast.makeText(this, "Payment Cancelled", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
         } catch (Exception e) {
             Log.e("RESPONSE", "Exception in onPaymentError", e);
         }

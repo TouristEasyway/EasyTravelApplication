@@ -24,6 +24,11 @@ public class HotelListResponse implements Serializable {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return hotelName;
+    }
+
     public String getAddress() {
         return address;
     }

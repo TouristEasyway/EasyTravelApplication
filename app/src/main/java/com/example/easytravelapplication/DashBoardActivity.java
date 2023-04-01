@@ -56,7 +56,7 @@ public class DashBoardActivity extends AppCompatActivity {
     private ProgressDialog pd;
 
 
-    String[] adminList = {"Manage User", "Manage Package", "Package Purchase History", "Manage Car Rents", "Car Rental History"};
+    String[] adminList = {"Manage User", "Manage Package", "Package Purchase History", "Manage Hotel","Manage Car Rents", "Car Rental History"};
 
 
     @Override
@@ -436,6 +436,8 @@ public class DashBoardActivity extends AppCompatActivity {
                         new CommonMethod(context, ManagePackageActivity.class);
                     } else if (arrayList[position].equals("Package Purchase History")) {
                         new CommonMethod(context, PackagePurchaseHistoryActivity.class);
+                    }else if(arrayList[position].equals("Manage Hotel")){
+                        new CommonMethod(context, ManageHotelActivity.class);
                     }else if (arrayList[position].equals("Manage Car Rents")) {
                         new CommonMethod(context, ManageCarRentActivity.class);
                     } else if (arrayList[position].equals("Car Rental History")) {

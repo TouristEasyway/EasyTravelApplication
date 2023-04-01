@@ -42,7 +42,7 @@ public class UserDashBoardPackageAdapter extends RecyclerView.Adapter<UserDashBo
     public void onBindViewHolder(@NonNull UserDashBoardPackageAdapter.MyViewHolder holder, int position) {
 
         holder.binding.tvTitle.setText(responseList.get(position).getPackageName());
-        holder.binding.tvPrice.setText(responseList.get(position).getPrice());
+        holder.binding.tvPrice.setText(holder.itemView.getContext().getString(R.string.rupee)+""+responseList.get(position).getPrice());
         holder.binding.tvSubtitle.setText(responseList.get(position).getPlaces());
         Picasso.get().load(responseList.get(position).getPackageImage()).into(holder.binding.img);
 
@@ -53,7 +53,6 @@ public class UserDashBoardPackageAdapter extends RecyclerView.Adapter<UserDashBo
                 intent.putExtra("PACKAGE_RESPONSE",responseList.get(position));
                 holder.itemView.getContext().startActivity(intent);            }
         });
-
 
     }
 

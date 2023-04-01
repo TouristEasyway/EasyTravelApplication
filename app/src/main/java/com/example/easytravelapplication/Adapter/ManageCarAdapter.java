@@ -56,7 +56,7 @@ public class ManageCarAdapter extends RecyclerView.Adapter<ManageCarAdapter.View
 
         holder.itemRowBinding.tvCarName.setText(responseList.get(position).getCarName());
         holder.itemRowBinding.tvFuelType.setText(responseList.get(position).getfuelType());
-        holder.itemRowBinding.tvRateParKm.setText(responseList.get(position).getRatePerKM());
+        holder.itemRowBinding.tvRateParKm.setText(responseList.get(position).getRatePerKM() + "Km/Hr");
         holder.itemRowBinding.tvAvailable.setText(responseList.get(position).getAvailable());
 
         if (responseList.get(position).getCarImage() == null) {
@@ -68,7 +68,13 @@ public class ManageCarAdapter extends RecyclerView.Adapter<ManageCarAdapter.View
         if (userType.equals("User")){
             holder.itemRowBinding.deleterImg.setVisibility(View.GONE);
             holder.itemRowBinding.editImg.setVisibility(View.GONE);
-            holder.itemRowBinding.tvPurchase.setVisibility(View.VISIBLE);
+            if (responseList.get(position).getAvailable().equals("Booked")){
+                holder.itemRowBinding.tvPurchase.setVisibility(View.GONE);
+            }
+            else{
+                holder.itemRowBinding.tvPurchase.setVisibility(View.VISIBLE);
+
+            }
 
         }
         else{

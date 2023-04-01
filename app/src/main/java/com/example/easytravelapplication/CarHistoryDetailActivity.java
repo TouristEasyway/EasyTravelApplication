@@ -37,7 +37,7 @@ public class CarHistoryDetailActivity extends AppCompatActivity {
         binding.txtCarName.setText(carHistoryResponse.getCarName());
         binding.txtCarType.setText(carHistoryResponse.getCarType());
         binding.txtFuelType.setText(carHistoryResponse.getFuelType());
-        binding.txtRate.setText(carHistoryResponse.getRatePerKM());
+        binding.txtRate.setText(carHistoryResponse.getRatePerKM()+""+"KM/Hr");
         binding.txtAvailable.setText(carHistoryResponse.getAvailable());
         binding.txtStartDate.setText(carHistoryResponse.getStartDate());
         binding.txtEndDate.setText(carHistoryResponse.getEndDate());

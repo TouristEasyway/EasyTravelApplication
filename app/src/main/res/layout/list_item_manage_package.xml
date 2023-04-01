@@ -57,7 +57,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="5dp"
                 app:layout_constraintEnd_toStartOf="@id/tvDayNight"
                 app:layout_constraintStart_toEndOf="@id/rivPackage"
@@ -65,28 +65,16 @@
                 tools:text="Goa, Ahmedabad,Pune" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvStartingDate"
-                style="@style/regular_14_text_bold"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toStartOf="@id/deleterImg"
-                app:layout_constraintStart_toEndOf="@id/rivPackage"
-                app:layout_constraintTop_toBottomOf="@id/tvPlaces"
-                tools:text="28-02-2022" />
-
-            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvPrice"
                 style="@style/regular_14_text_bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/deleterImg"
                 app:layout_constraintStart_toEndOf="@id/rivPackage"
-                app:layout_constraintTop_toBottomOf="@id/tvStartingDate"
+                app:layout_constraintTop_toBottomOf="@id/tvPlaces"
                 tools:text="$ 12,000.00" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -96,20 +84,21 @@
                 android:src="@drawable/baseline_delete_24"
                 android:tint="@color/red"
                 android:visibility="gone"
+                android:layout_marginTop="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="@id/tvPrice"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tvStartingDate" />
+                app:layout_constraintTop_toTopOf="@id/tvPrice" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imgEdit"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_20sdp"
                 android:visibility="gone"
                 android:src="@drawable/baseline_edit_24"
-                app:layout_constraintBottom_toBottomOf="@id/btnBuyNow"
-                app:layout_constraintEnd_toStartOf="@id/btnBuyNow"
-                app:layout_constraintTop_toTopOf="@id/btnBuyNow" />
+                app:layout_constraintBottom_toBottomOf="@id/deleterImg"
+                app:layout_constraintEnd_toStartOf="@id/deleterImg"
+                app:layout_constraintTop_toTopOf="@id/deleterImg" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnBuyNow"

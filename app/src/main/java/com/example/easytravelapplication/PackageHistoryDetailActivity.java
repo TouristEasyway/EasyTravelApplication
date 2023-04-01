@@ -31,9 +31,9 @@ public class PackageHistoryDetailActivity extends AppCompatActivity {
         binding.txtPackageName.setText(packageListResponse.getPackageName());
         binding.txtHotel.setText(packageListResponse.getHotelName());
         binding.txtPlaces.setText(packageListResponse.getPlaces());
-        binding.txtPrice.setText(packageListResponse.getPrice());
-        binding.txtTotalDays.setText(packageListResponse.getTotalDay());
-        binding.txtTotalNight.setText(packageListResponse.getTotalNight());
+        binding.txtPrice.setText(getString(R.string.rupee)+""+packageListResponse.getPrice());
+        binding.txtStartDate.setText(packageListResponse.getStartingDate());
+        binding.txtEndDate.setText(packageListResponse.getEndDate());
         binding.txtPurchaseDate.setText(packageListResponse.getPurchaseDate());
 
 

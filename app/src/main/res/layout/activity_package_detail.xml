@@ -20,7 +20,7 @@
             android:layout_height="@dimen/_130sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:scaleType="fitXY"
-            android:src="@mipmap/ic_launcher_round"
+            android:src="@color/darkcolor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -80,6 +80,7 @@
             app:layout_constraintStart_toEndOf="@id/label_hotel"
             app:layout_constraintTop_toBottomOf="@id/b1"
             tools:text="ABCD Hotel" />
+
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/b2"
             android:layout_width="wrap_content"
@@ -149,7 +150,79 @@
             app:barrierDirection="bottom"
             app:constraint_referenced_ids="label_places,txt_places" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_total_days"
+            style="@style/regular_14_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Total Day"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@id/txt_total_days"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/b4" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_total_days"
+            style="@style/regular_14_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_total_days"
+            app:layout_constraintTop_toBottomOf="@id/b4"
+            tools:text="1" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/b5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="label_total_days,txt_total_days" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_total_night"
+            style="@style/regular_14_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Total Night"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@id/txt_total_night"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/b5" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_total_night"
+            style="@style/regular_14_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_total_night"
+            app:layout_constraintTop_toBottomOf="@id/b5"
+            tools:text="2 " />
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/b6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="label_total_night,txt_total_night" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buyNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            style="@style/button"
+            android:text="Buy Now"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/b6" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

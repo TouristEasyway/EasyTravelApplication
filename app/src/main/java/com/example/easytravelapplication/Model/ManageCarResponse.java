@@ -58,7 +58,7 @@ public class ManageCarResponse implements Serializable {
     }
 
     public String getRatePerKM() {
-        return ratePerKM + "KM/Hr";
+        return ratePerKM;
     }
 
     public void setRatePerKM(String ratePerKM) {

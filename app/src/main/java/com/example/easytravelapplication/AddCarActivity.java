@@ -148,6 +148,7 @@ public class AddCarActivity extends AppCompatActivity {
 
     private void setDataForUpdate(ManageCarResponse response) {
 
+        binding.edtCarName.setText(response.getCarName());
 
         if (response.getfuelType().equals("Petrol")) {
             binding.rbPetrol.setChecked(true);
@@ -233,7 +234,7 @@ public class AddCarActivity extends AppCompatActivity {
         params.put("ratePerKM", binding.edtRatePerKm.getText().toString());
         params.put("city", city);
         params.put("state", state);
-        params.put("available", binding.edtAvailable.getText().toString());
+        params.put("available", binding.edtAvailable.getText().toString().trim());
         params.put("carImage", image);
 
         if (toUpdate) {

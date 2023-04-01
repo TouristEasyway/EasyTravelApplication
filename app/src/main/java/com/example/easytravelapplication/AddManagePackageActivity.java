@@ -1,8 +1,10 @@
 package com.example.easytravelapplication;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -11,8 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
+import com.example.easytravelapplication.Model.HotelListResponse;
 import com.example.easytravelapplication.Utils.AppConstant;
 import com.example.easytravelapplication.Utils.CommonMethod;
 import com.example.easytravelapplication.databinding.ActivityAddManagePackageBinding;
@@ -29,8 +30,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -39,6 +43,7 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class AddManagePackageActivity extends AppCompatActivity {
@@ -57,9 +62,14 @@ public class AddManagePackageActivity extends AppCompatActivity {
 
     boolean toUpdate;
 
-    String  hotelName;
+    String hotelName;
 
-    ArrayList<String> hotelList =  new ArrayList<>();
+    ArrayList<String> hotelList = new ArrayList<>();
+    ArrayList<HotelListResponse> arrayList = new ArrayList<>();
+
+    ArrayList<Integer> langList = new ArrayList<>();
+    String langArray[] = new String[arrayList.size()];
+    boolean[] selectedLanguage = new boolean[langArray.length];
 
 
     @Override
@@ -70,11 +80,6 @@ public class AddManagePackageActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Add Package");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         requestStoragePermission();
-        hotelList.add("Add Hotel");
-        hotelList.add("Taj Hotel");
-        hotelList.add("Hayat Hotel");
-        hotelList.add("Hotel River View");
-        hotelList.add("Hotel Star");
         initView();
         initListener();
     }
@@ -82,6 +87,24 @@ public class AddManagePackageActivity extends AppCompatActivity {
     private void initView() {
         Intent intent = getIntent();
         toUpdate = intent.getBooleanExtra("is_from_update", false);
+
+        if (intent.getStringExtra("package_name") == null) {
+            binding.btnManage.setText("Add Package");
+            getSupportActionBar().setTitle(" Add Package");
+        } else {
+            binding.btnManage.setText("Update Package");
+            getSupportActionBar().setTitle(" Update Package");
+            updateUI(intent);
+        }
+
+        sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
+        reference = FirebaseDatabase.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+        progressDialog = new ProgressDialog(AddManagePackageActivity.this);
+    }
+
+    private void updateUI(Intent intent) {
         uniqueKey = intent.getStringExtra("key");
         binding.edtPackageName.setText(intent.getStringExtra("package_name"));
         binding.edtPlaces.setText(intent.getStringExtra("places"));
@@ -94,49 +117,120 @@ public class AddManagePackageActivity extends AppCompatActivity {
         binding.edtPrice.setText(intent.getStringExtra("price"));
         image = intent.getStringExtra("image");
         String hotelName = intent.getStringExtra("hotel");
-        for (int i =0;i <hotelList.size();i++){
-            if (hotelList.get(i).equals(hotelName)){
-                binding.hotels.setSelection(i);
-                break;
-            }
-        }
+        binding.hotels.setText(hotelName);
         Picasso.get().load(image).placeholder(R.drawable.login_fi).into(binding.imgPackage);
-
-        if (intent.getStringExtra("package_name") == null) {
-            binding.btnManage.setText("Add Package");
-            getSupportActionBar().setTitle(" Add Package");
-        } else {
-            binding.btnManage.setText("Update Package");
-            getSupportActionBar().setTitle(" Update Package");
-        }
-
-        sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
-        reference = FirebaseDatabase.getInstance().getReference();
-        storageReference = FirebaseStorage.getInstance().getReference();
-
-        progressDialog = new ProgressDialog(AddManagePackageActivity.this);
     }
 
     private void initListener() {
 
 
-        ArrayAdapter hotelAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,hotelList);
-        hotelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        getHotelName();
+        binding.hotels.setOnClickListener(new View.OnClickListener() {
 
-        binding.hotels.setAdapter(hotelAdapter);
+            boolean[] selectedLanguage;
 
-        binding.hotels.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                hotelName = hotelList.get(i);
-
-            }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onClick(View view) {
+                ArrayList<Integer> langList = new ArrayList<>();
+                String langArray[] = new String[arrayList.size()];
+                selectedLanguage = new boolean[langArray.length];
 
+                for (int i =0;i<arrayList.size();i++){
+                    langArray[i] = arrayList.get(i).getHotelName();
+                }
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddManagePackageActivity.this);
+
+                // set title
+                builder.setTitle("Select Hotel");
+
+                // set dialog non cancelable
+                builder.setCancelable(false);
+
+                builder.setMultiChoiceItems(langArray, selectedLanguage, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                        // check condition
+                        if (b) {
+                            // when checkbox selected
+                            // Add position  in lang list
+                            langList.add(i);
+                            // Sort array list
+                            Collections.sort(langList);
+                        } else {
+                            // when checkbox unselected
+                            // Remove position from langList
+                            langList.remove(Integer.valueOf(i));
+                        }
+                    }
+                });
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // Initialize string builder
+                        // use for loop
+                        StringBuilder stringBuilder = new StringBuilder();
+                        for (int j = 0; j < langList.size(); j++) {
+                            // concat array value
+                            stringBuilder.append(langArray[langList.get(j)]);
+                            // check condition
+                            if (j != langList.size() - 1) {
+                                // When j value  not equal
+                                // to lang list size - 1
+                                // add comma
+                                stringBuilder.append(", ");
+                            }
+                        }
+                        // set text on textView
+                        binding.hotels.setText(stringBuilder.toString());
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // dismiss dialog
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // use for loop
+                        for (int j = 0; j < selectedLanguage.length; j++) {
+                            // remove all selection
+                            selectedLanguage[j] = false;
+                            // clear language list
+                            langList.clear();
+                            // clear text view value
+                            binding.hotels.setText("");
+                        }
+                    }
+                });
+                // show dialog
+                builder.show();
             }
         });
+
+//        ArrayAdapter hotelAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,hotelList);
+//        hotelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//
+//        binding.hotels.setAdapter(hotelAdapter);
+//
+//        binding.hotels.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                hotelName = hotelList.get(i);
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
         binding.editImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,6 +246,30 @@ public class AddManagePackageActivity extends AppCompatActivity {
                 checkValidation();
             }
         });
+    }
+
+    private  void getHotelName() {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manage Hotel");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        HotelListResponse data = snapshot.getValue(HotelListResponse.class);
+                        arrayList.add(data);
+                    }
+                    
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        
     }
 
     private void requestStoragePermission() {
@@ -272,7 +390,7 @@ public class AddManagePackageActivity extends AppCompatActivity {
         params.put("price", binding.edtPrice.getText().toString());
         params.put("packageImage", s);
         params.put("status", "Active");
-        params.put("hotelName", hotelName);
+        params.put("hotelName", binding.hotels.getText().toString());
 
         if (toUpdate) {
             dbref.child(uniqueKey).updateChildren(params).addOnSuccessListener(new OnSuccessListener() {
@@ -287,12 +405,13 @@ public class AddManagePackageActivity extends AppCompatActivity {
                     Toast.makeText(AddManagePackageActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
                 }
             });
-        }else {
+        } else {
             dbref.child(key).setValue(params).addOnSuccessListener(new OnSuccessListener() {
                 @Override
                 public void onSuccess(Object o) {
                     progressDialog.dismiss();
                     Toast.makeText(AddManagePackageActivity.this, "Package Added Successfully.", Toast.LENGTH_SHORT).show();
+                    new CommonMethod(AddManagePackageActivity.this, ManagePackageActivity.class);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -303,11 +422,13 @@ public class AddManagePackageActivity extends AppCompatActivity {
             });
         }
     }
+
     @Override
     public void onBackPressed() {
         //Use For Close Application
         finish();
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
