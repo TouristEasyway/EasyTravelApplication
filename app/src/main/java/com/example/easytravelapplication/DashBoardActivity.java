@@ -62,7 +62,7 @@ public class DashBoardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dash_board);
+//        setContentView(R.layout.activity_dash_board);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dash_board);
         auth = FirebaseAuth.getInstance();
@@ -139,8 +139,6 @@ public class DashBoardActivity extends AppCompatActivity {
     }
 
     private void setCarData() {
-
-
         binding.rvCar.setVisibility(View.VISIBLE);
         binding.tvCar.setVisibility(View.VISIBLE);
         binding.carViewAll.setVisibility(View.VISIBLE);
@@ -263,8 +261,6 @@ public class DashBoardActivity extends AppCompatActivity {
 //    }
 
     private void setPackageHistoryData() {
-
-
         binding.rvPackageHistory.setVisibility(View.VISIBLE);
         binding.tvPackageHistory.setVisibility(View.VISIBLE);
         binding.packageHistoryViewAll.setVisibility(View.VISIBLE);

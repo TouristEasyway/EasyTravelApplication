@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home_new"
+        android:title="Home" />
+    <item
+        android:id="@+id/package1"
+        android:icon="@drawable/ic_privilege_new"
+        android:title="Package" />
+
+    <item
+        android:id="@+id/car"
+        android:icon="@drawable/ic_privilege_new"
+        android:title="Car" />
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_profile_new"
+        android:title="Profile" />
+
+</menu>

@@ -54,7 +54,7 @@ public class ManagePackageAdapter extends RecyclerView.Adapter<ManagePackageAdap
         holder.itemRowBinding.tvPackageName.setText(responseList.get(position).getPackageName());
         holder.itemRowBinding.tvPlaces.setText(responseList.get(position).getPlaces());
         holder.itemRowBinding.tvDayNight.setText(responseList.get(position).getTotalDay() + "D/" + responseList.get(position).getTotalNight() + "N");
-        holder.itemRowBinding.tvPrice.setText(holder.itemView.getContext().getString(R.string.rupee)+""+responseList.get(position).getPrice());
+        holder.itemRowBinding.tvPrice.setText(holder.itemView.getContext().getString(R.string.rupee) + responseList.get(position).getPrice() + "/Night");
 
         Picasso.get().load(responseList.get(position).getPackageImage()).into(holder.itemRowBinding.rivPackage);
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -75,13 +75,13 @@ public class ManagePackageAdapter extends RecyclerView.Adapter<ManagePackageAdap
                 Intent intent = new Intent(context, AddManagePackageActivity.class);
                 intent.putExtra("is_from_update", true);
                 intent.putExtra("package_name", responseList.get(position).getPackageName());
-                intent.putExtra("places",  responseList.get(position).getPlaces());
-                intent.putExtra("day",  responseList.get(position).getTotalDay());
-                intent.putExtra("night",  responseList.get(position).getTotalNight());
-                intent.putExtra("starting_date",  responseList.get(position).getStartingDate());
-                intent.putExtra("end_date",  responseList.get(position).getEndDate());
-                intent.putExtra("price",  responseList.get(position).getPrice());
-                intent.putExtra("image",  responseList.get(position).getPackageImage());
+                intent.putExtra("places", responseList.get(position).getPlaces());
+                intent.putExtra("day", responseList.get(position).getTotalDay());
+                intent.putExtra("night", responseList.get(position).getTotalNight());
+                intent.putExtra("starting_date", responseList.get(position).getStartingDate());
+                intent.putExtra("end_date", responseList.get(position).getEndDate());
+                intent.putExtra("price", responseList.get(position).getPrice());
+                intent.putExtra("image", responseList.get(position).getPackageImage());
                 intent.putExtra("key", responseList.get(position).getKey());
                 intent.putExtra("hotel", responseList.get(position).getHotelName());
                 context.startActivity(intent);
@@ -92,18 +92,18 @@ public class ManagePackageAdapter extends RecyclerView.Adapter<ManagePackageAdap
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, BuyNowActivity.class);
-                intent.putExtra("package_name",  responseList.get(position).getPackageName());
-                intent.putExtra("places",  responseList.get(position).getPlaces());
-                intent.putExtra("day",  responseList.get(position).getTotalDay());
-                intent.putExtra("night",  responseList.get(position).getTotalNight());
-                intent.putExtra("starting_date",  responseList.get(position).getStartingDate());
-                intent.putExtra("end_date",  responseList.get(position).getEndDate());
-                intent.putExtra("price",  responseList.get(position).getPrice());
-                intent.putExtra("image",  responseList.get(position).getPackageImage());
+                intent.putExtra("package_name", responseList.get(position).getPackageName());
+                intent.putExtra("places", responseList.get(position).getPlaces());
+                intent.putExtra("day", responseList.get(position).getTotalDay());
+                intent.putExtra("night", responseList.get(position).getTotalNight());
+                intent.putExtra("starting_date", responseList.get(position).getStartingDate());
+                intent.putExtra("end_date", responseList.get(position).getEndDate());
+                intent.putExtra("price", responseList.get(position).getPrice());
+                intent.putExtra("image", responseList.get(position).getPackageImage());
+                intent.putExtra("hotel_name", responseList.get(position).getHotelName());
                 context.startActivity(intent);
             }
         });
-
 
 
         holder.itemRowBinding.deleterImg.setOnClickListener(new View.OnClickListener() {

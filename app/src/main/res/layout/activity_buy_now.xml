@@ -77,6 +77,19 @@
 
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvHotelName"
+                        style="@style/regular_14_text_bold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:text="Hotel"
+                        android:textSize="@dimen/_15sdp"
+                        app:layout_constraintEnd_toStartOf="@id/tvDayNight"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/viewDivider" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvDayNight"
                         style="@style/regular_14_text_bold"
                         android:layout_width="wrap_content"
@@ -87,7 +100,6 @@
                         android:text="4N/5D"
                         android:textColor="@color/white"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/viewDivider" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -211,7 +223,7 @@
 
                 </RadioGroup>
 
-                <com.google.android.material.textfield.TextInputLayout
+                <!--<com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilDob"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
@@ -232,7 +244,8 @@
                         android:focusable="false"
                         android:textColor="@color/black" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>-->
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilStartDate"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -244,7 +257,7 @@
                     app:hintTextColor="@color/black"
                     app:layout_constraintEnd_toEndOf="@id/end"
                     app:layout_constraintStart_toStartOf="@id/start"
-                    app:layout_constraintTop_toBottomOf="@id/tilDob">
+                    app:layout_constraintTop_toBottomOf="@id/radioGroup">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tvStartDate"
@@ -279,18 +292,30 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/label_spinner"
-                    style="@style/regular_14_text_bold"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:text="Add Hotel"
-                    android:textSize="@dimen/_15sdp"
-                    app:layout_constraintEnd_toEndOf="@id/end"
-                    app:layout_constraintStart_toStartOf="@id/start"
-                    app:layout_constraintTop_toBottomOf="@id/tilEndDate" />
+                <!--                <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                    android:id="@+id/label_spinner"-->
+                <!--                    style="@style/regular_14_text"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="@dimen/_20sdp"-->
+                <!--                    android:text="Hotel"-->
+                <!--                    android:textSize="@dimen/_15sdp"-->
+                <!--                    app:layout_constraintEnd_toEndOf="@id/end"-->
+                <!--                    app:layout_constraintStart_toStartOf="@id/start"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@id/tilEndDate" />-->
 
+                <!--                <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                    android:id="@+id/tvHotelName"-->
+                <!--                    style="@style/regular_14_text_bold"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="@dimen/_10sdp"-->
+                <!--                    android:text="Hotel"-->
+                <!--                    android:textSize="@dimen/_15sdp"-->
+                <!--                    app:layout_constraintEnd_toEndOf="@id/label_spinner"-->
+                <!--                    app:layout_constraintStart_toStartOf="@id/label_spinner"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@id/label_spinner" />-->
+                <!--
                 <Spinner
                     android:id="@+id/hotels"
                     android:layout_width="0dp"
@@ -300,7 +325,7 @@
                     android:layout_marginBottom="@dimen/_20sdp"
                     app:layout_constraintEnd_toEndOf="@id/label_spinner"
                     app:layout_constraintStart_toStartOf="@id/label_spinner"
-                    app:layout_constraintTop_toBottomOf="@id/label_spinner" />
+                    app:layout_constraintTop_toBottomOf="@id/label_spinner" />-->
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
@@ -320,10 +345,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:text="@string/rupee"
                 app:layout_constraintBottom_toBottomOf="@id/btnContinue"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/btnContinue"
-                android:text="@string/rupee" />
+                app:layout_constraintTop_toTopOf="@id/btnContinue" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvPrice"

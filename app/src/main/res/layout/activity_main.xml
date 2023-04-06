@@ -1,256 +1,505 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+<layout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nsView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                tools:context=".DashBoardActivity">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_dashboard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/item_home" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_package"
+                    style="@style/regular_14_text_bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Package"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toStartOf="@+id/package_view_all"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/package_view_all"
+                    style="@style/regular_14_text_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="View All"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPackage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_package"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_user_dashboard" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/no_data_pacakge"
+                    style="@style/regular_14_text_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="No Data found"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_package" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_package_history"
+                    style="@style/regular_14_text_bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Package History"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toStartOf="@+id/package_history_view_all"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rvPackage"
+                    app:layout_goneMarginTop="@dimen/_20sdp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/package_history_view_all"
+                    style="@style/regular_14_text_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View All"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_package_history"
+                    app:layout_goneMarginTop="@dimen/_20sdp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPackageHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_package_history"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_user_dashboard" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/no_data_pacakge_history"
+                    style="@style/regular_14_text_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="No Data found"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_package_history" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_car"
+                    style="@style/regular_14_text_bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Car"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toStartOf="@+id/car_view_all"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rvPackageHistory"
+                    app:layout_goneMarginTop="@dimen/_20sdp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/car_view_all"
+                    style="@style/regular_14_text_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View All"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_car" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_car"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_user_dashboard" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/no_data_car"
+                    style="@style/regular_14_text_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="No Data found"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_car" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_car_history"
+                    style="@style/regular_14_text_bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Car History"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toStartOf="@+id/car_history_view_all"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rvCar"
+                    app:layout_goneMarginTop="@dimen/_20sdp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/car_history_view_all"
+                    style="@style/regular_14_text_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View All"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_car_history" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCarHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_car_history"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_user_dashboard" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/no_data_car_history"
+                    style="@style/regular_14_text_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="No Data found"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_car_history" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginVertical="10dp">
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/white"
+            app:itemIconSize="@dimen/_25sdp"
+            app:itemIconTint="@drawable/bottom_navigation_selector"
+            app:itemPaddingBottom="@dimen/_5sdp"
+            app:itemTextColor="@drawable/bottom_navigation_selector"
+            app:labelVisibilityMode="labeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/bottom_nav_menu" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardPackage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="10dp"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+        <!--    <androidx.core.widget.NestedScrollView-->
+        <!--        android:id="@+id/nsView"-->
+        <!--        android:layout_width="0dp"-->
+        <!--        android:layout_height="0dp"-->
+        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintTop_toTopOf="parent">-->
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="30dp">
+        <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_marginVertical="10dp">-->
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/regular_20_text_bold"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Packages"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/ivPackageErrow"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+        <!--            <androidx.cardview.widget.CardView-->
+        <!--                android:id="@+id/cardPackage"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginHorizontal="10dp"-->
+        <!--                android:layout_marginVertical="10dp"-->
+        <!--                app:cardCornerRadius="15dp"-->
+        <!--                app:cardElevation="5dp"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toTopOf="parent">-->
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivPackageErrow"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+        <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="match_parent"-->
+        <!--                    android:paddingHorizontal="10dp"-->
+        <!--                    android:paddingVertical="30dp">-->
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardPackagePurchaseHistory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="10dp"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardPackage">
+        <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+        <!--                        style="@style/regular_20_text_bold"-->
+        <!--                        android:layout_width="0dp"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:text="Packages"-->
+        <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                        app:layout_constraintEnd_toStartOf="@id/ivPackageErrow"-->
+        <!--                        app:layout_constraintStart_toStartOf="parent"-->
+        <!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="30dp">
+        <!--                    <androidx.appcompat.widget.AppCompatImageView-->
+        <!--                        android:id="@+id/ivPackageErrow"-->
+        <!--                        android:layout_width="30dp"-->
+        <!--                        android:layout_height="30dp"-->
+        <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                        app:layout_constraintTop_toTopOf="parent" />-->
+        <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+        <!--            </androidx.cardview.widget.CardView>-->
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/regular_20_text_bold"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Package Purchase History"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/ivPackagePurchaseHistoryErrow"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+        <!--            <androidx.cardview.widget.CardView-->
+        <!--                android:id="@+id/cardPackagePurchaseHistory"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginHorizontal="10dp"-->
+        <!--                android:layout_marginVertical="10dp"-->
+        <!--                app:cardCornerRadius="15dp"-->
+        <!--                app:cardElevation="5dp"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toBottomOf="@id/cardPackage">-->
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivPackagePurchaseHistoryErrow"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+        <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="match_parent"-->
+        <!--                    android:paddingHorizontal="10dp"-->
+        <!--                    android:paddingVertical="30dp">-->
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardManageHotels"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="10dp"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardPackagePurchaseHistory">
+        <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+        <!--                        style="@style/regular_20_text_bold"-->
+        <!--                        android:layout_width="0dp"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:text="Package Purchase History"-->
+        <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                        app:layout_constraintEnd_toStartOf="@id/ivPackagePurchaseHistoryErrow"-->
+        <!--                        app:layout_constraintStart_toStartOf="parent"-->
+        <!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="30dp">
+        <!--                    <androidx.appcompat.widget.AppCompatImageView-->
+        <!--                        android:id="@+id/ivPackagePurchaseHistoryErrow"-->
+        <!--                        android:layout_width="30dp"-->
+        <!--                        android:layout_height="30dp"-->
+        <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                        app:layout_constraintTop_toTopOf="parent" />-->
+        <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+        <!--            </androidx.cardview.widget.CardView>-->
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/regular_20_text_bold"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Manage Hotels"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/ivManageHotelsErrow"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+        <!--            <androidx.cardview.widget.CardView-->
+        <!--                android:id="@+id/cardManageHotels"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginHorizontal="10dp"-->
+        <!--                android:layout_marginVertical="10dp"-->
+        <!--                app:cardCornerRadius="15dp"-->
+        <!--                app:cardElevation="5dp"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toBottomOf="@id/cardPackagePurchaseHistory">-->
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivManageHotelsErrow"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+        <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="match_parent"-->
+        <!--                    android:paddingHorizontal="10dp"-->
+        <!--                    android:paddingVertical="30dp">-->
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardHotelBookingHistory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="10dp"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardPackagePurchaseHistory">
+        <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+        <!--                        style="@style/regular_20_text_bold"-->
+        <!--                        android:layout_width="0dp"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:text="Manage Hotels"-->
+        <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                        app:layout_constraintEnd_toStartOf="@id/ivManageHotelsErrow"-->
+        <!--                        app:layout_constraintStart_toStartOf="parent"-->
+        <!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="30dp">
+        <!--                    <androidx.appcompat.widget.AppCompatImageView-->
+        <!--                        android:id="@+id/ivManageHotelsErrow"-->
+        <!--                        android:layout_width="30dp"-->
+        <!--                        android:layout_height="30dp"-->
+        <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                        app:layout_constraintTop_toTopOf="parent" />-->
+        <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+        <!--            </androidx.cardview.widget.CardView>-->
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/regular_20_text_bold"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Hotel Booking History"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/ivHotelBookingHistoryErrow"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+        <!--            <androidx.cardview.widget.CardView-->
+        <!--                android:id="@+id/cardHotelBookingHistory"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginHorizontal="10dp"-->
+        <!--                android:layout_marginVertical="10dp"-->
+        <!--                app:cardCornerRadius="15dp"-->
+        <!--                app:cardElevation="5dp"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toBottomOf="@id/cardPackagePurchaseHistory">-->
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivHotelBookingHistoryErrow"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+        <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="match_parent"-->
+        <!--                    android:paddingHorizontal="10dp"-->
+        <!--                    android:paddingVertical="30dp">-->
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardManageCarRents"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="10dp"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardHotelBookingHistory">
+        <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+        <!--                        style="@style/regular_20_text_bold"-->
+        <!--                        android:layout_width="0dp"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:text="Hotel Booking History"-->
+        <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                        app:layout_constraintEnd_toStartOf="@id/ivHotelBookingHistoryErrow"-->
+        <!--                        app:layout_constraintStart_toStartOf="parent"-->
+        <!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="30dp">
+        <!--                    <androidx.appcompat.widget.AppCompatImageView-->
+        <!--                        android:id="@+id/ivHotelBookingHistoryErrow"-->
+        <!--                        android:layout_width="30dp"-->
+        <!--                        android:layout_height="30dp"-->
+        <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                        app:layout_constraintTop_toTopOf="parent" />-->
+        <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+        <!--            </androidx.cardview.widget.CardView>-->
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/regular_20_text_bold"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Manage Car Rents"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/ivManageCarRentsErrow"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+        <!--            <androidx.cardview.widget.CardView-->
+        <!--                android:id="@+id/cardManageCarRents"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginHorizontal="10dp"-->
+        <!--                android:layout_marginVertical="10dp"-->
+        <!--                app:cardCornerRadius="15dp"-->
+        <!--                app:cardElevation="5dp"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toBottomOf="@id/cardHotelBookingHistory">-->
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivManageCarRentsErrow"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+        <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="match_parent"-->
+        <!--                    android:paddingHorizontal="10dp"-->
+        <!--                    android:paddingVertical="30dp">-->
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardCarRentalHistory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="10dp"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardManageCarRents">
+        <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+        <!--                        style="@style/regular_20_text_bold"-->
+        <!--                        android:layout_width="0dp"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:text="Manage Car Rents"-->
+        <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                        app:layout_constraintEnd_toStartOf="@id/ivManageCarRentsErrow"-->
+        <!--                        app:layout_constraintStart_toStartOf="parent"-->
+        <!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="30dp">
+        <!--                    <androidx.appcompat.widget.AppCompatImageView-->
+        <!--                        android:id="@+id/ivManageCarRentsErrow"-->
+        <!--                        android:layout_width="30dp"-->
+        <!--                        android:layout_height="30dp"-->
+        <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                        app:layout_constraintTop_toTopOf="parent" />-->
+        <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+        <!--            </androidx.cardview.widget.CardView>-->
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/regular_20_text_bold"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Car Rental History"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/ivCarRentalHistoryErrow"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+        <!--            <androidx.cardview.widget.CardView-->
+        <!--                android:id="@+id/cardCarRentalHistory"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginHorizontal="10dp"-->
+        <!--                android:layout_marginVertical="10dp"-->
+        <!--                app:cardCornerRadius="15dp"-->
+        <!--                app:cardElevation="5dp"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toBottomOf="@id/cardManageCarRents">-->
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivCarRentalHistoryErrow"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+        <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="match_parent"-->
+        <!--                    android:paddingHorizontal="10dp"-->
+        <!--                    android:paddingVertical="30dp">-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+        <!--                    <androidx.appcompat.widget.AppCompatTextView-->
+        <!--                        style="@style/regular_20_text_bold"-->
+        <!--                        android:layout_width="0dp"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:text="Car Rental History"-->
+        <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                        app:layout_constraintEnd_toStartOf="@id/ivCarRentalHistoryErrow"-->
+        <!--                        app:layout_constraintStart_toStartOf="parent"-->
+        <!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!--                    <androidx.appcompat.widget.AppCompatImageView-->
+        <!--                        android:id="@+id/ivCarRentalHistoryErrow"-->
+        <!--                        android:layout_width="30dp"-->
+        <!--                        android:layout_height="30dp"-->
+        <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                        app:layout_constraintTop_toTopOf="parent" />-->
+        <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+        <!--            </androidx.cardview.widget.CardView>-->
+
+        <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+        <!--    </androidx.core.widget.NestedScrollView>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

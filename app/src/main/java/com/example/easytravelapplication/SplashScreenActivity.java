@@ -30,7 +30,8 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                     if (sp.getString(AppConstant.IS_LOGIN, "").equalsIgnoreCase("true")) {
-                        new CommonMethod(SplashScreenActivity.this, DashBoardActivity.class);
+                        new CommonMethod(SplashScreenActivity.this, MainActivity.class);
+//                        new CommonMethod(SplashScreenActivity.this, DashBoardActivity.class);
                         finish();
                     } else {
                         new CommonMethod(SplashScreenActivity.this, LogInActivity.class);

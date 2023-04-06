@@ -9,8 +9,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
@@ -36,8 +34,11 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 public class BuyNowActivity extends AppCompatActivity implements PaymentResultListener {
@@ -48,10 +49,10 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
     ProgressDialog progressDialog;
     private String totalDay, totalNight, image;
     String sPaymentType = "", sTransactionId = "";
-    String  startDate;
+    String startDate;
     String endDate;
-    String  hotelName;
-
+    String hotelName;
+    int totalAmount;
     ArrayList<HotelListResponse> hotelList = new ArrayList<>();
 
     @Override
@@ -70,7 +71,6 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
 
     private void initView() {
 
-
         Intent intent = getIntent();
         binding.tvPackageName.setText(intent.getStringExtra("package_name"));
         binding.tvPlaces.setText(intent.getStringExtra("places"));
@@ -79,48 +79,45 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
         binding.tvDayNight.setText(totalDay + "D/" + totalNight + "N");
         binding.tvEndDate.setText(intent.getStringExtra("end_date"));
         binding.tvPrice.setText(intent.getStringExtra("price"));
+        binding.tvHotelName.setText(intent.getStringExtra("hotel_name"));
         image = intent.getStringExtra("image");
         Picasso.get().load(image).into(binding.rivPackage);
-
 
         binding.edtName.setText(sp.getString(AppConstant.NAME, ""));
         binding.edtEmail.setText(sp.getString(AppConstant.EMAIL, ""));
         binding.edtContactNo.setText(sp.getString(AppConstant.CONTACT, ""));
-        binding.tvDob.setText(sp.getString(AppConstant.DOB, ""));
 
-        if (sp.getString(AppConstant.GENDER, "").equalsIgnoreCase("Female")){
+        if (sp.getString(AppConstant.GENDER, "").equalsIgnoreCase("Female")) {
             binding.rgFemale.setChecked(true);
-        }
-        else{
+        } else {
             binding.rgMale.setChecked(true);
-
         }
 
-        getHotelName();
+//        getHotelName();
 
-        HotelListResponse response = new HotelListResponse();
-        response.setHotelName("Add Hotels");
-        hotelList.add(0,response);
-        ArrayAdapter hotelAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,hotelList);
-        hotelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        binding.hotels.setAdapter(hotelAdapter);
-
-        binding.hotels.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                hotelName = hotelList.get(i).getHotelName();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        HotelListResponse response = new HotelListResponse();
+//        response.setHotelName("Add Hotels");
+//        hotelList.add(0,response);
+//        ArrayAdapter hotelAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,hotelList);
+//        hotelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//
+//        binding.hotels.setAdapter(hotelAdapter);
+//
+//        binding.hotels.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                hotelName = hotelList.get(i).getHotelName();
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
     }
 
-    private  void getHotelName() {
+    private void getHotelName() {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manage Hotel");
         reference.addValueEventListener(new ValueEventListener() {
@@ -146,7 +143,7 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
 
     private void initListener() {
 
-        binding.tvDob.setOnClickListener(new View.OnClickListener() {
+        /*binding.tvDob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar c = Calendar.getInstance();
@@ -171,7 +168,7 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
                         year, month, day);
                 datePickerDialog.show();
             }
-        });
+        });*/
 
         binding.tvStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,12 +221,11 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
                                 binding.tvEndDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                                 endDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
 
+                                countDays();
                             }
                         },
                         year, month, day);
                 datePickerDialog.show();
-
-
             }
         });
 
@@ -245,9 +241,11 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
                     binding.edtContactNo.setError("Phone No is  Required");
                 } else if (binding.radioGroup.getCheckedRadioButtonId() == -1) {
                     new CommonMethod(BuyNowActivity.this, "Please Select Gender");
-                } else if (binding.tvDob.getText().toString().equals("")) {
+                }
+                /*else if (binding.tvDob.getText().toString().equals("")) {
                     binding.tvDob.setError("Date of Birth is  Required");
-                } else {
+                }*/
+                else {
                     progressDialog = new ProgressDialog(BuyNowActivity.this);
                     progressDialog.setMessage("Please Wait...");
                     progressDialog.setCancelable(false);
@@ -258,6 +256,26 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
                 }
             }
         });
+    }
+
+
+    private void countDays() {
+        Date date1;
+        Date date2;
+        SimpleDateFormat dates = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            date1 = dates.parse(startDate);
+            date2 = dates.parse(endDate);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        long difference = Math.abs(date1.getTime() - date2.getTime());
+        long differenceDates = difference / (24 * 60 * 60 * 1000);
+        String dayDifference = Long.toString(differenceDates);
+        Log.d("TAG", dayDifference);
+
+        totalAmount = Integer.parseInt(dayDifference) * Integer.parseInt(getIntent().getStringExtra("price"));
+        binding.tvPrice.setText(String.valueOf(totalAmount));
     }
 
     private void BookPackage() {
@@ -279,6 +297,8 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
         params.put("price", binding.tvPrice.getText().toString());
         params.put("purchaseDate", Calendar.getInstance().getTime().toString());
         params.put("packageImage", image);
+        params.put("transactionId", sTransactionId);
+        params.put("paymentType", sPaymentType);
         params.put("status", "Active");
 
         dbref.child(key).setValue(params).addOnSuccessListener(new OnSuccessListener() {
@@ -323,8 +343,7 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
             co.open(activity, options);
         } catch (Exception e) {
             Log.d("RESPONSE", e.getMessage());
-            Toast.makeText(activity, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT)
-                    .show();
+            Toast.makeText(activity, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -336,14 +355,13 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
             sTransactionId = razorpayPaymentID;
             sPaymentType = "Online";
             if (new ConnectionDetector(BuyNowActivity.this).isConnectingToInternet()) {
-                if(new ConnectionDetector(BuyNowActivity.this).isConnectingToInternet()){
+                if (new ConnectionDetector(BuyNowActivity.this).isConnectingToInternet()) {
 
                     progressDialog.show();
                     BookPackage();
                     progressDialog.dismiss();
 
-                }
-                else{
+                } else {
                     new ConnectionDetector(BuyNowActivity.this).connectiondetect();
                     progressDialog.dismiss();
                 }
@@ -376,6 +394,7 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
         //Use For Close Application
         finish();
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

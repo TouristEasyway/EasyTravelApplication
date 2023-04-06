@@ -73,7 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        Picasso.get().load(image).into(binding.userProfileImage);
+        Picasso.get().load(image).placeholder(R.drawable.unknown_person).into(binding.userProfileImage);
 
         binding.btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +81,21 @@ public class ProfileActivity extends AppCompatActivity {
                 checkValidatation();
             }
         });
+
+        binding.btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.signOut();
+                sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
+                sp.edit().clear().commit();
+                openLogin();
+            }
+        });
+    }
+
+    private void openLogin() {
+        startActivity(new Intent(ProfileActivity.this, LogInActivity.class));
+        finish();
     }
 
     private void checkValidatation() {
@@ -170,7 +185,7 @@ public class ProfileActivity extends AppCompatActivity {
                 sp.edit().putString(AppConstant.CONTACT, binding.TIEPhoneNo.getText().toString()).commit();
                 sp.edit().putString(AppConstant.CITY, binding.TIECity.getText().toString()).commit();
                 sp.edit().putString(AppConstant.STATE, binding.TIEState.getText().toString()).commit();
-                sp.edit().putString(AppConstant.GENDER,  binding.rgMale.isChecked() ? "Male" : "Female").commit();
+                sp.edit().putString(AppConstant.GENDER, binding.rgMale.isChecked() ? "Male" : "Female").commit();
                 sp.edit().putString(AppConstant.PROFILE_IMAGE, s).commit();
                 Toast.makeText(ProfileActivity.this, "Profile Updated Successfully.", Toast.LENGTH_SHORT).show();
             }
@@ -367,6 +382,7 @@ public class ProfileActivity extends AppCompatActivity {
         //Use For Close Application
         finish();
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

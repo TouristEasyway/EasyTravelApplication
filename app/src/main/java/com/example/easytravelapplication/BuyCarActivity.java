@@ -1,9 +1,5 @@
 package com.example.easytravelapplication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -15,12 +11,15 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
 import com.example.easytravelapplication.Model.ManageCarResponse;
 import com.example.easytravelapplication.Utils.AppConstant;
 import com.example.easytravelapplication.Utils.CommonMethod;
 import com.example.easytravelapplication.Utils.ConnectionDetector;
 import com.example.easytravelapplication.databinding.ActivityBuyCarBinding;
-import com.example.easytravelapplication.databinding.ActivityBuyNowBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -44,11 +43,12 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
     DatabaseReference reference, dbref;
     ProgressDialog progressDialog;
     ManageCarResponse response;
-    String  startDate;
+    String startDate;
     String endDate;
     String sPaymentType = "", sTransactionId = "";
 
     int price;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +57,7 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
         binding = DataBindingUtil.setContentView(this, R.layout.activity_buy_car);
         response = (ManageCarResponse) getIntent().getSerializableExtra("CAR_RESPONSE");
 
-        getSupportActionBar().setTitle("Buy Car");
+        getSupportActionBar().setTitle("Book Car");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         reference = FirebaseDatabase.getInstance().getReference();
 
@@ -119,6 +119,7 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
                                 binding.tvEndDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                                 endDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
 
+                                countDays();
                             }
                         },
                         year, month, day);
@@ -128,35 +129,33 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
             }
         });
 
-        binding.tvBookDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar c = Calendar.getInstance();
-
-
-                int year = c.get(Calendar.YEAR);
-                int month = c.get(Calendar.MONTH);
-                int day = c.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        // on below line we are passing context.
-                        BuyCarActivity.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                // on below line we are setting date to our text view.
-                                binding.tvBookDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-
-                            }
-                        },
-                        year, month, day);
-                datePickerDialog.show();
-
-                countDays();
-
-            }
-        });
+//        binding.tvBookDate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final Calendar c = Calendar.getInstance();
+//
+//
+//                int year = c.get(Calendar.YEAR);
+//                int month = c.get(Calendar.MONTH);
+//                int day = c.get(Calendar.DAY_OF_MONTH);
+//
+//                DatePickerDialog datePickerDialog = new DatePickerDialog(
+//                        // on below line we are passing context.
+//                        BuyCarActivity.this,
+//                        new DatePickerDialog.OnDateSetListener() {
+//                            @Override
+//                            public void onDateSet(DatePicker view, int year,
+//                                                  int monthOfYear, int dayOfMonth) {
+//                                // on below line we are setting date to our text view.
+//                                binding.tvBookDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+//
+//                            }
+//                        },
+//                        year, month, day);
+//                datePickerDialog.show();
+//
+//            }
+//        });
         binding.btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,13 +165,11 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
                     binding.edtEmail.setError("Email is Required");
                 } else if (binding.edtContactNo.getText().toString().equals("")) {
                     binding.edtContactNo.setError("Phone No is  Required");
-                } else if (binding.tvStartDate.getText().equals("") ) {
+                } else if (binding.tvStartDate.getText().equals("")) {
                     binding.tvStartDate.setError("Select Starting Date ");
                 } else if (binding.tvEndDate.getText().toString().equals("")) {
                     binding.tvEndDate.setError("Select End Date");
-                }
-
-                else {
+                } else {
                     progressDialog = new ProgressDialog(BuyCarActivity.this);
                     progressDialog.setMessage("Please Wait...");
                     progressDialog.setCancelable(false);
@@ -198,9 +195,9 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
         long difference = Math.abs(date1.getTime() - date2.getTime());
         long differenceDates = difference / (24 * 60 * 60 * 1000);
         String dayDifference = Long.toString(differenceDates);
-        Log.d("TAG",dayDifference);
+        Log.d("TAG", dayDifference);
 
-         price = Integer.parseInt(dayDifference) * Integer.parseInt(response.getRatePerKM());
+        price = Integer.parseInt(dayDifference) * Integer.parseInt(response.getRatePerKM());
         binding.tvPrice.setText(getString(R.string.rupee) + String.valueOf(price));
     }
 
@@ -218,11 +215,13 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
         params.put("carName", response.getCarName());
         params.put("fuelType", response.getfuelType());
         params.put("carType", response.getCarType());
-        params.put("bookDate", binding.tvBookDate.getText().toString());
+        params.put("bookDate", new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime()));
         params.put("price", binding.tvPrice.getText().toString());
         params.put("ratePerKM", response.getRatePerKM());
         params.put("available", response.getAvailable());
         params.put("city", response.getCity());
+        params.put("transactionId", sTransactionId);
+        params.put("paymentType", sPaymentType);
         params.put("status", "Active");
 
         dbref.child(key).setValue(params).addOnSuccessListener(new OnSuccessListener() {
@@ -230,7 +229,7 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
             public void onSuccess(Object o) {
                 progressDialog.dismiss();
                 new CommonMethod(BuyCarActivity.this, "Car Booked Successfully.");
-                new CommonMethod(BuyCarActivity.this,CarRentalHistoryActivity.class);
+                new CommonMethod(BuyCarActivity.this, CarRentalHistoryActivity.class);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -248,7 +247,7 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
         binding.tvCarName.setText(response.getCarName());
         binding.tvCarType.setText(response.getCarType());
         binding.tvFuelType.setText(response.getfuelType());
-        binding.tvRate.setText(response.getRatePerKM()+ "KM/Hr");
+        binding.tvRate.setText(response.getRatePerKM() + "KM/Hr");
         binding.tvAvailble.setText(response.getAvailable());
         binding.tvCity.setText(response.getCity());
         binding.edtName.setText(sp.getString(AppConstant.NAME, ""));
@@ -257,7 +256,7 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
     }
 
 
-        private void launchRazorpayPayment() {
+    private void launchRazorpayPayment() {
         final Activity activity = this;
 
         final Checkout co = new Checkout();
@@ -266,13 +265,13 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
             JSONObject options = new JSONObject();
             options.put("name", "Razorpay Corp");
             //options.put("description", "Demoing Charges");
-            options.put("description", "BuyCar Details");
+            options.put("description", "Book Car Details");
             options.put("send_sms_hash", true);
             options.put("allow_rotation", true);
             //You can omit the image option to fetch the image from dashboard
             options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
             options.put("currency", "INR");
-            options.put("amount", price);
+            options.put("amount", price * 100);
 
             JSONObject preFill = new JSONObject();
             preFill.put("email", sp.getString(AppConstant.EMAIL, ""));
@@ -296,14 +295,13 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
             sTransactionId = razorpayPaymentID;
             sPaymentType = "Online";
             if (new ConnectionDetector(BuyCarActivity.this).isConnectingToInternet()) {
-                if(new ConnectionDetector(BuyCarActivity.this).isConnectingToInternet()){
+                if (new ConnectionDetector(BuyCarActivity.this).isConnectingToInternet()) {
                     progressDialog = new ProgressDialog(BuyCarActivity.this);
                     progressDialog.setMessage("Please Wait...");
                     progressDialog.setCancelable(false);
                     progressDialog.show();
                     bookCar();
-                }
-                else{
+                } else {
                     new ConnectionDetector(BuyCarActivity.this).connectiondetect();
                 }
             } else {
@@ -326,11 +324,13 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
             Log.e("RESPONSE", "Exception in onPaymentError", e);
         }
     }
+
     @Override
     public void onBackPressed() {
         //Use For Close Application
         finish();
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

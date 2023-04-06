@@ -39,8 +39,8 @@
                         android:id="@+id/imgCar"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/car"
                         android:scaleType="fitXY"
+                        android:src="@drawable/car"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:riv_corner_radius="10dp" />
@@ -84,7 +84,6 @@
                         tools:text="Auto " />
 
 
-
                     <View
                         android:id="@+id/viewDivider"
                         android:layout_width="0dp"
@@ -125,11 +124,11 @@
                         android:layout_marginTop="10dp"
                         android:background="@drawable/bg_black_25"
                         android:padding="10dp"
-                        tools:text="Booked"
                         android:textColor="@color/white"
                         app:layout_constraintEnd_toStartOf="@id/tv_city"
                         app:layout_constraintStart_toEndOf="@id/tv_rate"
-                        app:layout_constraintTop_toBottomOf="@id/viewDivider" />
+                        app:layout_constraintTop_toBottomOf="@id/viewDivider"
+                        tools:text="Booked" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/labe_city"
@@ -147,8 +146,8 @@
                         style="@style/regular_16_text_bold"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
                         android:layout_marginTop="2dp"
+                        android:gravity="end"
                         app:layout_constraintBottom_toBottomOf="@id/tv_availble"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_availble"
@@ -295,29 +294,27 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilBookDate"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:hint="Book Date"
-                    app:boxStrokeColor="@color/black"
-                    app:hintTextColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="@id/end"
-                    app:layout_constraintStart_toStartOf="@id/start"
-                    app:layout_constraintTop_toBottomOf="@id/tilEndDate">
+                <!--                <com.google.android.material.textfield.TextInputLayout-->
+                <!--                    android:id="@+id/tilBookDate"-->
+                <!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="20dp"-->
+                <!--                    android:hint="Book Date"-->
+                <!--                    app:boxStrokeColor="@color/black"-->
+                <!--                    app:hintTextColor="@color/black"-->
+                <!--                    app:layout_constraintEnd_toEndOf="@id/end"-->
+                <!--                    app:layout_constraintStart_toStartOf="@id/start"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@id/tilEndDate">-->
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tvBookDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:textColor="@color/black" />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
+                <!--                    <com.google.android.material.textfield.TextInputEditText-->
+                <!--                        android:id="@+id/tvBookDate"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:clickable="false"-->
+                <!--                        android:focusable="false"-->
+                <!--                        android:textColor="@color/black" />-->
+                <!--                </com.google.android.material.textfield.TextInputLayout>-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
@@ -338,11 +335,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:text="₹0.00"
                 app:layout_constraintBottom_toBottomOf="@id/btnContinue"
                 app:layout_constraintEnd_toStartOf="@id/btnContinue"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/btnContinue"
-                android:text="₹0.00" />
+                app:layout_constraintTop_toTopOf="@id/btnContinue" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnContinue"

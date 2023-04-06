@@ -112,7 +112,8 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void openMain() {
-        startActivity(new Intent(LogInActivity.this, DashBoardActivity.class));
+//        startActivity(new Intent(LogInActivity.this, DashBoardActivity.class));
+        startActivity(new Intent(LogInActivity.this, MainActivity.class));
         finish();
     }
 

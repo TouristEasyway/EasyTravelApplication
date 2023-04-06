@@ -261,7 +261,8 @@ public class LoginOtpActivity extends AppCompatActivity {
                             //Toast.makeText(LoginOtpActivity.this, "Success", Toast.LENGTH_SHORT).show();
                             if (sp.getString(AppConstant.LOGIN_SIGNUP, "").equalsIgnoreCase("Login")) {
                                 sp.edit().putString(AppConstant.IS_LOGIN, "true").commit();
-                                new CommonMethod(LoginOtpActivity.this, DashBoardActivity.class);
+//                                new CommonMethod(LoginOtpActivity.this, DashBoardActivity.class);
+                                new CommonMethod(LoginOtpActivity.this, MainActivity.class);
                             } else {
                                 pd = new ProgressDialog(LoginOtpActivity.this);
                                 pd.setMessage("Please Wait...");
@@ -291,7 +292,8 @@ public class LoginOtpActivity extends AppCompatActivity {
                                         pd.dismiss();
                                         sp.edit().putString( AppConstant.IS_LOGIN, "true").commit();
                                         new CommonMethod(LoginOtpActivity.this, "Registration Successfully");
-                                        new CommonMethod(LoginOtpActivity.this, DashBoardActivity.class);
+//                                        new CommonMethod(LoginOtpActivity.this, DashBoardActivity.class);
+                                        new CommonMethod(LoginOtpActivity.this, MainActivity.class);
                                         //onBackPressed();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {

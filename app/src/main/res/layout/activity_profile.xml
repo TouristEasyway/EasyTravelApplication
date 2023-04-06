@@ -33,7 +33,7 @@
                         android:id="@+id/user_profile_image"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
-                        android:src="@drawable/ic_person"
+                        android:src="@drawable/unknown_person"
                         app:civ_border_color="@color/white"
                         app:civ_border_width="2dp" />
 
@@ -55,8 +55,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:gravity="center"
-                    tools:text="Vishva Asmar"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    tools:text="Vishva Asmar" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/TIL_name"
@@ -201,9 +201,23 @@
         </androidx.core.widget.NestedScrollView>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLogout"
+            style="@style/button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="30dp"
+            android:paddingHorizontal="30dp"
+            android:text="Logout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnUpdate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nsView" />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnUpdate"
             style="@style/button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="30dp"
@@ -211,9 +225,8 @@
             android:text="Update"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnLogout"
             app:layout_constraintTop_toBottomOf="@id/nsView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </layout>
