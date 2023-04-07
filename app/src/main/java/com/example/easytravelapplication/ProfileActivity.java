@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -28,6 +30,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -38,7 +41,9 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
     ActivityProfileBinding binding;
@@ -58,6 +63,31 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
 
+        binding.bottomNavigationView.setSelectedItemId(R.id.profile);
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        return true;
+                    case R.id.package1:
+                        startActivity(new Intent(getApplicationContext(), ManagePackageActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.car:
+                        startActivity(new Intent(getApplicationContext(), ManageCarRentActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+                return false;
+            }
+        });
         getSupportActionBar().setTitle("Update Profile");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         requestStoragePermission();
@@ -197,13 +227,32 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void requestStoragePermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-            return;
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+    String[] appPermission = {android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CALL_PHONE, Manifest.permission.CAMERA};
 
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+    public static String[] appPermission33 = {Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_AUDIO, Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.CALL_PHONE, Manifest.permission.CAMERA};
+
+    private void requestStoragePermission() {
+        List<String> listPermission = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            for (String perm : appPermission33) {
+                if (ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED) {
+                    listPermission.add(perm);
+                }
+            }
+            if (!listPermission.isEmpty()) {
+                ActivityCompat.requestPermissions(this, listPermission.toArray(new String[listPermission.size()]), STORAGE_CODE);
+            }
+        } else {
+            for (String perm : appPermission) {
+                if (ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED) {
+                    listPermission.add(perm);
+                }
+            }
+            if (!listPermission.isEmpty()) {
+                ActivityCompat.requestPermissions(this, listPermission.toArray(new String[listPermission.size()]), STORAGE_CODE);
+            }
         }
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_CODE);
     }
 
     private void openGallery() {

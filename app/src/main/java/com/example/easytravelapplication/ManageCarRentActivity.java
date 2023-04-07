@@ -6,8 +6,10 @@ import androidx.databinding.DataBindingUtil;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.easytravelapplication.Adapter.ManageCarAdapter;
@@ -18,6 +20,7 @@ import com.example.easytravelapplication.Utils.AppConstant;
 import com.example.easytravelapplication.Utils.CommonMethod;
 import com.example.easytravelapplication.Utils.ConnectionDetector;
 import com.example.easytravelapplication.databinding.ActivityManageCarRentBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,8 +42,34 @@ public class ManageCarRentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_manage_car_rent);
+
+        binding.bottomNavigationView.setSelectedItemId(R.id.car);
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.package1:
+                        startActivity(new Intent(getApplicationContext(), ManagePackageActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.car:
+                        return true;
+
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+                return false;
+            }
+        });
+
         getSupportActionBar().setTitle("Manage Car");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
