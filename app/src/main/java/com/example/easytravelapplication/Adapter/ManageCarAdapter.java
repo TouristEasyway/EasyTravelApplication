@@ -32,12 +32,12 @@ public class ManageCarAdapter extends RecyclerView.Adapter<ManageCarAdapter.View
     private ArrayList<ManageCarResponse> responseList;
     private Context context;
 
-    private  String userType;
+    private String userType;
 
-    public ManageCarAdapter(Context context,ArrayList<ManageCarResponse> responseList,String userType) {
+    public ManageCarAdapter(Context context, ArrayList<ManageCarResponse> responseList, String userType) {
         this.responseList = responseList;
         this.context = context;
-        this.userType =userType;
+        this.userType = userType;
 
     }
 
@@ -65,19 +65,17 @@ public class ManageCarAdapter extends RecyclerView.Adapter<ManageCarAdapter.View
             Picasso.get().load(responseList.get(position).getCarImage()).into(holder.itemRowBinding.imgCar);
         }
 
-        if (userType.equals("User")){
+        if (userType.equals("User")) {
             holder.itemRowBinding.deleterImg.setVisibility(View.GONE);
             holder.itemRowBinding.editImg.setVisibility(View.GONE);
-            if (responseList.get(position).getAvailable().equals("Booked")){
+            if (responseList.get(position).getAvailable().equals("Booked")) {
                 holder.itemRowBinding.tvPurchase.setVisibility(View.GONE);
-            }
-            else{
+            } else {
                 holder.itemRowBinding.tvPurchase.setVisibility(View.VISIBLE);
 
             }
 
-        }
-        else{
+        } else {
             holder.itemRowBinding.deleterImg.setVisibility(View.VISIBLE);
             holder.itemRowBinding.editImg.setVisibility(View.VISIBLE);
             holder.itemRowBinding.tvPurchase.setVisibility(View.GONE);
@@ -86,8 +84,8 @@ public class ManageCarAdapter extends RecyclerView.Adapter<ManageCarAdapter.View
         holder.itemRowBinding.tvPurchase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context,BuyCarActivity.class);
-                intent.putExtra("CAR_RESPONSE",responseList.get(position));
+                Intent intent = new Intent(context, BuyCarActivity.class);
+                intent.putExtra("CAR_RESPONSE", responseList.get(position));
                 context.startActivity(intent);
 
             }
@@ -95,10 +93,10 @@ public class ManageCarAdapter extends RecyclerView.Adapter<ManageCarAdapter.View
         holder.itemRowBinding.editImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context,AddCarActivity.class);
-                intent.putExtra("CAR_RESPONSE",responseList.get(position));
+                Intent intent = new Intent(context, AddCarActivity.class);
+                intent.putExtra("CAR_RESPONSE", responseList.get(position));
                 intent.putExtra("UPDATE_CAR", true);
-                intent.putExtra("image",  responseList.get(position).getCarImage());
+                intent.putExtra("image", responseList.get(position).getCarImage());
                 context.startActivity(intent);
             }
         });
@@ -148,7 +146,6 @@ public class ManageCarAdapter extends RecyclerView.Adapter<ManageCarAdapter.View
                 alert.show();
 
 
-
             }
         });
 
@@ -162,6 +159,7 @@ public class ManageCarAdapter extends RecyclerView.Adapter<ManageCarAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ItemManageCarBinding itemRowBinding;
+
         public ViewHolder(ItemManageCarBinding itemView) {
             super(itemView.getRoot());
             this.itemRowBinding = itemView;

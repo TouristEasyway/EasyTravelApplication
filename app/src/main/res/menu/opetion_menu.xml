@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/profile"
-        android:title="Your Profile"
+    <item
+        android:id="@+id/profile"
         android:icon="@drawable/ic_person"
-        />
+        android:title="Your Profile"
+        android:visible="false" />
 
-    <item android:id="@+id/logout"
-        android:title="Logout"
+    <item
+        android:id="@+id/logout"
         android:icon="@drawable/ic_logout"
-        />
+        android:title="Logout"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/icSearch"
+        android:icon="@drawable/ic_search"
+        android:title="Search"
+        app:showAsAction="always" />
 
 </menu>
