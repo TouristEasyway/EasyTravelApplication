@@ -12,6 +12,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -22,7 +24,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
-import com.example.easytravelapplication.Model.HotelListResponse;
 import com.example.easytravelapplication.Utils.AppConstant;
 import com.example.easytravelapplication.Utils.CommonMethod;
 import com.example.easytravelapplication.databinding.ActivityAddManageHotelBinding;
@@ -61,6 +62,10 @@ public class AddManageHotelActivity extends AppCompatActivity {
     //    ImageAdapter adapter;
     boolean toUpdate;
 
+    private ArrayList<String> cityList = new ArrayList<>();
+    private ArrayList<String> stateList = new ArrayList<>();
+    String city = "", state = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,8 +85,6 @@ public class AddManageHotelActivity extends AppCompatActivity {
         uniqueKey = intent.getStringExtra("key");
         binding.edtHotelName.setText(intent.getStringExtra("hotel_name"));
         binding.edtAddress.setText(intent.getStringExtra("address"));
-        binding.edtCity.setText(intent.getStringExtra("city"));
-        binding.edtState.setText(intent.getStringExtra("state"));
         binding.edtLocation.setText(intent.getStringExtra("location"));
         binding.edtPrice.setText(intent.getStringExtra("price"));
         binding.edtCheckInTime.setText(intent.getStringExtra("check_in_time"));
@@ -107,6 +110,48 @@ public class AddManageHotelActivity extends AppCompatActivity {
         sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
         reference = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
+
+        cityList.add("Ahmedabad");
+        cityList.add("Dahod");
+        cityList.add("Surat");
+
+        stateList.add("Gujarat");
+        stateList.add("Maharashtra");
+
+
+        ArrayAdapter cityAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, cityList);
+        cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        binding.citySpinner.setAdapter(cityAdapter);
+
+        ArrayAdapter stateAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, stateList);
+        stateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        binding.stateSpinner.setAdapter(stateAdapter);
+
+        binding.citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                city = cityList.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        binding.stateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                state = stateList.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         progressDialog = new ProgressDialog(AddManageHotelActivity.this);
     }
@@ -193,12 +238,12 @@ public class AddManageHotelActivity extends AppCompatActivity {
             binding.edtService.setError("Service is  Required");
         } else if (binding.edtAddress.getText().toString().equals("")) {
             binding.edtAddress.setError("Address Date Required");
-        } else if (binding.edtCity.getText().toString().equals("")) {
-            binding.edtCity.setError("City is Required");
+        } else if (city.equals("")) {
+            new CommonMethod(this, "City is Required");
         } else if (binding.edtLocation.getText().toString().equals("")) {
             binding.edtLocation.setError("Location is  Required");
-        } else if (binding.edtState.getText().toString().equals("")) {
-            binding.edtState.setError("State is  Required");
+        } else if (state.equals("")) {
+            new CommonMethod(this, "State is Required");
         } else if (binding.edtPrice.getText().toString().equals("")) {
             binding.edtPrice.setError("Price is  Required");
         } else if (bitmap == null) {
@@ -257,8 +302,8 @@ public class AddManageHotelActivity extends AppCompatActivity {
         params.put("key", key);
         params.put("hotelName", binding.edtHotelName.getText().toString());
         params.put("address", binding.edtAddress.getText().toString());
-        params.put("city", binding.edtCity.getText().toString());
-        params.put("state", binding.edtState.getText().toString());
+        params.put("city", city);
+        params.put("state", state);
         params.put("location", binding.edtLocation.getText().toString());
         params.put("price", binding.edtPrice.getText().toString());
         params.put("checkInTime", binding.edtCheckInTime.getText().toString());
@@ -400,6 +445,7 @@ public class AddManageHotelActivity extends AppCompatActivity {
         //Use For Close Application
         finish();
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

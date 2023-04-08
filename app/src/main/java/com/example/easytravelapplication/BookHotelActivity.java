@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.easytravelapplication.Utils.AppConstant;
+import com.example.easytravelapplication.Utils.CommonMethod;
 import com.example.easytravelapplication.databinding.ActivityBookHotelBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -115,7 +116,6 @@ public class BookHotelActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final Calendar c = Calendar.getInstance();
 
-
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
@@ -195,6 +195,8 @@ public class BookHotelActivity extends AppCompatActivity {
             public void onSuccess(Object o) {
                 progressDialog.dismiss();
                 Toast.makeText(BookHotelActivity.this, "Hotel Booked Successfully.", Toast.LENGTH_SHORT).show();
+                new CommonMethod(BookHotelActivity.this, MainActivity.class);
+                finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

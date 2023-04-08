@@ -194,7 +194,7 @@ public class AddCarActivity extends AppCompatActivity {
         } else if (binding.radioGroupCarTye.getCheckedRadioButtonId() == -1) {
             new CommonMethod(AddCarActivity.this, "Select Car Type");
         } else if (binding.edtRatePerKm.getText().equals("")) {
-            binding.edtRatePerKm.setError("Please Enter rate par km");
+            binding.edtRatePerKm.setError("Please Enter rate par Day");
         } else if (binding.edtAvailable.getText().equals("")) {
             binding.edtAvailable.setError("Please Car availability");
         }else if (bitmap == null) {
@@ -224,7 +224,6 @@ public class AddCarActivity extends AppCompatActivity {
     private void addCarData(String image) {
         dbref = reference.child("Manage Car");
         String key = reference.push().getKey();
-
 
         HashMap params = new HashMap<>();
         params.put("key", key);

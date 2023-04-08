@@ -229,7 +229,8 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
             public void onSuccess(Object o) {
                 progressDialog.dismiss();
                 new CommonMethod(BuyCarActivity.this, "Car Booked Successfully.");
-                new CommonMethod(BuyCarActivity.this, CarRentalHistoryActivity.class);
+                new CommonMethod(BuyCarActivity.this, MainActivity.class);
+                finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

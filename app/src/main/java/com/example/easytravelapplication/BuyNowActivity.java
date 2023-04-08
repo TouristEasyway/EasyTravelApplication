@@ -306,6 +306,8 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
             public void onSuccess(Object o) {
                 progressDialog.dismiss();
                 Toast.makeText(BuyNowActivity.this, "Package Booked Successfully.", Toast.LENGTH_SHORT).show();
+                new CommonMethod(BuyNowActivity.this, MainActivity.class);
+                finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

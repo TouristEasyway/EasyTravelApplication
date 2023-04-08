@@ -163,7 +163,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:hint="Rate per Km"
+                    android:hint="Rate per Day"
                     app:boxStrokeColor="@color/black"
                     app:hintTextColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"

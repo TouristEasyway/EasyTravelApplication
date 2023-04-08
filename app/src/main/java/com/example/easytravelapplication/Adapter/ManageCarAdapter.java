@@ -56,7 +56,7 @@ public class ManageCarAdapter extends RecyclerView.Adapter<ManageCarAdapter.View
 
         holder.itemRowBinding.tvCarName.setText(responseList.get(position).getCarName());
         holder.itemRowBinding.tvFuelType.setText(responseList.get(position).getfuelType());
-        holder.itemRowBinding.tvRateParKm.setText(responseList.get(position).getRatePerKM() + "Km/Hr");
+        holder.itemRowBinding.tvRateParKm.setText(responseList.get(position).getRatePerKM() + "/Day");
         holder.itemRowBinding.tvAvailable.setText(responseList.get(position).getAvailable());
 
         if (responseList.get(position).getCarImage() == null) {

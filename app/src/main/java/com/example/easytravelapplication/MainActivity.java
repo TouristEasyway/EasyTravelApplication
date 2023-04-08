@@ -70,12 +70,8 @@ public class MainActivity extends AppCompatActivity {
             pd.show();
             setPackageData();
             setPackageHistoryData();
-//            setHotelData();
-//            setHotelHistoryData();
             setCarData();
             setCarHistoryData();
-
-
 //            adapter = new HomeAdapter(this, userList);
         } else {
             getSupportActionBar().setTitle("Admin");
@@ -83,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
             adapter = new HomeAdapter(this, adminList);
             binding.rvDashboard.setAdapter(adapter);
         }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.home);
