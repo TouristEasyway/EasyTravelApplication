@@ -38,7 +38,9 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class AddCarActivity extends AppCompatActivity {
@@ -231,6 +233,7 @@ public class AddCarActivity extends AppCompatActivity {
         params.put("fuelType", binding.rbPetrol.isChecked() ? "Petrol" : "CNG");
         params.put("carType", binding.rbAuto.isChecked() ? "Auto" : "Manual");
         params.put("ratePerKM", binding.edtRatePerKm.getText().toString());
+        params.put("bookedDate", new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime()));
         params.put("city", city);
         params.put("state", state);
         params.put("available", binding.edtAvailable.getText().toString().trim());

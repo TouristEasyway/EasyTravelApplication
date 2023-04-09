@@ -7,13 +7,13 @@ import java.util.ArrayList;
 
 public class ManageCarResponse implements Serializable {
 
-    String carName, fuelType,carType,ratePerKM,city,state,available,key,carImage;
+    String carName, fuelType,carType,ratePerKM,city,state,available,bookedDate,key,carImage;
 
     public ManageCarResponse(){
 
     }
 
-    public ManageCarResponse(String carName, String fuelType, String carType, String ratePerKM, String city, String state,String available,String key,String carImage) {
+    public ManageCarResponse(String carName, String fuelType, String carType, String ratePerKM, String city, String state,String available,String bookedDate,String key,String carImage) {
         this.carName = carName;
         this.fuelType = fuelType;
         this.carType = carType;
@@ -21,6 +21,7 @@ public class ManageCarResponse implements Serializable {
         this.city = city;
         this.state = state;
         this.available = available;
+        this.bookedDate = bookedDate;
         this.key = key;
         this.carImage = carImage;
     }
@@ -95,5 +96,13 @@ public class ManageCarResponse implements Serializable {
 
     public void setCarImage(String carImage) {
         this.carImage = carImage;
+    }
+
+    public String getBookedDate() {
+        return bookedDate;
+    }
+
+    public void setBookedDate(String bookedDate) {
+        this.bookedDate = bookedDate;
     }
 }

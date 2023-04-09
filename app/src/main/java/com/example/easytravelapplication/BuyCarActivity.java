@@ -248,7 +248,7 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
         binding.tvCarName.setText(response.getCarName());
         binding.tvCarType.setText(response.getCarType());
         binding.tvFuelType.setText(response.getfuelType());
-        binding.tvRate.setText(response.getRatePerKM() + "KM/Hr");
+        binding.tvRate.setText(response.getRatePerKM() + "/Day");
         binding.tvAvailble.setText(response.getAvailable());
         binding.tvCity.setText(response.getCity());
         binding.edtName.setText(sp.getString(AppConstant.NAME, ""));

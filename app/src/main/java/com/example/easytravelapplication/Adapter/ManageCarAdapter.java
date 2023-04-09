@@ -26,7 +26,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ManageCarAdapter extends RecyclerView.Adapter<ManageCarAdapter.ViewHolder> {
     private ArrayList<ManageCarResponse> responseList;
@@ -57,7 +59,12 @@ public class ManageCarAdapter extends RecyclerView.Adapter<ManageCarAdapter.View
         holder.itemRowBinding.tvCarName.setText(responseList.get(position).getCarName());
         holder.itemRowBinding.tvFuelType.setText(responseList.get(position).getfuelType());
         holder.itemRowBinding.tvRateParKm.setText(responseList.get(position).getRatePerKM() + "/Day");
-        holder.itemRowBinding.tvAvailable.setText(responseList.get(position).getAvailable());
+        if (responseList.get(position).getBookedDate().compareTo(new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime())) < 0) {
+            holder.itemRowBinding.tvAvailable.setText("Available");
+        } else {
+            holder.itemRowBinding.tvAvailable.setText("Booked");
+        }
+
 
         if (responseList.get(position).getCarImage() == null) {
             Picasso.get().load(R.drawable.car).into(holder.itemRowBinding.imgCar);
@@ -68,13 +75,12 @@ public class ManageCarAdapter extends RecyclerView.Adapter<ManageCarAdapter.View
         if (userType.equals("User")) {
             holder.itemRowBinding.deleterImg.setVisibility(View.GONE);
             holder.itemRowBinding.editImg.setVisibility(View.GONE);
-            if (responseList.get(position).getAvailable().equals("Booked")) {
-                holder.itemRowBinding.tvPurchase.setVisibility(View.GONE);
-            } else {
+
+            if (responseList.get(position).getBookedDate().compareTo(new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime())) < 0) {
                 holder.itemRowBinding.tvPurchase.setVisibility(View.VISIBLE);
-
+            } else {
+                holder.itemRowBinding.tvPurchase.setVisibility(View.GONE);
             }
-
         } else {
             holder.itemRowBinding.deleterImg.setVisibility(View.VISIBLE);
             holder.itemRowBinding.editImg.setVisibility(View.VISIBLE);

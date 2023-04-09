@@ -13,6 +13,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -70,7 +72,8 @@ public class AddManagePackageActivity extends AppCompatActivity {
     ArrayList<Integer> langList = new ArrayList<>();
     String langArray[] = new String[arrayList.size()];
     boolean[] selectedLanguage = new boolean[langArray.length];
-
+    private ArrayList<String> cityList = new ArrayList<>();
+    String city = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +104,33 @@ public class AddManagePackageActivity extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
 
+        cityList.add("City");
+        cityList.add("Ahmedabad");
+        cityList.add("Dahod");
+        cityList.add("Surat");
+
+        ArrayAdapter cityAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, cityList);
+        cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        binding.citySpinner.setAdapter(cityAdapter);
+
+        binding.citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (cityList.get(i).equalsIgnoreCase("City")) {
+                    city = "";
+                } else {
+                    city = cityList.get(i);
+                }
+                getHotelName(city);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         progressDialog = new ProgressDialog(AddManagePackageActivity.this);
     }
 
@@ -123,12 +153,43 @@ public class AddManagePackageActivity extends AppCompatActivity {
 
     private void initListener() {
 
+//        ArrayAdapter hotelAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,hotelList);
+//        hotelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//
+//        binding.hotels.setAdapter(hotelAdapter);
+//
+//        binding.hotels.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                hotelName = hotelList.get(i);
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
+        binding.editImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openGallery();
+            }
+        });
 
-        getHotelName();
+        Picasso.get().load(image).placeholder(R.drawable.login_fi).into(binding.imgPackage);
+
+        binding.btnManage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkValidation();
+            }
+        });
+    }
+
+    private void selectHotelPopup() {
         binding.hotels.setOnClickListener(new View.OnClickListener() {
-
             boolean[] selectedLanguage;
-
 
             @Override
             public void onClick(View view) {
@@ -136,8 +197,16 @@ public class AddManagePackageActivity extends AppCompatActivity {
                 String langArray[] = new String[arrayList.size()];
                 selectedLanguage = new boolean[langArray.length];
 
-                for (int i =0;i<arrayList.size();i++){
-                    langArray[i] = arrayList.get(i).getHotelName();
+                for (int i = 0; i < arrayList.size(); i++) {
+                    if (city.equalsIgnoreCase(arrayList.get(i).getCity())) {
+                        langArray[i] = arrayList.get(i).getHotelName();
+                        binding.hotels.setVisibility(View.VISIBLE);
+                        binding.labelSpinner.setVisibility(View.VISIBLE);
+                    } else {
+                        arrayList.remove(i);
+                        binding.hotels.setVisibility(View.GONE);
+                        binding.labelSpinner.setVisibility(View.GONE);
+                    }
                 }
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(AddManagePackageActivity.this);
@@ -213,42 +282,9 @@ public class AddManagePackageActivity extends AppCompatActivity {
                 builder.show();
             }
         });
-
-//        ArrayAdapter hotelAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,hotelList);
-//        hotelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//        binding.hotels.setAdapter(hotelAdapter);
-//
-//        binding.hotels.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                hotelName = hotelList.get(i);
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
-        binding.editImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGallery();
-            }
-        });
-
-        Picasso.get().load(image).placeholder(R.drawable.login_fi).into(binding.imgPackage);
-
-        binding.btnManage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkValidation();
-            }
-        });
     }
 
-    private  void getHotelName() {
+    private void getHotelName(String city) {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manage Hotel");
         reference.addValueEventListener(new ValueEventListener() {
@@ -258,18 +294,22 @@ public class AddManagePackageActivity extends AppCompatActivity {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         HotelListResponse data = snapshot.getValue(HotelListResponse.class);
                         arrayList.add(data);
+//                        if (city.equalsIgnoreCase(data.getCity())) {
+//                            arrayList.add(data);
+//                            binding.hotels.setVisibility(View.VISIBLE);
+//                            binding.labelSpinner.setVisibility(View.VISIBLE);
+//                        } else {
+//                            arrayList.remove(data);
+//                        }
+                        selectHotelPopup();
                     }
-                    
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-
-        
     }
 
     private void requestStoragePermission() {

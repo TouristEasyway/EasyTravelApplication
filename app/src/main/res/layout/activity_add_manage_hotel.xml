@@ -294,6 +294,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:hint="Price"
+                    android:visibility="gone"
                     app:boxStrokeColor="@color/black"
                     app:hintTextColor="@color/black"
                     app:layout_constraintEnd_toEndOf="@id/glEnd"

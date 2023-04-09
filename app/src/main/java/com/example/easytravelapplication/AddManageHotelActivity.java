@@ -86,7 +86,7 @@ public class AddManageHotelActivity extends AppCompatActivity {
         binding.edtHotelName.setText(intent.getStringExtra("hotel_name"));
         binding.edtAddress.setText(intent.getStringExtra("address"));
         binding.edtLocation.setText(intent.getStringExtra("location"));
-        binding.edtPrice.setText(intent.getStringExtra("price"));
+//        binding.edtPrice.setText(intent.getStringExtra("price"));
         binding.edtCheckInTime.setText(intent.getStringExtra("check_in_time"));
         binding.edtCheckOutTime.setText(intent.getStringExtra("check_out_time"));
         binding.edtService.setText(intent.getStringExtra("service"));
@@ -244,9 +244,11 @@ public class AddManageHotelActivity extends AppCompatActivity {
             binding.edtLocation.setError("Location is  Required");
         } else if (state.equals("")) {
             new CommonMethod(this, "State is Required");
-        } else if (binding.edtPrice.getText().toString().equals("")) {
+        }
+        /*else if (binding.edtPrice.getText().toString().equals("")) {
             binding.edtPrice.setError("Price is  Required");
-        } else if (bitmap == null) {
+        }*/
+        else if (bitmap == null) {
             progressDialog.setMessage("Please Wait...");
             progressDialog.show();
             updateData(image);
