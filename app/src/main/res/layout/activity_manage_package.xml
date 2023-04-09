@@ -18,6 +18,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
             tools:itemCount="10"
             tools:listitem="@layout/list_item_manage_package" />
 

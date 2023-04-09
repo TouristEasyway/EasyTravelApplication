@@ -54,7 +54,8 @@ public class ManagePackageAdapter extends RecyclerView.Adapter<ManagePackageAdap
         holder.itemRowBinding.tvPackageName.setText(responseList.get(position).getPackageName());
         holder.itemRowBinding.tvPlaces.setText(responseList.get(position).getPlaces());
         holder.itemRowBinding.tvDayNight.setText(responseList.get(position).getTotalDay() + "D/" + responseList.get(position).getTotalNight() + "N");
-        holder.itemRowBinding.tvPrice.setText(holder.itemView.getContext().getString(R.string.rupee) + responseList.get(position).getPrice() + "/Night");
+        //holder.itemRowBinding.tvPrice.setText(holder.itemView.getContext().getString(R.string.rupee) + responseList.get(position).getPrice() + "/Night");
+        holder.itemRowBinding.tvPrice.setText(holder.itemView.getContext().getString(R.string.rupee) + responseList.get(position).getPrice());
 
         Picasso.get().load(responseList.get(position).getPackageImage()).into(holder.itemRowBinding.rivPackage);
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

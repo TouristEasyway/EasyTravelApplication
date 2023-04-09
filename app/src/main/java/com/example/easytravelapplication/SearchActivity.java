@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -125,15 +127,30 @@ public class SearchActivity extends AppCompatActivity {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         PackageListResponse data = snapshot.getValue(PackageListResponse.class);
                         if (data != null) {
-                            if (Integer.parseInt(query) >= Integer.parseInt(data.getPrice())) {
-                                packageArrayList.add(data);
-                                ManagePackageAdapter adapter = new ManagePackageAdapter(packageArrayList, SearchActivity.this);
-                                binding.rvPackage.setVisibility(View.VISIBLE);
-                                binding.noPackageData.setVisibility(View.GONE);
-                                binding.rvPackage.setAdapter(adapter);
-                                adapter.notifyDataSetChanged();
-                            } else {
-                                packageArrayList.remove(data);
+                            if (query!= "" && city!="") {
+                                Log.d("RESPONSE",query+"_______"+data.getPrice()+"______"+city+"____"+data.getCity());
+                                if ((Integer.parseInt(query) >= Integer.parseInt(data.getPrice())) && city.equalsIgnoreCase(data.getCity())) {
+                                    packageArrayList.add(data);
+                                    ManagePackageAdapter adapter = new ManagePackageAdapter(packageArrayList, SearchActivity.this);
+                                    binding.rvPackage.setVisibility(View.VISIBLE);
+                                    binding.noPackageData.setVisibility(View.GONE);
+                                    binding.rvPackage.setAdapter(adapter);
+                                    adapter.notifyDataSetChanged();
+                                } else {
+                                    packageArrayList.remove(data);
+                                }
+                            }
+                            else {
+                                if (Integer.parseInt(query) >= Integer.parseInt(data.getPrice())) {
+                                    packageArrayList.add(data);
+                                    ManagePackageAdapter adapter = new ManagePackageAdapter(packageArrayList, SearchActivity.this);
+                                    binding.rvPackage.setVisibility(View.VISIBLE);
+                                    binding.noPackageData.setVisibility(View.GONE);
+                                    binding.rvPackage.setAdapter(adapter);
+                                    adapter.notifyDataSetChanged();
+                                } else {
+                                    packageArrayList.remove(data);
+                                }
                             }
                             pd.dismiss();
                         } else {
@@ -168,8 +185,9 @@ public class SearchActivity extends AppCompatActivity {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         ManageCarResponse data = snapshot.getValue(ManageCarResponse.class);
                         if (data != null) {
-                            if (query.equals("") != true && city.equals("") != true) {
-                                if (Integer.parseInt(query) >= Integer.parseInt(data.getRatePerKM()) && city.equalsIgnoreCase(data.getCity())) {
+                            Log.d("RESPONSE_QUERY",query+"_____"+city+"______");
+                            if (query!= "" && city!="") {
+                                if ((Integer.parseInt(query) >= Integer.parseInt(data.getRatePerKM())) && city.equalsIgnoreCase(data.getCity())) {
                                     carArrayList.add(data);
                                     ManageCarAdapter adapter = new ManageCarAdapter(SearchActivity.this, carArrayList, userType);
                                     binding.rvCar.setAdapter(adapter);
@@ -214,5 +232,14 @@ public class SearchActivity extends AppCompatActivity {
                 pd.dismiss();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id==android.R.id.home){
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

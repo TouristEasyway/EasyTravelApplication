@@ -70,6 +70,8 @@ public class ProfileActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.home:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0, 0);
                         return true;
                     case R.id.package1:
                         startActivity(new Intent(getApplicationContext(), ManagePackageActivity.class));
@@ -79,10 +81,7 @@ public class ProfileActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), ManageCarRentActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
-
                     case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                        overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;

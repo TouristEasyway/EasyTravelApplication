@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -122,7 +123,15 @@ public class AddManagePackageActivity extends AppCompatActivity {
                 } else {
                     city = cityList.get(i);
                 }
-                getHotelName(city);
+                if(city.equalsIgnoreCase("")){
+                    binding.labelSpinner.setVisibility(View.GONE);
+                    binding.hotels.setVisibility(View.GONE);
+                }
+                else {
+                    binding.labelSpinner.setVisibility(View.VISIBLE);
+                    binding.hotels.setVisibility(View.VISIBLE);
+                    getHotelName(city);
+                }
             }
 
             @Override
@@ -187,7 +196,7 @@ public class AddManagePackageActivity extends AppCompatActivity {
         });
     }
 
-    private void selectHotelPopup() {
+    private void selectHotelPopup(String city) {
         binding.hotels.setOnClickListener(new View.OnClickListener() {
             boolean[] selectedLanguage;
 
@@ -200,12 +209,12 @@ public class AddManagePackageActivity extends AppCompatActivity {
                 for (int i = 0; i < arrayList.size(); i++) {
                     if (city.equalsIgnoreCase(arrayList.get(i).getCity())) {
                         langArray[i] = arrayList.get(i).getHotelName();
-                        binding.hotels.setVisibility(View.VISIBLE);
-                        binding.labelSpinner.setVisibility(View.VISIBLE);
+                        //binding.hotels.setVisibility(View.VISIBLE);
+                        //binding.labelSpinner.setVisibility(View.VISIBLE);
                     } else {
                         arrayList.remove(i);
-                        binding.hotels.setVisibility(View.GONE);
-                        binding.labelSpinner.setVisibility(View.GONE);
+                        //binding.hotels.setVisibility(View.GONE);
+                        //binding.labelSpinner.setVisibility(View.GONE);
                     }
                 }
 
@@ -291,9 +300,12 @@ public class AddManagePackageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    arrayList = new ArrayList<>();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        HotelListResponse data = snapshot.getValue(HotelListResponse.class);
-                        arrayList.add(data);
+                        if(String.valueOf(snapshot.child("city").getValue()).equalsIgnoreCase(city)) {
+                            HotelListResponse data = snapshot.getValue(HotelListResponse.class);
+                            arrayList.add(data);
+                        }
 //                        if (city.equalsIgnoreCase(data.getCity())) {
 //                            arrayList.add(data);
 //                            binding.hotels.setVisibility(View.VISIBLE);
@@ -301,7 +313,15 @@ public class AddManagePackageActivity extends AppCompatActivity {
 //                        } else {
 //                            arrayList.remove(data);
 //                        }
-                        selectHotelPopup();
+                    }
+                    if(arrayList.size()<=0){
+                        binding.labelSpinner.setVisibility(View.GONE);
+                        binding.hotels.setVisibility(View.GONE);
+                    }
+                    else {
+                        binding.labelSpinner.setVisibility(View.VISIBLE);
+                        binding.hotels.setVisibility(View.VISIBLE);
+                        selectHotelPopup(city);
                     }
                 }
             }
@@ -422,6 +442,7 @@ public class AddManagePackageActivity extends AppCompatActivity {
         HashMap params = new HashMap<>();
         params.put("key", key);
         params.put("packageName", binding.edtPackageName.getText().toString());
+        params.put("city", city);
         params.put("places", binding.edtPlaces.getText().toString());
         params.put("totalDay", binding.edtTotalDay.getText().toString());
         params.put("totalNight", binding.edtTotalNight.getText().toString());

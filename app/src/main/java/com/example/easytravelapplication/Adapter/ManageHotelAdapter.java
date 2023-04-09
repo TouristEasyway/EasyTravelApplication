@@ -56,7 +56,7 @@ public class ManageHotelAdapter extends RecyclerView.Adapter<ManageHotelAdapter.
 
         holder.binding.tvHotelName.setText(response.getHotelName());
         holder.binding.tvPlaces.setText(response.getAddress() + ", " + response.getCity());
-        holder.binding.tvPrice.setText(response.getPrice());
+        //holder.binding.tvPrice.setText(response.getPrice());
 
         Picasso.get().load(response.getHotelImages()).placeholder(R.drawable.ic_person).into(holder.binding.rivPackage);
 

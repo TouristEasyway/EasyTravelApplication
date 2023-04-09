@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class PackageListResponse implements Serializable {
 
-    String packageName, places,totalDay,totalNight,startingDate,price,packageImage,key,endDate,hotelName;
+    String packageName, places,totalDay,totalNight,startingDate,price,packageImage,key,endDate,hotelName,city;
 
     public PackageListResponse() {
     }
@@ -18,8 +18,17 @@ public class PackageListResponse implements Serializable {
         this.price = price;
         this.packageImage = packageImage;
         this.key = key;
+        this.city = city;
         this.endDate = endDate;
         this.hotelName = hotelName;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getHotelName() {
