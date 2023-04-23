@@ -40,12 +40,12 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
 
     ActivityBuyCarBinding binding;
     SharedPreferences sp;
-    DatabaseReference reference, dbref;
+    DatabaseReference reference, dbref,bookReference;
     ProgressDialog progressDialog;
     ManageCarResponse response;
     String startDate;
     String endDate;
-    String sPaymentType = "", sTransactionId = "";
+    String sPaymentType = "", sTransactionId = "",manageCarKey="";
 
     int price;
 
@@ -231,6 +231,32 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
                 new CommonMethod(BuyCarActivity.this, "Car Booked Successfully.");
                 new CommonMethod(BuyCarActivity.this, MainActivity.class);
                 finish();
+
+                bookReference = reference.child("Manage Car");
+                HashMap params = new HashMap<>();
+                params.put("key", manageCarKey);
+                params.put("carName", response.getCarName());
+                params.put("fuelType", response.getfuelType());
+                params.put("carType", response.getCarType());
+                params.put("ratePerKM", response.getRatePerKM());
+                params.put("bookedDate", new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime()));
+                params.put("city", response.getCity());
+                params.put("state", response.getState());
+                params.put("carImage", response.getCarImage());
+                params.put("available", "booked");
+                bookReference.child(manageCarKey).setValue(params).addOnSuccessListener(new OnSuccessListener() {
+                    @Override
+                    public void onSuccess(Object o) {
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(BuyCarActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -254,6 +280,7 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
         binding.edtName.setText(sp.getString(AppConstant.NAME, ""));
         binding.edtEmail.setText(sp.getString(AppConstant.EMAIL, ""));
         binding.edtContactNo.setText(sp.getString(AppConstant.CONTACT, ""));
+        manageCarKey = response.getKey();
     }
 
 
