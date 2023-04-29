@@ -1,16 +1,21 @@
 package com.example.easytravelapplication;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,6 +67,20 @@ public class MainActivity extends AppCompatActivity {
         sp.getString(AppConstant.USERTYPE, "");
         String userType = sp.getString(AppConstant.USERTYPE, "");
         pd = new ProgressDialog(this);
+
+        final Dialog dialog = new Dialog(MainActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_description);
+        ImageView closeIv = dialog.findViewById(R.id.dialog_description_close);
+        dialog.show();
+        dialog.setCancelable(false);
+
+        closeIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
 
         if (userType.equals("User")) {
             getSupportActionBar().setTitle("Home");
@@ -127,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
                     UserCarHistoryAdapter adapter = new UserCarHistoryAdapter(arrayList);
                     binding.rvCarHistory.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-
                 } else {
                     binding.rvCarHistory.setVisibility(View.VISIBLE);
                     binding.noDataCarHistory.setVisibility(View.VISIBLE);

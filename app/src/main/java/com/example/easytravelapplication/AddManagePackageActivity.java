@@ -109,6 +109,7 @@ public class AddManagePackageActivity extends AppCompatActivity {
         cityList.add("Ahmedabad");
         cityList.add("Dahod");
         cityList.add("Surat");
+        cityList.add("Nadiad");
 
         ArrayAdapter cityAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, cityList);
         cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

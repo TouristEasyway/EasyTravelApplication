@@ -221,7 +221,7 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
                                 binding.tvEndDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                                 endDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
 
-                                countDays();
+                                //countDays();
                             }
                         },
                         year, month, day);
@@ -245,6 +245,11 @@ public class BuyNowActivity extends AppCompatActivity implements PaymentResultLi
                 /*else if (binding.tvDob.getText().toString().equals("")) {
                     binding.tvDob.setError("Date of Birth is  Required");
                 }*/
+                else if (binding.tvStartDate.getText().toString().equals("")) {
+                    binding.tvStartDate.setError("Select Starting Date ");
+                } else if (binding.tvEndDate.getText().toString().toString().equals("")) {
+                    binding.tvEndDate.setError("Select End Date");
+                }
                 else {
                     progressDialog = new ProgressDialog(BuyNowActivity.this);
                     progressDialog.setMessage("Please Wait...");

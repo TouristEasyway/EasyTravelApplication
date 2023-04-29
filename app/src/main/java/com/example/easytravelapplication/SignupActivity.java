@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,10 +44,10 @@ public class SignupActivity extends AppCompatActivity {
     ProgressDialog pd;
     FirebaseAuth auth;
     private ArrayList<String> cityList = new ArrayList<>();
-    private  ArrayList<String> stateList = new ArrayList<>();
-    String  startDate;
+    private ArrayList<String> stateList = new ArrayList<>();
+    String startDate;
 
-    String  city,state;
+    String city, state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +67,13 @@ public class SignupActivity extends AppCompatActivity {
         stateList.add("Gujarat");
 
 
-        ArrayAdapter cityAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,cityList);
+        ArrayAdapter cityAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, cityList);
         cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         binding.citySpinner.setAdapter(cityAdapter);
 
 
-        ArrayAdapter stateAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,stateList);
+        ArrayAdapter stateAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, stateList);
         stateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         binding.stateSpinner.setAdapter(stateAdapter);
@@ -142,21 +143,20 @@ public class SignupActivity extends AppCompatActivity {
         binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (binding.TIEName.getText().toString().equals("")) {
                     binding.TIEName.setError("Name is Required");
                 } else if (binding.TIEEmail.getText().toString().matches("")) {
                     binding.TIEEmail.setError("Email is Required");
                 } else if (binding.TIEPhoneNo.getText().toString().equals("")) {
                     binding.TIEPhoneNo.setError("Phone No is  Required");
-                } else if(binding.TIEPhoneNo.getText().toString().length() > 10){
+                } else if (binding.TIEPhoneNo.getText().toString().length() > 10) {
                     binding.TIEDob.setError("10 Digit Phone No Required");
                 } else if (binding.radioGroup.getCheckedRadioButtonId() == -1) {
                     new CommonMethod(SignupActivity.this, "Please Select Gender");
                 } else if (binding.TIEDob.getText().toString().equals("")) {
                     binding.TIEDob.setError("Date of Birth is  Required");
                 } else if (binding.stateSpinner.getSelectedItemPosition() == 0) {
-                   new CommonMethod(SignupActivity.this, "Please Select State");
+                    new CommonMethod(SignupActivity.this, "Please Select State");
                 } else if (binding.citySpinner.getSelectedItemPosition() == 0) {
                     new CommonMethod(SignupActivity.this, "Please Select City");
                 } else if (binding.TIEPassword.getText().toString().equals("")) {
@@ -164,7 +164,6 @@ public class SignupActivity extends AppCompatActivity {
                 } else if (binding.TIEConfirmPassword.getText().toString().equals("")) {
                     binding.TIEConfirmPassword.setError(" Please Enter Confirm is  Required");
                 } else {
-
                     pd = new ProgressDialog(SignupActivity.this);
                     pd.setMessage("Please Wait...");
                     pd.setCancelable(false);
@@ -206,7 +205,7 @@ public class SignupActivity extends AppCompatActivity {
         user.put("email", binding.TIEEmail.getText().toString());
         user.put("contact_no", binding.TIEPhoneNo.getText().toString());
         user.put("gender", binding.rgMale.isChecked() ? "Male" : "Female");
-        user.put("birth_date",startDate);
+        user.put("birth_date", startDate);
         user.put("city", city);
         user.put("state", state);
         user.put("password", binding.TIEPassword.getText().toString());
@@ -244,9 +243,20 @@ public class SignupActivity extends AppCompatActivity {
         intent.putExtra("CONTACT_NO", binding.TIEPhoneNo.getText().toString());
         startActivity(intent);*/
     }
+
     @Override
     public void onBackPressed() {
         //Use For Close Application
-        finishAffinity();
+        //finishAffinity();
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

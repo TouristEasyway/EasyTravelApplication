@@ -55,6 +55,8 @@ public class SearchActivity extends AppCompatActivity {
         sp = getSharedPreferences(AppConstant.PREF, Context.MODE_PRIVATE);
         userType = sp.getString(AppConstant.USERTYPE, "");
 
+        binding.edtSearch.requestFocus();
+
         cityList.add("City");
         cityList.add("Ahmedabad");
         cityList.add("Dahod");
@@ -81,7 +83,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        binding.edtSearch.addTextChangedListener(new TextWatcher() {
+        /*binding.edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -96,27 +98,38 @@ public class SearchActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 stringQuery = String.valueOf(editable);
             }
-        });
+        });*/
 
         binding.btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                stringQuery = binding.edtSearch.getText().toString();
 
                 if (stringQuery.equals("")) {
                     new CommonMethod(SearchActivity.this, "Please Enter Price For Search");
-                } else {
-                    pd = new ProgressDialog(SearchActivity.this);
-                    pd.setMessage("Please Wait...");
-                    pd.setCancelable(false);
-                    pd.show();
-                    getCarData(stringQuery, city);
-                    getPackageData(stringQuery, city);
+                }
+                else if(city == ""){
+                    new CommonMethod(SearchActivity.this, "Please Select City");
+                }
+                else {
+                    if(Integer.parseInt(stringQuery)>=5000 && Integer.parseInt(stringQuery)<=25000) {
+                        pd = new ProgressDialog(SearchActivity.this);
+                        pd.setMessage("Please Wait...");
+                        pd.setCancelable(false);
+                        pd.show();
+                        getCarData(stringQuery, city);
+                        getPackageData(stringQuery, city);
+                    }
+                    else{
+                        new CommonMethod(SearchActivity.this, "Please Enter Amount Between 5000-25000");
+                    }
                 }
             }
         });
     }
 
     private void getPackageData(String query, String city) {
+        Log.d("RESPONSE_QUERY_PACKAGE",query);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manage Packages");
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -141,7 +154,7 @@ public class SearchActivity extends AppCompatActivity {
                                 }
                             }
                             else {
-                                if (Integer.parseInt(query) >= Integer.parseInt(data.getPrice())) {
+                                /*if (Integer.parseInt(query) >= Integer.parseInt(data.getPrice())) {
                                     packageArrayList.add(data);
                                     ManagePackageAdapter adapter = new ManagePackageAdapter(packageArrayList, SearchActivity.this);
                                     binding.rvPackage.setVisibility(View.VISIBLE);
@@ -150,32 +163,47 @@ public class SearchActivity extends AppCompatActivity {
                                     adapter.notifyDataSetChanged();
                                 } else {
                                     packageArrayList.remove(data);
-                                }
+                                }*/
+                                binding.rvPackage.setVisibility(View.GONE);
+                                binding.noPackageData.setVisibility(View.VISIBLE);
+                                binding.rvPackage.setAdapter(null);
                             }
                             pd.dismiss();
                         } else {
                             binding.rvPackage.setVisibility(View.GONE);
                             binding.noPackageData.setVisibility(View.VISIBLE);
+                            binding.rvPackage.setAdapter(null);
                             pd.dismiss();
                         }
                     }
                 } else {
                     binding.rvPackage.setVisibility(View.GONE);
                     binding.noPackageData.setVisibility(View.VISIBLE);
+                    binding.rvPackage.setAdapter(null);
                     pd.dismiss();
                 }
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 binding.noPackageData.setVisibility(View.VISIBLE);
                 binding.rvPackage.setVisibility(View.GONE);
+                binding.rvPackage.setAdapter(null);
                 pd.dismiss();
             }
         });
+
+        /*if(packageArrayList.size()>0 || carArrayList.size()>0){
+            binding.searchNestedScroll.setVisibility(View.VISIBLE);
+        }
+        else{
+            binding.searchNestedScroll.setVisibility(View.GONE);
+        }*/
     }
 
     private void getCarData(String query, String city) {
+        Log.d("RESPONSE_QUERY",query);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manage Car");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -198,7 +226,7 @@ public class SearchActivity extends AppCompatActivity {
                                     carArrayList.remove(data);
                                 }
                             } else {
-                                if (Integer.parseInt(query) >= Integer.parseInt(data.getRatePerKM())) {
+                                /*if (Integer.parseInt(query) >= Integer.parseInt(data.getRatePerKM())) {
                                     carArrayList.add(data);
                                     ManageCarAdapter adapter = new ManageCarAdapter(SearchActivity.this, carArrayList, userType);
                                     binding.rvCar.setAdapter(adapter);
@@ -207,7 +235,10 @@ public class SearchActivity extends AppCompatActivity {
                                     binding.noCarData.setVisibility(View.GONE);
                                 } else {
                                     carArrayList.remove(data);
-                                }
+                                }*/
+                                binding.rvCar.setVisibility(View.GONE);
+                                binding.noCarData.setVisibility(View.VISIBLE);
+                                binding.rvCar.setAdapter(null);
                             }
 
 
@@ -215,12 +246,14 @@ public class SearchActivity extends AppCompatActivity {
                         } else {
                             binding.rvCar.setVisibility(View.GONE);
                             binding.noCarData.setVisibility(View.VISIBLE);
+                            binding.rvCar.setAdapter(null);
                             pd.dismiss();
                         }
                     }
                 } else {
                     binding.rvCar.setVisibility(View.GONE);
                     binding.noCarData.setVisibility(View.VISIBLE);
+                    binding.rvCar.setAdapter(null);
                     pd.dismiss();
                 }
             }
@@ -229,6 +262,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
                 binding.rvCar.setVisibility(View.GONE);
                 binding.noCarData.setVisibility(View.VISIBLE);
+                binding.rvCar.setAdapter(null);
                 pd.dismiss();
             }
         });

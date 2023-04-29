@@ -165,9 +165,9 @@ public class BuyCarActivity extends AppCompatActivity implements PaymentResultLi
                     binding.edtEmail.setError("Email is Required");
                 } else if (binding.edtContactNo.getText().toString().equals("")) {
                     binding.edtContactNo.setError("Phone No is  Required");
-                } else if (binding.tvStartDate.getText().equals("")) {
+                } else if (binding.tvStartDate.getText().toString().equals("")) {
                     binding.tvStartDate.setError("Select Starting Date ");
-                } else if (binding.tvEndDate.getText().toString().equals("")) {
+                } else if (binding.tvEndDate.getText().toString().toString().equals("")) {
                     binding.tvEndDate.setError("Select End Date");
                 } else {
                     progressDialog = new ProgressDialog(BuyCarActivity.this);
