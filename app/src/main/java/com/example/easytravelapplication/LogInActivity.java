@@ -66,6 +66,13 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
 
+        binding.tvForgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LogInActivity.this, ForgetPasswordActivity.class));
+                finish();
+            }
+        });
 
         binding.registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override

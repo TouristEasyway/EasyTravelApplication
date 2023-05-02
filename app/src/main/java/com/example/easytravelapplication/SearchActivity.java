@@ -4,8 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -107,20 +105,17 @@ public class SearchActivity extends AppCompatActivity {
 
                 if (stringQuery.equals("")) {
                     new CommonMethod(SearchActivity.this, "Please Enter Price For Search");
-                }
-                else if(city == ""){
+                } else if (city == "") {
                     new CommonMethod(SearchActivity.this, "Please Select City");
-                }
-                else {
-                    if(Integer.parseInt(stringQuery)>=5000 && Integer.parseInt(stringQuery)<=25000) {
+                } else {
+                    if (Integer.parseInt(stringQuery) >= 5000 && Integer.parseInt(stringQuery) <= 25000) {
                         pd = new ProgressDialog(SearchActivity.this);
                         pd.setMessage("Please Wait...");
                         pd.setCancelable(false);
                         pd.show();
                         getCarData(stringQuery, city);
                         getPackageData(stringQuery, city);
-                    }
-                    else{
+                    } else {
                         new CommonMethod(SearchActivity.this, "Please Enter Amount Between 5000-25000");
                     }
                 }
@@ -129,7 +124,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void getPackageData(String query, String city) {
-        Log.d("RESPONSE_QUERY_PACKAGE",query);
+        Log.d("RESPONSE_QUERY_PACKAGE", query);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manage Packages");
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -140,33 +135,23 @@ public class SearchActivity extends AppCompatActivity {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         PackageListResponse data = snapshot.getValue(PackageListResponse.class);
                         if (data != null) {
-                            if (query!= "" && city!="") {
-                                Log.d("RESPONSE",query+"_______"+data.getPrice()+"______"+city+"____"+data.getCity());
+                            if (!query.isEmpty() && !city.isEmpty()) {
+                                Log.d("RESPONSE", query + "_______" + data.getPrice() + "______" + city + "____" + data.getCity());
                                 if ((Integer.parseInt(query) >= Integer.parseInt(data.getPrice())) && city.equalsIgnoreCase(data.getCity())) {
                                     packageArrayList.add(data);
-                                    ManagePackageAdapter adapter = new ManagePackageAdapter(packageArrayList, SearchActivity.this);
-                                    binding.rvPackage.setVisibility(View.VISIBLE);
-                                    binding.noPackageData.setVisibility(View.GONE);
-                                    binding.rvPackage.setAdapter(adapter);
-                                    adapter.notifyDataSetChanged();
                                 } else {
                                     packageArrayList.remove(data);
                                 }
                             }
-                            else {
-                                /*if (Integer.parseInt(query) >= Integer.parseInt(data.getPrice())) {
-                                    packageArrayList.add(data);
-                                    ManagePackageAdapter adapter = new ManagePackageAdapter(packageArrayList, SearchActivity.this);
-                                    binding.rvPackage.setVisibility(View.VISIBLE);
-                                    binding.noPackageData.setVisibility(View.GONE);
-                                    binding.rvPackage.setAdapter(adapter);
-                                    adapter.notifyDataSetChanged();
-                                } else {
-                                    packageArrayList.remove(data);
-                                }*/
+                            if (!packageArrayList.isEmpty()) {
+                                binding.rvPackage.setVisibility(View.VISIBLE);
+                                binding.noPackageData.setVisibility(View.GONE);
+                                ManagePackageAdapter adapter = new ManagePackageAdapter(packageArrayList, SearchActivity.this);
+                                binding.rvPackage.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+                            } else {
                                 binding.rvPackage.setVisibility(View.GONE);
                                 binding.noPackageData.setVisibility(View.VISIBLE);
-                                binding.rvPackage.setAdapter(null);
                             }
                             pd.dismiss();
                         } else {
@@ -203,7 +188,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void getCarData(String query, String city) {
-        Log.d("RESPONSE_QUERY",query);
+        Log.d("RESPONSE_QUERY", query);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Manage Car");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -213,35 +198,25 @@ public class SearchActivity extends AppCompatActivity {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         ManageCarResponse data = snapshot.getValue(ManageCarResponse.class);
                         if (data != null) {
-                            Log.d("RESPONSE_QUERY",query+"_____"+city+"______");
-                            if (query!= "" && city!="") {
+                            Log.d("RESPONSE_QUERY", query + "_____" + city + "______");
+                            if (!query.isEmpty() && !city.isEmpty()) {
                                 if ((Integer.parseInt(query) >= Integer.parseInt(data.getRatePerKM())) && city.equalsIgnoreCase(data.getCity())) {
                                     carArrayList.add(data);
-                                    ManageCarAdapter adapter = new ManageCarAdapter(SearchActivity.this, carArrayList, userType);
-                                    binding.rvCar.setAdapter(adapter);
-                                    adapter.notifyDataSetChanged();
-                                    binding.rvCar.setVisibility(View.VISIBLE);
-                                    binding.noCarData.setVisibility(View.GONE);
                                 } else {
                                     carArrayList.remove(data);
                                 }
+                            }
+                            if (!carArrayList.isEmpty()) {
+                                ManageCarAdapter adapter = new ManageCarAdapter(SearchActivity.this, carArrayList, userType);
+                                binding.rvCar.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+                                binding.rvCar.setVisibility(View.VISIBLE);
+                                binding.noCarData.setVisibility(View.GONE);
                             } else {
-                                /*if (Integer.parseInt(query) >= Integer.parseInt(data.getRatePerKM())) {
-                                    carArrayList.add(data);
-                                    ManageCarAdapter adapter = new ManageCarAdapter(SearchActivity.this, carArrayList, userType);
-                                    binding.rvCar.setAdapter(adapter);
-                                    adapter.notifyDataSetChanged();
-                                    binding.rvCar.setVisibility(View.VISIBLE);
-                                    binding.noCarData.setVisibility(View.GONE);
-                                } else {
-                                    carArrayList.remove(data);
-                                }*/
                                 binding.rvCar.setVisibility(View.GONE);
                                 binding.noCarData.setVisibility(View.VISIBLE);
                                 binding.rvCar.setAdapter(null);
                             }
-
-
                             pd.dismiss();
                         } else {
                             binding.rvCar.setVisibility(View.GONE);
@@ -271,7 +246,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id==android.R.id.home){
+        if (id == android.R.id.home) {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);

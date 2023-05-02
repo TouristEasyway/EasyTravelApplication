@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -128,10 +126,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setCarHistoryData() {
-
-        binding.rvCarHistory.setVisibility(View.VISIBLE);
-        binding.tvCarHistory.setVisibility(View.VISIBLE);
-        binding.carHistoryViewAll.setVisibility(View.VISIBLE);
         reference = FirebaseDatabase.getInstance().getReference("Book Car");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -140,14 +134,26 @@ public class MainActivity extends AppCompatActivity {
                     ArrayList<CarHistoryResponse> arrayList = new ArrayList<>();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         CarHistoryResponse data = snapshot.getValue(CarHistoryResponse.class);
-                        arrayList.add(data);
+                        if (sp.getString(AppConstant.EMAIL, "").equalsIgnoreCase(data.getEmail())) {
+                            arrayList.add(data);
+                        }
                     }
 
-                    UserCarHistoryAdapter adapter = new UserCarHistoryAdapter(arrayList);
-                    binding.rvCarHistory.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    if (!arrayList.isEmpty()) {
+                        UserCarHistoryAdapter adapter = new UserCarHistoryAdapter(arrayList);
+                        binding.rvCarHistory.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                        binding.rvCarHistory.setVisibility(View.VISIBLE);
+                        binding.tvCarHistory.setVisibility(View.VISIBLE);
+                        binding.carHistoryViewAll.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.rvCarHistory.setVisibility(View.GONE);
+                        binding.tvCarHistory.setVisibility(View.GONE);
+                        binding.carHistoryViewAll.setVisibility(View.GONE);
+                    }
+                    binding.noDataCarHistory.setVisibility(View.GONE);
                 } else {
-                    binding.rvCarHistory.setVisibility(View.VISIBLE);
+                    binding.rvCarHistory.setVisibility(View.GONE);
                     binding.noDataCarHistory.setVisibility(View.VISIBLE);
                 }
                 pd.dismiss();
@@ -211,9 +217,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setPackageHistoryData() {
-        binding.rvPackageHistory.setVisibility(View.VISIBLE);
-        binding.tvPackageHistory.setVisibility(View.VISIBLE);
-        binding.packageHistoryViewAll.setVisibility(View.VISIBLE);
         reference = FirebaseDatabase.getInstance().getReference("Book Packages");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -222,14 +225,25 @@ public class MainActivity extends AppCompatActivity {
                     ArrayList<PackageHistoryListResponse> arrayList = new ArrayList<>();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         PackageHistoryListResponse data = snapshot.getValue(PackageHistoryListResponse.class);
-                        arrayList.add(data);
+                        if (sp.getString(AppConstant.EMAIL, "").equalsIgnoreCase(data.getUserEmail())) {
+                            arrayList.add(data);
+                        }
                     }
 
-                    UserPackageHistoryAdapter adapter = new UserPackageHistoryAdapter(arrayList);
-                    binding.rvPackageHistory.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    if (!arrayList.isEmpty()) {
+                        UserPackageHistoryAdapter adapter = new UserPackageHistoryAdapter(arrayList);
+                        binding.rvPackageHistory.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                        binding.rvPackageHistory.setVisibility(View.VISIBLE);
+                        binding.tvPackageHistory.setVisibility(View.VISIBLE);
+                        binding.packageHistoryViewAll.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.rvPackageHistory.setVisibility(View.GONE);
+                        binding.tvPackageHistory.setVisibility(View.GONE);
+                        binding.packageHistoryViewAll.setVisibility(View.GONE);
+                    }
                     pd.dismiss();
-
+                    binding.noDataPacakgeHistory.setVisibility(View.GONE);
                 } else {
                     binding.noDataPacakgeHistory.setVisibility(View.VISIBLE);
                     binding.rvPackageHistory.setVisibility(View.GONE);
