@@ -43,8 +43,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
+
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
+import com.smarteist.autoimageslider.SliderViewAdapter;
 
 public class DashBoardActivity extends AppCompatActivity {
 
@@ -56,8 +62,11 @@ public class DashBoardActivity extends AppCompatActivity {
     private ProgressDialog pd;
 
 
-    String[] adminList = {"Manage User", "Manage Package", "Package Purchase History", "Manage Hotel","Manage Car Rents", "Car Rental History"};
+    String[] adminList = {"Manage User", "Manage Package", "Package Purchase History", "Manage Hotel", "Manage Car Rents", "Car Rental History"};
 
+    ArrayList<BannerList> bannerArrayList;
+    String[] bannerDescArray = {"Description 1", "Description 2", "Description 3", "Description 4"};
+    int[] bannerImageArray = {R.drawable.banner1, R.drawable.banner2, R.drawable.banner1, R.drawable.banner2};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +85,7 @@ public class DashBoardActivity extends AppCompatActivity {
             pd.setMessage("Please Wait...");
             pd.setCancelable(false);
             pd.show();
+            setBannerData();
             setPackageData();
             setPackageHistoryData();
 //            setHotelData();
@@ -94,6 +104,26 @@ public class DashBoardActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+    }
+
+    private void setBannerData() {
+        binding.homeBannerSlider.setVisibility(View.VISIBLE);
+
+        bannerArrayList = new ArrayList<>();
+        for (int i = 0; i < bannerDescArray.length; i++) {
+            BannerList list = new BannerList();
+            list.setDescription(bannerDescArray[i]);
+            list.setImage(bannerImageArray[i]);
+            bannerArrayList.add(list);
+        }
+        binding.homeBannerSlider.setSliderAdapter(new HomeBannerAdapter(DashBoardActivity.this, bannerArrayList));
+        binding.homeBannerSlider.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using IndicatorAnimationType. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        binding.homeBannerSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        binding.homeBannerSlider.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+        binding.homeBannerSlider.setIndicatorSelectedColor(getResources().getColor(R.color.black));
+        binding.homeBannerSlider.setIndicatorUnselectedColor(getResources().getColor(R.color.white));
+        binding.homeBannerSlider.setScrollTimeInSec(10); //set scroll delay in seconds :
+        binding.homeBannerSlider.startAutoCycle();
     }
 
     private void setCarHistoryData() {
@@ -116,8 +146,7 @@ public class DashBoardActivity extends AppCompatActivity {
                     binding.rvCarHistory.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
-                }
-                else{
+                } else {
                     binding.rvCarHistory.setVisibility(View.VISIBLE);
                     binding.noDataCarHistory.setVisibility(View.VISIBLE);
                 }
@@ -159,8 +188,7 @@ public class DashBoardActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                     pd.dismiss();
 
-                }
-                else{
+                } else {
                     pd.dismiss();
                     binding.noDataCar.setVisibility(View.VISIBLE);
                     binding.rvCar.setVisibility(View.GONE);
@@ -280,8 +308,7 @@ public class DashBoardActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                     pd.dismiss();
 
-                }
-                else{
+                } else {
                     binding.noDataPacakgeHistory.setVisibility(View.VISIBLE);
                     binding.rvPackageHistory.setVisibility(View.GONE);
                 }
@@ -321,8 +348,7 @@ public class DashBoardActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                     pd.dismiss();
 
-                }
-                else{
+                } else {
                     binding.noDataPacakge.setVisibility(View.VISIBLE);
                     binding.rvPackage.setVisibility(View.GONE);
                 }
@@ -432,9 +458,9 @@ public class DashBoardActivity extends AppCompatActivity {
                         new CommonMethod(context, ManagePackageActivity.class);
                     } else if (arrayList[position].equals("Package Purchase History")) {
                         new CommonMethod(context, PackagePurchaseHistoryActivity.class);
-                    }else if(arrayList[position].equals("Manage Hotel")){
+                    } else if (arrayList[position].equals("Manage Hotel")) {
                         new CommonMethod(context, ManageHotelActivity.class);
-                    }else if (arrayList[position].equals("Manage Car Rents")) {
+                    } else if (arrayList[position].equals("Manage Car Rents")) {
                         new CommonMethod(context, ManageCarRentActivity.class);
                     } else if (arrayList[position].equals("Car Rental History")) {
                         new CommonMethod(context, CarRentalHistoryActivity.class);

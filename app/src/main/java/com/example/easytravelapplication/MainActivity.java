@@ -39,6 +39,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 
@@ -54,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
 
     String[] adminList = {"Manage User", "Manage Package", "Package Purchase History", "Manage Hotel", "Manage Car Rents", "Car Rental History"};
 
+    ArrayList<BannerList> bannerArrayList;
+    String[] bannerDescArray = {"Description 1", "Description 2", "Description 3", "Description 4"};
+    int[] bannerImageArray = {R.drawable.banner2, R.drawable.banner2, R.drawable.banner2, R.drawable.banner2};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         String userType = sp.getString(AppConstant.USERTYPE, "");
         pd = new ProgressDialog(this);
 
-        final Dialog dialog = new Dialog(MainActivity.this);
+        /*final Dialog dialog = new Dialog(MainActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_description);
         ImageView closeIv = dialog.findViewById(R.id.dialog_description_close);
@@ -78,13 +85,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 dialog.dismiss();
             }
-        });
+        });*/
 
         if (userType.equals("User")) {
             getSupportActionBar().setTitle("Home");
             pd.setMessage("Please Wait...");
             pd.setCancelable(false);
             pd.show();
+            setBannerData();
             setPackageData();
             setPackageHistoryData();
             setCarData();
@@ -123,6 +131,26 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void setBannerData() {
+        binding.homeBannerSlider.setVisibility(View.VISIBLE);
+
+        bannerArrayList = new ArrayList<>();
+        for (int i = 0; i < bannerDescArray.length; i++) {
+            BannerList list = new BannerList();
+            list.setDescription(bannerDescArray[i]);
+            list.setImage(bannerImageArray[i]);
+            bannerArrayList.add(list);
+        }
+        binding.homeBannerSlider.setSliderAdapter(new HomeBannerAdapter(MainActivity.this, bannerArrayList));
+        binding.homeBannerSlider.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using IndicatorAnimationType. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        binding.homeBannerSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        binding.homeBannerSlider.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+        binding.homeBannerSlider.setIndicatorSelectedColor(getResources().getColor(R.color.black));
+        binding.homeBannerSlider.setIndicatorUnselectedColor(getResources().getColor(R.color.white));
+        binding.homeBannerSlider.setScrollTimeInSec(10); //set scroll delay in seconds :
+        binding.homeBannerSlider.startAutoCycle();
     }
 
     private void setCarHistoryData() {

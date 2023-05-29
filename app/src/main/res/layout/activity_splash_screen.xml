@@ -32,8 +32,8 @@
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="275dp"
-            android:layout_height="95dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/explore_beauty_of_journey"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="#B52B79"

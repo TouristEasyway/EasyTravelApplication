@@ -35,7 +35,29 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:listitem="@layout/item_home" />
 
+                <com.smarteist.autoimageslider.SliderView
+                    android:visibility="gone"
+                    android:id="@+id/home_banner_slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_150sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:sliderAutoCycleDirection="back_and_forth"
+                    app:sliderAutoCycleEnabled="true"
+                    app:sliderIndicatorGravity="bottom|center"
+                    app:sliderIndicatorMargin="15dp"
+                    app:sliderIndicatorOrientation="horizontal"
+                    app:sliderIndicatorPadding="3dp"
+                    app:sliderIndicatorRadius="2dp"
+                    app:sliderIndicatorSelectedColor="@color/black"
+                    app:sliderIndicatorUnselectedColor="@color/white"
+                    app:sliderScrollTimeInSec="5"
+                    app:sliderStartAutoCycle="true" />
+
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:visibility="gone"
                     android:id="@+id/tv_package"
                     style="@style/regular_14_text_bold"
                     android:layout_width="0dp"
@@ -43,13 +65,13 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="Package"
                     android:textSize="20sp"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toStartOf="@+id/package_view_all"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/home_banner_slider" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/package_view_all"
+                    app:layout_constraintTop_toBottomOf="@id/home_banner_slider"
                     style="@style/regular_14_text_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -57,8 +79,7 @@
                     android:text="View All"
                     android:textSize="20sp"
                     android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvPackage"
